@@ -29,16 +29,24 @@ public class WriteThread extends Thread {
 	public void run() {
 
 		Console console = System.console();
+		String secret = "";
+
+		do {
+			secret = console.readLine("\nEnter the secret password: ");
+		} while ( ! client.verifyPassword( secret ) );
 
 		String userName = console.readLine("\nEnter your name: ");
 		client.setUserName(userName);
+
+		String color = console.readLine("\nEnter you text color: ");
+		
 		writer.println(userName);
 
 		String text;
 
 		do {
 			text = console.readLine("[" + userName + "]: ");
-			writer.println(text);
+			writer.println("In " + color + ": " + text);
 
 		} while (!text.equals("bye"));
 
