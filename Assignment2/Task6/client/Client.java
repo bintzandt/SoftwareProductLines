@@ -1,5 +1,6 @@
-import java.net.*;
-import java.io.*;
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 /**
  * To run the client in a command prompt use: javac Client.java & java Client localhost 8080
@@ -24,7 +25,7 @@ public class Client {
 			Socket socket = new Socket(hostname, port);
 			System.out.println("Connected to the chat server");
 
-			new ReadThread(socket).start();
+			new ReadThread(socket, this).start();
 			System.out.println("Reader started");
 			System.out.flush();
 			new WriteThread(socket, this).start();

@@ -11,10 +11,12 @@ import java.net.Socket;
  */
 public class ReadThread extends Thread {
 	private final Socket socket;
+	private final Client client;
 	private ObjectInputStream ois;
 
-	public ReadThread(Socket socket) {
+	public ReadThread(Socket socket, Client client) {
 		this.socket = socket;
+		this.client = client;	
 	}
 
 	public void run() {
@@ -28,7 +30,14 @@ public class ReadThread extends Thread {
 		while (true) {
 			try {
 				Message m = (Message) ois.readObject();
-	            System.out.println(m.getMessageBody());
+	            
+				System.out.println("\n" + m.getMessageBody());
+
+				// prints the username after displaying the server's message
+				if (client.getUserName() != null) {
+					System.out.print("[" + client.getUserName() + "]: ");
+				}
+				
 			} catch (Exception ex) {
 				System.out.println("Error reading from server: " + ex.getMessage());
 				ex.printStackTrace();
