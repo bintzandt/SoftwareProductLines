@@ -26,12 +26,15 @@ public class ReadThread extends Thread {
 			System.out.println("Error creating object input stream " + ex.getMessage());
 			ex.printStackTrace();
 		}
-		
+
+		Logger logger = new Logger("spl_client.log");
+
 		while (true) {
 			try {
 				Message m = (Message) ois.readObject();
-	            
+
 				System.out.println("\n" + m.getMessageBody());
+				logger.writeln(m.getPlainMessage());
 
 				// prints the username after displaying the server's message
 				if (client.getUserName() != null) {
@@ -41,7 +44,10 @@ public class ReadThread extends Thread {
 			} catch (Exception ex) {
 				System.out.println("Error reading from server: " + ex.getMessage());
 				ex.printStackTrace();
+				break;
 			}
 		}
+
+		logger.close();
 	}
 }

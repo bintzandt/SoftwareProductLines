@@ -15,6 +15,7 @@ public class Message implements Serializable {
 	public String getMessageBody() {
 		return this.color + this.m + Color.RESET;
 	}
+	public String getPlainMessage() { return this.m; }
 	
 	public Color getColor() {
 		return this.color;

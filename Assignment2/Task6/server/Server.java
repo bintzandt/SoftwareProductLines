@@ -6,9 +6,11 @@ public class Server {
 	private int port;
 	private Set<String> userNames = new HashSet<>();
 	private Set<UserThread> userThreads = new HashSet<>();
+	private Logger logger;
 
 	public Server( int port ){
 		this.port = port;
+		logger = new Logger("spl_server.log");
 	}
 
 	public void execute(){
@@ -43,6 +45,8 @@ public class Server {
 	}
 
 	void broadcast( Message message, UserThread excludeUser ){
+		logger.writeln(message.getPlainMessage());
+
 		for (UserThread user : userThreads){
 			if (user != excludeUser){
 				user.sendMessage(message);
