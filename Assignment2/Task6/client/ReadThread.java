@@ -1,5 +1,10 @@
+import org.fusesource.jansi.AnsiConsole;
+
 import java.io.*;
 import java.net.*;
+
+import static org.fusesource.jansi.Ansi.Color.*;
+import static org.fusesource.jansi.Ansi.ansi;
 
 /**
  * This thread is responsible for reading server's input and printing it
@@ -27,10 +32,13 @@ public class ReadThread extends Thread {
 	}
 
 	public void run() {
+		AnsiConsole.systemInstall();
 		while (true) {
 			try {
 				String response = reader.readLine();
-				System.out.println("\n" + response);
+
+				//System.out.println( ansi().fg(RED).a("Hello").fg(GREEN).a(" World").reset() );
+				System.out.println("\n" + ansi().fg(RED).a(response).reset());
 
 				// prints the username after displaying the server's message
 				if (client.getUserName() != null) {

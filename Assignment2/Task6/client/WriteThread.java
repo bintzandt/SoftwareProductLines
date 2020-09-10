@@ -1,3 +1,5 @@
+import org.fusesource.jansi.AnsiConsole;
+
 import java.io.*;
 import java.net.*;
 
@@ -49,6 +51,8 @@ public class WriteThread extends Thread {
 			writer.println("In " + color + ": " + text);
 
 		} while (!text.equals("bye"));
+
+		AnsiConsole.systemUninstall();
 
 		try {
 			socket.close();
