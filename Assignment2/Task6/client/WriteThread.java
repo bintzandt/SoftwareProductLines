@@ -14,6 +14,7 @@ public class WriteThread extends Thread {
 	private Socket socket;
 	private Client client;
 	private ObjectOutputStream oos;
+	private Color color;
 
 	public WriteThread(Socket socket, Client client) {
 		this.socket = socket;
@@ -39,9 +40,19 @@ public class WriteThread extends Thread {
 		String userName = console.readLine("\nEnter your name: ");
 		client.setUserName(userName);
 
-		String color = console.readLine("\nEnter you text color: ");
+		do {
+			try {
+				String colorString = console.readLine("\nEnter you text color: ").toUpperCase();
+				color = Color.valueOf(colorString);
+			} catch(IllegalArgumentException ex) {
+				System.out.println("Invalid color, please choose one of the following colors: " + Color.getColorOptions());
+				continue;
+			}
+			break;
+		} while(true);
 		
 		try {
+			System.out.println("Read color " + color);
 			Message userNameMessage = new Message(userName, color);
 			oos.writeObject(userNameMessage);
 			System.out.println("Succesfully joined chat server as " + userName);
@@ -55,7 +66,7 @@ public class WriteThread extends Thread {
 		do {
 			text = console.readLine("[" + userName + "]: ");
 			try {
-				m = new Message(text);
+				m = new Message(text, color);
 				oos.writeObject(m);
 			} catch (IOException ex) {
 				System.out.println("Error sending message to server: " + ex.getMessage());

@@ -26,7 +26,7 @@ public class UserThread extends Thread {
 			printUsers(userName);
 			server.addUserName(userNameMessage.getMessageBody());
 			
-			Message serverMessage = new Message("New user connected: " + userName);
+			Message serverMessage = new Message("New user connected: " + userName, Color.RESET);
 			server.broadcast(serverMessage, this);
 
 			String clientMessage;
@@ -36,7 +36,7 @@ public class UserThread extends Thread {
 				clientMessage = m.getMessageBody();
 				
 				
-				serverMessage = new Message("[" + userName + "]: " + clientMessage);
+				serverMessage = new Message("[" + userName + "]: " + clientMessage, m.getColor());
 				server.broadcast(serverMessage, this);
 
 			} while (!clientMessage.equals("bye"));
@@ -44,7 +44,7 @@ public class UserThread extends Thread {
 			server.removeUser(userName, this);
 			socket.close();
 
-			serverMessage = new Message(userName + " has quitted.");
+			serverMessage = new Message(userName + " has quitted.", m.getColor());
 			server.broadcast(serverMessage, this);
 
 		} catch (Exception ex) {
@@ -60,11 +60,13 @@ public class UserThread extends Thread {
 		try {
 			if (server.hasUsers()){
 				this.oos.writeObject(new Message(
-					"Welcome " + userName + ", currently connected users are: " + server.getUserNames()
+					"Welcome " + userName + ", currently connected users are: " + server.getUserNames(),
+					Color.RESET
 				));
 			} else {
 				this.oos.writeObject(new Message(
-					"Welcome " + userName + ", no other users are currently connected"
+					"Welcome " + userName + ", no other users are currently connected",
+					Color.RESET
 				));
 			}
 		} catch (IOException ex) {

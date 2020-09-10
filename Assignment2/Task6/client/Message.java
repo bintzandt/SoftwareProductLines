@@ -4,24 +4,19 @@ public class Message implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private final String color;
+	private final Color color;
 	private final String m;
 	
-	public Message(String m) {
-		this.m = m;
-		this.color = "Black";
-	}
-	
-	public Message(String m, String color) {
+	public Message(String m, Color color) {
 		this.m = m;
 		this.color = color;
 	}
 	
 	public String getMessageBody() {
-		return this.m;
+		return this.color + this.m + Color.RESET;
 	}
 	
-	public String getColor() {
+	public Color getColor() {
 		return this.color;
 	}
 	
