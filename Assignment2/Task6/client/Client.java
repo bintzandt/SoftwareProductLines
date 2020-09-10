@@ -44,7 +44,7 @@ public class Client {
 	}
 
 	Boolean verifyPassword( String password ) {
-		if ( password == this.password ){
+		if ( this.password.equals( password ) ){
 			System.out.println("Password correct, go ahead!");
 			return true;
 		}
