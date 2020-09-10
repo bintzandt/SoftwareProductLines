@@ -1,10 +1,6 @@
-import org.fusesource.jansi.AnsiConsole;
-
-import java.io.*;
-import java.net.*;
-
-import static org.fusesource.jansi.Ansi.Color.*;
-import static org.fusesource.jansi.Ansi.ansi;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.net.Socket;
 
 /**
  * This thread is responsible for reading server's input and printing it
@@ -14,40 +10,37 @@ import static org.fusesource.jansi.Ansi.ansi;
  * @author www.codejava.net
  */
 public class ReadThread extends Thread {
-	private BufferedReader reader;
-	private Socket socket;
-	private Client client;
+	private final Socket socket;
+	private final Client client;
+	private ObjectInputStream ois;
 
 	public ReadThread(Socket socket, Client client) {
 		this.socket = socket;
-		this.client = client;
-
-		try {
-			InputStream input = socket.getInputStream();
-			reader = new BufferedReader(new InputStreamReader(input));
-		} catch (IOException ex) {
-			System.out.println("Error getting input stream: " + ex.getMessage());
-			ex.printStackTrace();
-		}
+		this.client = client;	
 	}
 
 	public void run() {
-		AnsiConsole.systemInstall();
+		try {
+			this.ois = new ObjectInputStream(socket.getInputStream());
+		} catch (IOException ex) {
+			System.out.println("Error creating object input stream " + ex.getMessage());
+			ex.printStackTrace();
+		}
+		
 		while (true) {
 			try {
-				String response = reader.readLine();
-
-				//System.out.println( ansi().fg(RED).a("Hello").fg(GREEN).a(" World").reset() );
-				System.out.println("\n" + ansi().fg(RED).a(response).reset());
+				Message m = (Message) ois.readObject();
+	            
+				System.out.println("\n" + m.getMessageBody());
 
 				// prints the username after displaying the server's message
 				if (client.getUserName() != null) {
 					System.out.print("[" + client.getUserName() + "]: ");
 				}
-			} catch (IOException ex) {
+				
+			} catch (Exception ex) {
 				System.out.println("Error reading from server: " + ex.getMessage());
 				ex.printStackTrace();
-				break;
 			}
 		}
 	}
