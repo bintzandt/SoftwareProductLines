@@ -1,5 +1,7 @@
-import java.io.*;
-import java.net.*;
+import java.io.Console;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 
 /**
  * This thread is responsible for reading user's input and send it
@@ -9,17 +11,16 @@ import java.net.*;
  * @author www.codejava.net
  */
 public class WriteThread extends Thread {
-	private PrintWriter writer;
 	private Socket socket;
 	private Client client;
+	private ObjectOutputStream oos;
 
 	public WriteThread(Socket socket, Client client) {
 		this.socket = socket;
 		this.client = client;
 
 		try {
-			OutputStream output = socket.getOutputStream();
-			writer = new PrintWriter(output, true);
+			oos = new ObjectOutputStream(socket.getOutputStream());
 		} catch (IOException ex) {
 			System.out.println("Error getting output stream: " + ex.getMessage());
 			ex.printStackTrace();
@@ -40,13 +41,26 @@ public class WriteThread extends Thread {
 
 		String color = console.readLine("\nEnter you text color: ");
 		
-		writer.println(userName);
+		try {
+			Message userNameMessage = new Message(userName, color);
+			oos.writeObject(userNameMessage);
+			System.out.println("Succesfully joined chat server as " + userName);
+		} catch (IOException ex) {
+			System.out.println("Error sending username message to server: " + ex.getMessage());
+			ex.printStackTrace();
+		}
 
 		String text;
-
+		Message m;
 		do {
 			text = console.readLine("[" + userName + "]: ");
-			writer.println("In " + color + ": " + text);
+			try {
+				m = new Message(text);
+				oos.writeObject(m);
+			} catch (IOException ex) {
+				System.out.println("Error sending message to server: " + ex.getMessage());
+				ex.printStackTrace();
+			}
 
 		} while (!text.equals("bye"));
 

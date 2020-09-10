@@ -1,5 +1,6 @@
-import java.io.*;
-import java.net.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.net.Socket;
 
 /**
  * This thread is responsible for reading server's input and printing it
@@ -9,37 +10,28 @@ import java.net.*;
  * @author www.codejava.net
  */
 public class ReadThread extends Thread {
-	private BufferedReader reader;
-	private Socket socket;
-	private Client client;
+	private final Socket socket;
+	private ObjectInputStream ois;
 
-	public ReadThread(Socket socket, Client client) {
+	public ReadThread(Socket socket) {
 		this.socket = socket;
-		this.client = client;
-
-		try {
-			InputStream input = socket.getInputStream();
-			reader = new BufferedReader(new InputStreamReader(input));
-		} catch (IOException ex) {
-			System.out.println("Error getting input stream: " + ex.getMessage());
-			ex.printStackTrace();
-		}
 	}
 
 	public void run() {
+		try {
+			this.ois = new ObjectInputStream(socket.getInputStream());
+		} catch (IOException ex) {
+			System.out.println("Error creating object input stream " + ex.getMessage());
+			ex.printStackTrace();
+		}
+		
 		while (true) {
 			try {
-				String response = reader.readLine();
-				System.out.println("\n" + response);
-
-				// prints the username after displaying the server's message
-				if (client.getUserName() != null) {
-					System.out.print("[" + client.getUserName() + "]: ");
-				}
-			} catch (IOException ex) {
+				Message m = (Message) ois.readObject();
+	            System.out.println(m.getMessageBody());
+			} catch (Exception ex) {
 				System.out.println("Error reading from server: " + ex.getMessage());
 				ex.printStackTrace();
-				break;
 			}
 		}
 	}

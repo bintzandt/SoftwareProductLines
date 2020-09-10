@@ -42,7 +42,7 @@ public class Server {
 		server.execute();
 	}
 
-	void broadcast( String message, UserThread excludeUser ){
+	void broadcast( Message message, UserThread excludeUser ){
 		for (UserThread user : userThreads){
 			if (user != excludeUser){
 				user.sendMessage(message);

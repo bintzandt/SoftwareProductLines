@@ -1,11 +1,12 @@
 import java.io.*;
 import java.net.*;
-import java.util.*;
+
 
 public class UserThread extends Thread {
 	private Socket socket;
 	private Server server;
-	private PrintWriter writer;
+	private ObjectInputStream ois;
+	private ObjectOutputStream oos;
 
 	public UserThread(Socket socket, Server server) {
 		this.socket = socket;
@@ -14,25 +15,26 @@ public class UserThread extends Thread {
 
 	public void run() {
 		try {
-			InputStream input = socket.getInputStream();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+			this.ois = new ObjectInputStream(socket.getInputStream());
+			this.oos = new ObjectOutputStream(socket.getOutputStream());
 
-			OutputStream output = socket.getOutputStream();
-			writer = new PrintWriter(output, true);
-
-			printUsers();
-
-			String userName = reader.readLine();
-			server.addUserName(userName);
+			Message userNameMessage = (Message) ois.readObject();
+			String userName = userNameMessage.getMessageBody();
 			
-			String serverMessage = "New user connected: " + userName;
+			printUsers(userName);
+			server.addUserName(userNameMessage.getMessageBody());
+			
+			Message serverMessage = new Message("New user connected: " + userName);
 			server.broadcast(serverMessage, this);
 
 			String clientMessage;
-
-			do {
-				clientMessage = reader.readLine();
-				serverMessage = "[" + userName + "]: " + clientMessage;
+			Message m;
+			do {				
+				m = (Message) ois.readObject();
+				clientMessage = m.getMessageBody();
+				
+				
+				serverMessage = new Message("[" + userName + "]: " + clientMessage);
 				server.broadcast(serverMessage, this);
 
 			} while (!clientMessage.equals("bye"));
@@ -40,27 +42,45 @@ public class UserThread extends Thread {
 			server.removeUser(userName, this);
 			socket.close();
 
-			serverMessage = userName + " has quitted.";
+			serverMessage = new Message(userName + " has quitted.");
 			server.broadcast(serverMessage, this);
 
-		} catch (IOException ex) {
+		} catch (Exception ex) {
 			System.out.println("Error in UserThread: " + ex.getMessage());
 			ex.printStackTrace();
 		}
 	}
 
-	void printUsers(){
-		if (server.hasUsers()){
-			writer.println("Connected users: " + server.getUserNames());
-		} else {
-			writer.println("No other users connected");
+	/**
+	 * Sends all currently connected users to the new user
+	 */
+	void printUsers(String userName){
+		try {
+			if (server.hasUsers()){
+				this.oos.writeObject(new Message(
+					"Welcome " + userName + ", currently connected users are: " + server.getUserNames()
+				));
+			} else {
+				this.oos.writeObject(new Message(
+					"Welcome " + userName + ", no other users are currently connected"
+				));
+			}
+		} catch (IOException ex) {
+			System.out.println("Error sending connected users to new user: " + ex.getMessage());
+			ex.printStackTrace();
 		}
+		
 	}
 
 	/**
 	 * Sends a message to the client.
 	 */
-	void sendMessage(String message) {
-		writer.println(message);
+	void sendMessage(Message message) {
+		try {
+			this.oos.writeObject(message);
+		} catch (IOException ex) {
+			System.out.println("Error sending message to user: " + ex.getMessage());
+			ex.printStackTrace();
+		}
 	}
 }

@@ -2,6 +2,7 @@ import java.net.*;
 import java.io.*;
 
 /**
+ * To run the client in a command prompt use: javac Client.java & java Client localhost 8080
  * This is the chat client program.
  * Type 'bye' to terminte the program.
  *
@@ -21,11 +22,13 @@ public class Client {
 	public void execute() {
 		try {
 			Socket socket = new Socket(hostname, port);
-
 			System.out.println("Connected to the chat server");
 
-			new ReadThread(socket, this).start();
+			new ReadThread(socket).start();
+			System.out.println("Reader started");
+			System.out.flush();
 			new WriteThread(socket, this).start();
+			System.out.println("Writer started");
 
 		} catch (UnknownHostException ex) {
 			System.out.println("Server not found: " + ex.getMessage());
