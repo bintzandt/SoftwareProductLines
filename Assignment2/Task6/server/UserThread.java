@@ -5,6 +5,8 @@ import java.net.Socket;
 
 
 public class UserThread extends Thread {
+	private final String serverPassword = "SUPERSECRET";
+
 	private Socket socket;
 	private Server server;
 	private ObjectInputStream ois;
@@ -20,31 +22,55 @@ public class UserThread extends Thread {
 			this.ois = new ObjectInputStream(socket.getInputStream());
 			this.oos = new ObjectOutputStream(socket.getOutputStream());
 
-			Message userNameMessage = (Message) ois.readObject();
-			String userName = userNameMessage.getMessageBody();
+			boolean authenticated = false;
+			String userName = "";
+			do {
+				Message userNameMessage = (Message) ois.readObject();
+				if (LoginMessage.class.isInstance(userNameMessage)) {
+					LoginMessage lm = (LoginMessage) userNameMessage;
+					userName = lm.getUsername();
+					String password = lm.getPassword();
+
+					if (password.equals(serverPassword)) {
+						authenticated = true;
+					} else {
+						System.out.println("User " + userName + " attempted login with incorrect password");
+						sendMessage(new ChatMessage("Incorrect password! Please reconnect, connection closed.", Color.RED));
+						socket.close();
+						return;
+					}
+				}
+			} while (!authenticated);
 			
 			printUsers(userName);
-			server.addUserName(userNameMessage.getMessageBody());
+			server.addUserName(userName);
 			
-			Message serverMessage = new Message("New user connected: " + userName, Color.RESET);
+			Message serverMessage = new ChatMessage("New user connected: " + userName, Color.YELLOW);
 			server.broadcast(serverMessage, this);
 
 			String clientMessage;
 			Message m;
-			do {				
+			boolean saidBye = false;
+			do {
 				m = (Message) ois.readObject();
-				clientMessage = m.getMessageBody();
-				
-				
-				serverMessage = new Message("[" + userName + "]: " + clientMessage, m.getColor());
-				server.broadcast(serverMessage, this);
+				if (ChatMessage.class.isInstance(m)) {
+					ChatMessage cm = (ChatMessage) m;
+					clientMessage = cm.getMessageBody();
 
-			} while (!clientMessage.equals("bye"));
+					serverMessage = new ChatMessage("[" + userName + "]: " + clientMessage, cm.getColor());
+					server.broadcast(serverMessage, this);
+
+					if (clientMessage.equals("bye")) {
+						saidBye = true;
+					}
+				}
+
+			} while (!saidBye);
 
 			server.removeUser(userName, this);
 			socket.close();
 
-			serverMessage = new Message(userName + " has quitted.", m.getColor());
+			serverMessage = new ChatMessage(userName + " has quitted.", Color.YELLOW);
 			server.broadcast(serverMessage, this);
 
 		} catch (Exception ex) {
@@ -59,14 +85,14 @@ public class UserThread extends Thread {
 	void printUsers(String userName){
 		try {
 			if (server.hasUsers()){
-				this.oos.writeObject(new Message(
+				this.oos.writeObject(new ChatMessage(
 					"Welcome " + userName + ", currently connected users are: " + server.getUserNames(),
-					Color.RESET
+					Color.YELLOW
 				));
 			} else {
-				this.oos.writeObject(new Message(
+				this.oos.writeObject(new ChatMessage(
 					"Welcome " + userName + ", no other users are currently connected",
-					Color.RESET
+					Color.YELLOW
 				));
 			}
 		} catch (IOException ex) {

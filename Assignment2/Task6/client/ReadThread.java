@@ -33,8 +33,12 @@ public class ReadThread extends Thread {
 			try {
 				Message m = (Message) ois.readObject();
 
-				System.out.println("\n" + m.getMessageBody());
-				logger.writeln(m.getPlainMessage());
+				if (ChatMessage.class.isInstance(m)) {
+					ChatMessage cm = (ChatMessage) m;
+
+					System.out.println("\n" + cm.getMessageBody());
+					logger.writeln(cm.getPlainMessage());
+				}
 
 				// prints the username after displaying the server's message
 				if (client.getUserName() != null) {

@@ -13,7 +13,6 @@ public class Client {
 	private String hostname;
 	private int port;
 	private String userName;
-	private final String password = "SUPERSECRET";
 
 	public Client(String hostname, int port) {
 		this.hostname = hostname;
@@ -45,16 +44,6 @@ public class Client {
 
 	String getUserName() {
 		return this.userName;
-	}
-
-	Boolean verifyPassword( String password ) {
-		if ( this.password.equals( password ) ){
-			System.out.println("Password correct, go ahead!");
-			return true;
-		}
-
-		System.out.println("\nPassword incorrect, try again!");
-		return false;
 	}
 
 

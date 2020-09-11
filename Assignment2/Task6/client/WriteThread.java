@@ -31,11 +31,6 @@ public class WriteThread extends Thread {
 	public void run() {
 
 		Console console = System.console();
-		String secret = "";
-
-		do {
-			secret = console.readLine("\nEnter the secret password: ");
-		} while ( ! client.verifyPassword( secret ) );
 
 		String userName = console.readLine("\nEnter your name: ");
 		client.setUserName(userName);
@@ -50,15 +45,19 @@ public class WriteThread extends Thread {
 			}
 			break;
 		} while(true);
-		
+		System.out.println("Read color " + color);
+
 		try {
-			System.out.println("Read color " + color);
-			Message userNameMessage = new Message(userName, color);
-			oos.writeObject(userNameMessage);
-			System.out.println("Succesfully joined chat server as " + userName);
+			String secret = console.readLine("\nEnter the secret password: ");
+
+			Message loginMessage = new LoginMessage(userName, secret);
+			oos.writeObject(loginMessage);
+
+			System.out.println("Joining the chat server as " + userName);
 		} catch (IOException ex) {
-			System.out.println("Error sending username message to server: " + ex.getMessage());
+			System.out.println("Error sending login message to server: " + ex.getMessage());
 			ex.printStackTrace();
+			return; // Disconnect?
 		}
 
 		String text;
@@ -66,7 +65,7 @@ public class WriteThread extends Thread {
 		do {
 			text = console.readLine("[" + userName + "]: ");
 			try {
-				m = new Message(text, color);
+				m = new ChatMessage(text, color);
 				oos.writeObject(m);
 			} catch (IOException ex) {
 				System.out.println("Error sending message to server: " + ex.getMessage());

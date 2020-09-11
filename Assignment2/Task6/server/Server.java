@@ -45,7 +45,10 @@ public class Server {
 	}
 
 	void broadcast( Message message, UserThread excludeUser ){
-		logger.writeln(message.getPlainMessage());
+		if (ChatMessage.class.isInstance(message)) {
+			ChatMessage cm = (ChatMessage) message;
+			logger.writeln(cm.getPlainMessage());
+		}
 
 		for (UserThread user : userThreads){
 			if (user != excludeUser){
