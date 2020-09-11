@@ -35,7 +35,7 @@ public class UserThread extends Thread {
 						authenticated = true;
 					} else {
 						System.out.println("User " + userName + " attempted login with incorrect password");
-						sendMessage(new ChatMessage("Incorrect password! Please reconnect, connection closed.", Color.RED));
+						sendMessage(new ChatMessage("Server", "Incorrect password! Please reconnect, connection closed.", Color.RED));
 						socket.close();
 						return;
 					}
@@ -45,7 +45,7 @@ public class UserThread extends Thread {
 			printUsers(userName);
 			server.addUserName(userName);
 			
-			Message serverMessage = new ChatMessage("New user connected: " + userName, Color.YELLOW);
+			Message serverMessage = new ChatMessage("Server", "New user connected: " + userName, Color.YELLOW);
 			server.broadcast(serverMessage, this);
 
 			String clientMessage;
@@ -53,12 +53,19 @@ public class UserThread extends Thread {
 			boolean saidBye = false;
 			do {
 				m = (Message) ois.readObject();
-				if (ChatMessage.class.isInstance(m)) {
-					ChatMessage cm = (ChatMessage) m;
+				if (ChatMessage.class.isInstance(m) || ChatEncryptedMessage.class.isInstance(m)) {
+					// Is message or encrypted message
+					ChatMessage cm;
+					if (ChatEncryptedMessage.class.isInstance(m)) {
+						// Shhhhh, it's end-to-end encrypted I promise
+						cm = ((ChatEncryptedMessage) m).decrypt();
+					} else {
+						cm = (ChatMessage) m;
+					}
 					clientMessage = cm.getMessageBody();
 
-					serverMessage = new ChatMessage("[" + userName + "]: " + clientMessage, cm.getColor());
-					server.broadcast(serverMessage, this);
+					// Broadcast the original message
+					server.broadcast(m, this);
 
 					if (clientMessage.equals("bye")) {
 						saidBye = true;
@@ -70,7 +77,7 @@ public class UserThread extends Thread {
 			server.removeUser(userName, this);
 			socket.close();
 
-			serverMessage = new ChatMessage(userName + " has quitted.", Color.YELLOW);
+			serverMessage = new ChatMessage("Server", userName + " has quitted.", Color.YELLOW);
 			server.broadcast(serverMessage, this);
 
 		} catch (Exception ex) {
@@ -86,11 +93,13 @@ public class UserThread extends Thread {
 		try {
 			if (server.hasUsers()){
 				this.oos.writeObject(new ChatMessage(
+						"Server",
 					"Welcome " + userName + ", currently connected users are: " + server.getUserNames(),
 					Color.YELLOW
 				));
 			} else {
 				this.oos.writeObject(new ChatMessage(
+						"Server",
 					"Welcome " + userName + ", no other users are currently connected",
 					Color.YELLOW
 				));

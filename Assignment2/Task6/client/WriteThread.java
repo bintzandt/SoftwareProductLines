@@ -65,7 +65,7 @@ public class WriteThread extends Thread {
 		do {
 			text = console.readLine("[" + userName + "]: ");
 			try {
-				m = new ChatMessage(text, color);
+				m = new ChatEncryptedMessage(userName, text, color);
 				oos.writeObject(m);
 			} catch (IOException ex) {
 				System.out.println("Error sending message to server: " + ex.getMessage());
