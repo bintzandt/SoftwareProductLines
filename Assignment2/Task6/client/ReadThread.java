@@ -12,11 +12,13 @@ import java.net.Socket;
 public class ReadThread extends Thread {
 	private final Socket socket;
 	private final Client client;
+	private final Logger logger;
 	private ObjectInputStream ois;
 
 	public ReadThread(Socket socket, Client client) {
 		this.socket = socket;
-		this.client = client;	
+		this.client = client;
+		this.logger = new Logger("spl_client.log");
 	}
 
 	public void run() {
@@ -26,8 +28,6 @@ public class ReadThread extends Thread {
 			System.out.println("Error creating object input stream " + ex.getMessage());
 			ex.printStackTrace();
 		}
-
-		Logger logger = new Logger("spl_client.log");
 
 		while (true) {
 			try {
@@ -39,7 +39,7 @@ public class ReadThread extends Thread {
 					System.out.println("\n" + cm.getMessageBody());
 					logger.writeln(cm.getPlainMessage());
 				} else if (ChatEncryptedMessage.class.isInstance(m)) {
-					ChatMessage cm = ((ChatEncryptedMessage) m).decrypt();
+					ChatMessage cm = ((ChatEncryptedMessage) m).getDecryptedMessage();
 
 					System.out.println("\n" + cm.getMessageBody());
 					logger.writeln(cm.getPlainMessage());
