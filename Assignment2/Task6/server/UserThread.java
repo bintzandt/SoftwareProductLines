@@ -48,29 +48,27 @@ public class UserThread extends Thread {
 			Message serverMessage = new ChatMessage("Server", "New user connected: " + userName, Color.YELLOW);
 			server.broadcast(serverMessage, this);
 
-			String clientMessage;
+			String clientMessage = "";
 			Message m;
 			boolean saidBye = false;
 			do {
 				m = (Message) ois.readObject();
-				if (ChatMessage.class.isInstance(m) || ChatEncryptedMessage.class.isInstance(m)) {
-					// Is message or encrypted message
-					ChatMessage cm;
-					if (ChatEncryptedMessage.class.isInstance(m)) {
-						// Shhhhh, it's end-to-end encrypted I promise
-						cm = ((ChatEncryptedMessage) m).decrypt();
-					} else {
-						cm = (ChatMessage) m;
-					}
-					clientMessage = cm.getMessageBody();
-
-					// Broadcast the original message
-					server.broadcast(m, this);
-
-					if (clientMessage.equals("bye")) {
-						saidBye = true;
-					}
+				if (ChatMessage.class.isInstance(m)) {
+					clientMessage = ((ChatMessage) m).getMessageBody();
 				}
+				
+				if (ChatEncryptedMessage.class.isInstance(m)) {
+					clientMessage = ((ChatEncryptedMessage) m).getDecryptedMessage().getMessageBody();
+				}
+				
+
+				// Broadcast the original message
+				server.broadcast(m, this);
+
+				if (clientMessage.equals("bye")) {
+					saidBye = true;
+				}
+
 
 			} while (!saidBye);
 

@@ -45,7 +45,7 @@ public class WriteThread extends Thread {
 			}
 			break;
 		} while(true);
-		System.out.println("Read color " + color);
+		System.out.println("You chose " + color.name() + ", all messages you send will be displayed in this color!");
 
 		try {
 			String secret = console.readLine("\nEnter the secret password: ");

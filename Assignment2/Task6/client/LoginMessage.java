@@ -1,5 +1,5 @@
 public class LoginMessage extends Message {
-    /**
+	/**
      * Sent by a client who wants to connect to the server
      */
     private final String username;
@@ -10,6 +10,11 @@ public class LoginMessage extends Message {
         this.password = password;
     }
 
-    public String getUsername() { return username; }
-    public String getPassword() { return password; }
+    public String getUsername() {
+    	return username;
+	}
+    
+    public String getPassword() {
+    	return password;
+	}
 }

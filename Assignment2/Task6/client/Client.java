@@ -3,7 +3,8 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 /**
- * To run the client in a command prompt use: javac Client.java & java Client localhost 8080
+ * To run the client in a command prompt use (in root directory):
+ * 	javac client/*.java server/*.java & java -cp client Client localhost 8080
  * This is the chat client program.
  * Type 'bye' to terminte the program.
  *
