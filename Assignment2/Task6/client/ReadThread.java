@@ -33,12 +33,12 @@ public class ReadThread extends Thread {
 			try {
 				Message m = (Message) ois.readObject();
 
-				if (ChatMessage.class.isInstance(m)) {
+				if (m instanceof ChatMessage) {
 					ChatMessage cm = (ChatMessage) m;
 
 					System.out.println("\n" + cm.getMessageBody());
 					logger.writeln(cm.getPlainMessage());
-				} else if (ChatEncryptedMessage.class.isInstance(m)) {
+				} else if (m instanceof ChatEncryptedMessage) {
 					ChatMessage cm = ((ChatEncryptedMessage) m).getDecryptedMessage();
 
 					System.out.println("\n" + cm.getMessageBody());
@@ -49,7 +49,7 @@ public class ReadThread extends Thread {
 				if (client.getUserName() != null) {
 					System.out.print("[" + client.getUserName() + "]: ");
 				}
-				
+
 			} catch (Exception ex) {
 				System.out.println("Error reading from server: " + ex.getMessage());
 				ex.printStackTrace();

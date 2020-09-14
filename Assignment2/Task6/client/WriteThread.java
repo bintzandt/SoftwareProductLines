@@ -39,12 +39,12 @@ public class WriteThread extends Thread {
 			try {
 				String colorString = console.readLine("\nEnter you text color: ").toUpperCase();
 				color = Color.valueOf(colorString);
-			} catch(IllegalArgumentException ex) {
+			} catch (IllegalArgumentException ex) {
 				System.out.println("Invalid color, please choose one of the following colors: " + Color.getColorOptions());
 				continue;
 			}
 			break;
-		} while(true);
+		} while (true);
 		System.out.println("You chose " + color.name() + ", all messages you send will be displayed in this color!");
 
 		try {

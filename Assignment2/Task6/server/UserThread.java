@@ -26,7 +26,7 @@ public class UserThread extends Thread {
 			String userName = "";
 			do {
 				Message userNameMessage = (Message) ois.readObject();
-				if (LoginMessage.class.isInstance(userNameMessage)) {
+				if (userNameMessage instanceof LoginMessage) {
 					LoginMessage lm = (LoginMessage) userNameMessage;
 					userName = lm.getUsername();
 					String password = lm.getPassword();
@@ -41,10 +41,10 @@ public class UserThread extends Thread {
 					}
 				}
 			} while (!authenticated);
-			
+
 			printUsers(userName);
 			server.addUserName(userName);
-			
+
 			Message serverMessage = new ChatMessage("Server", "New user connected: " + userName, Color.YELLOW);
 			server.broadcast(serverMessage, this);
 
@@ -53,14 +53,15 @@ public class UserThread extends Thread {
 			boolean saidBye = false;
 			do {
 				m = (Message) ois.readObject();
-				if (ChatMessage.class.isInstance(m)) {
+				if (m instanceof ChatMessage) {
 					clientMessage = ((ChatMessage) m).getMessageBody();
 				}
-				
-				if (ChatEncryptedMessage.class.isInstance(m)) {
+
+				if (m instanceof ChatEncryptedMessage) {
+					// Shhhhh, it's end-to-end encrypted I promise
 					clientMessage = ((ChatEncryptedMessage) m).getDecryptedMessage().getMessageBody();
 				}
-				
+
 
 				// Broadcast the original message
 				server.broadcast(m, this);
@@ -87,26 +88,26 @@ public class UserThread extends Thread {
 	/**
 	 * Sends all currently connected users to the new user
 	 */
-	void printUsers(String userName){
+	void printUsers(String userName) {
 		try {
-			if (server.hasUsers()){
+			if (server.hasUsers()) {
 				this.oos.writeObject(new ChatMessage(
 						"Server",
-					"Welcome " + userName + ", currently connected users are: " + server.getUserNames(),
-					Color.YELLOW
+						"Welcome " + userName + ", currently connected users are: " + server.getUserNames(),
+						Color.YELLOW
 				));
 			} else {
 				this.oos.writeObject(new ChatMessage(
 						"Server",
-					"Welcome " + userName + ", no other users are currently connected",
-					Color.YELLOW
+						"Welcome " + userName + ", no other users are currently connected",
+						Color.YELLOW
 				));
 			}
 		} catch (IOException ex) {
 			System.out.println("Error sending connected users to new user: " + ex.getMessage());
 			ex.printStackTrace();
 		}
-		
+
 	}
 
 	/**

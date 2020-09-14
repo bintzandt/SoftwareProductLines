@@ -8,25 +8,25 @@ public class Server {
 	private Set<UserThread> userThreads = new HashSet<>();
 	private Logger logger;
 
-	public Server( int port ){
+	public Server(int port) {
 		this.port = port;
 		logger = new Logger("spl_server.log");
 	}
 
-	public void execute(){
-		try (ServerSocket serverSocket = new ServerSocket( this.port ) ){
-			System.out.println("Server is listening on port " + this.port );
+	public void execute() {
+		try (ServerSocket serverSocket = new ServerSocket(this.port)) {
+			System.out.println("Server is listening on port " + this.port);
 
 			// Keep listening for new clients.
-			while( true ){
+			while (true) {
 				Socket socket = serverSocket.accept();
 				System.out.println("New user connected!");
 
 				UserThread newUser = new UserThread(socket, this);
-				userThreads.add( newUser );
+				userThreads.add(newUser);
 				newUser.start();
 			}
-		} catch( IOException ex ){
+		} catch (IOException ex) {
 			System.out.println("Error in the server: " + ex.getMessage());
 			ex.printStackTrace();
 		}
@@ -37,33 +37,33 @@ public class Server {
 			System.out.println("Syntax: java Server <port-number>");
 			System.exit(0);
 		}
- 
+
 		int port = Integer.parseInt(args[0]);
- 
+
 		Server server = new Server(port);
 		server.execute();
 	}
 
-	void broadcast( Message message, UserThread excludeUser ){
-		if (ChatMessage.class.isInstance(message)) {
+	void broadcast(Message message, UserThread excludeUser) {
+		if (message instanceof ChatMessage) {
 			ChatMessage cm = (ChatMessage) message;
 			logger.writeln(cm.getPlainMessage());
 		}
 
-		for (UserThread user : userThreads){
-			if (user != excludeUser){
+		for (UserThread user : userThreads) {
+			if (user != excludeUser) {
 				user.sendMessage(message);
 			}
 		}
 	}
 
-	void addUserName( String userName ){
+	void addUserName(String userName) {
 		userNames.add(userName);
 	}
 
-	void removeUser( String userName, UserThread user){
+	void removeUser(String userName, UserThread user) {
 		boolean removed = userNames.remove(userName);
-		if (removed){
+		if (removed) {
 			userThreads.remove(user);
 			System.out.println("The user " + userName + " has quitted");
 		}
@@ -73,8 +73,8 @@ public class Server {
 		return this.userNames;
 	}
 
-	boolean hasUsers(){
-		return ! this.userNames.isEmpty();
+	boolean hasUsers() {
+		return !this.userNames.isEmpty();
 	}
 
 }
