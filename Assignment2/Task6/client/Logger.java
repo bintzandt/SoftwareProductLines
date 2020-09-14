@@ -25,6 +25,7 @@ public class Logger {
 	public void writeln(String string) {
 		if (!available) return;
 		writer.println(getDateTime() + " - " + string);
+		writer.flush();
 	}
 
 	public void close() {

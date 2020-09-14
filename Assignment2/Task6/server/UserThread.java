@@ -54,17 +54,21 @@ public class UserThread extends Thread {
 			do {
 				m = (Message) ois.readObject();
 				if (m instanceof ChatMessage) {
-					clientMessage = ((ChatMessage) m).getMessageBody();
+					clientMessage = ((ChatMessage) m).getPlainMessage();
 				}
 
 				if (m instanceof ChatEncryptedMessage) {
 					// Shhhhh, it's end-to-end encrypted I promise
-					clientMessage = ((ChatEncryptedMessage) m).getDecryptedMessage().getMessageBody();
+					clientMessage = ((ChatEncryptedMessage) m).getDecryptedMessage().getPlainMessage();
 				}
 
 
 				// Broadcast the original message
 				server.broadcast(m, this);
+
+				// Log the message server-side as well
+				server.log(clientMessage);
+
 
 				if (clientMessage.equals("bye")) {
 					saidBye = true;
