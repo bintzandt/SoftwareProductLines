@@ -28,6 +28,28 @@ public class WriteThread extends Thread {
 		}
 	}
 
+	private void handleCommand(String text) {
+		String[] words = text.split("\\s+");
+
+		if (words[0].equals("/config")) {
+			if (words.length < 3) {
+				System.out.print(
+						"Current configuration:\n"
+						+ "colors = " + Config.COLORED_MESSAGES + "\n"
+						+ "send_username = " + Config.SEND_MY_USERNAME + "\n"
+				);
+			} else {
+				boolean value = Boolean.parseBoolean(words[2]);
+				if (words[1].equals("colors")) {
+					Config.COLORED_MESSAGES = value;
+				} else if (words[1].equals("send_username")) {
+					Config.SEND_MY_USERNAME = value;
+				}
+				System.out.println("Config " + words[1] + " set to " + value);
+			}
+		}
+	}
+
 	public void run() {
 
 		Console console = System.console();
@@ -62,16 +84,19 @@ public class WriteThread extends Thread {
 
 		String text;
 		Message m;
-		String usernameToSend = Config.SHOW_USERNAMES ? userName : "anonomous";
+		String usernameToSend = Config.SEND_MY_USERNAME ? userName : "anonymous";
 		do {
 			text = console.readLine("[" + userName + "]: ");
-			try {
-				
-				m = new ChatEncryptedMessage(usernameToSend, text, color);
-				oos.writeObject(m);
-			} catch (IOException ex) {
-				System.out.println("Error sending message to server: " + ex.getMessage());
-				ex.printStackTrace();
+			if (text.startsWith("/")) {
+				handleCommand(text);
+			} else {
+				try {
+					m = new ChatEncryptedMessage(usernameToSend, text, color);
+					oos.writeObject(m);
+				} catch (IOException ex) {
+					System.out.println("Error sending message to server: " + ex.getMessage());
+					ex.printStackTrace();
+				}
 			}
 
 		} while (!text.equals("bye"));
