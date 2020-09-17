@@ -50,7 +50,7 @@ public class WriteThread extends Thread {
 		try {
 			String secret = console.readLine("\nEnter the secret password: ");
 
-			Message loginMessage = new LoginMessage(userName, secret);
+			LoginMessage loginMessage = new LoginMessage(userName, secret);
 			oos.writeObject(loginMessage);
 
 			System.out.println("Joining the chat server as " + userName);
@@ -62,10 +62,12 @@ public class WriteThread extends Thread {
 
 		String text;
 		Message m;
+		String usernameToSend = Config.SHOW_USERNAMES ? userName : "anonomous";
 		do {
 			text = console.readLine("[" + userName + "]: ");
 			try {
-				m = new ChatEncryptedMessage(userName, text, color);
+				
+				m = new ChatEncryptedMessage(usernameToSend, text, color);
 				oos.writeObject(m);
 			} catch (IOException ex) {
 				System.out.println("Error sending message to server: " + ex.getMessage());

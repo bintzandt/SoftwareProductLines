@@ -1,4 +1,8 @@
-public class LoginMessage extends Message {
+import java.io.Serializable;
+
+public class LoginMessage implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Sent by a client who wants to connect to the server
 	 */

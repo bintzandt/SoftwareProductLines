@@ -25,7 +25,7 @@ public class UserThread extends Thread {
 			boolean authenticated = false;
 			String userName = "";
 			do {
-				Message userNameMessage = (Message) ois.readObject();
+				LoginMessage userNameMessage = (LoginMessage) ois.readObject();
 				if (userNameMessage instanceof LoginMessage) {
 					LoginMessage lm = (LoginMessage) userNameMessage;
 					userName = lm.getUsername();
