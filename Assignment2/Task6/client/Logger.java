@@ -6,8 +6,9 @@ public class Logger {
 	private String filepath;
 	private PrintWriter writer;
 	private boolean available = false;
+	private boolean enabled;
 
-	public Logger(String filename) {
+	public Logger(String filename, boolean enabled) {
 		this.filepath = System.getProperty("user.home") + "/" + filename;
 		try {
 			writer = new PrintWriter(new FileWriter(filepath, true));
@@ -16,6 +17,11 @@ public class Logger {
 		} catch (IOException e) {
 			System.out.println("Logging to " + filepath + " not available!");
 		}
+		this.enabled = enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	private String getDateTime() {
@@ -24,6 +30,7 @@ public class Logger {
 
 	public void writeln(String string) {
 		if (!available) return;
+		if (!enabled) return;
 		writer.println(getDateTime() + " - " + string);
 		writer.flush();
 	}

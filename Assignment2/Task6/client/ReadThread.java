@@ -12,13 +12,11 @@ import java.net.Socket;
 public class ReadThread extends Thread {
 	private final Socket socket;
 	private final Client client;
-	private final Logger logger;
 	private ObjectInputStream ois;
 
 	public ReadThread(Socket socket, Client client) {
 		this.socket = socket;
 		this.client = client;
-		this.logger = new Logger("spl_client.log");
 	}
 
 	public void run() {
@@ -37,12 +35,12 @@ public class ReadThread extends Thread {
 					ChatMessage cm = (ChatMessage) m;
 
 					System.out.println("\n" + cm.getMessageBody());
-					logger.writeln(cm.getPlainMessage());
+					client.getLogger().writeln(cm.getPlainMessage());
 				} else if (m instanceof ChatEncryptedMessage) {
 					ChatMessage cm = ((ChatEncryptedMessage) m).getDecryptedMessage();
 
 					System.out.println("\n" + cm.getMessageBody());
-					logger.writeln(cm.getPlainMessage());
+					client.getLogger().writeln(cm.getPlainMessage());
 				}
 
 				// prints the username after displaying the server's message
@@ -57,6 +55,6 @@ public class ReadThread extends Thread {
 			}
 		}
 
-		logger.close();
+		client.getLogger().close();
 	}
 }

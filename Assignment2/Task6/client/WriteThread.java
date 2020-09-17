@@ -37,15 +37,26 @@ public class WriteThread extends Thread {
 						"Current configuration:\n"
 						+ "colors = " + Config.COLORED_MESSAGES + "\n"
 						+ "send_username = " + Config.SEND_MY_USERNAME + "\n"
+						+ "chatlog = " + Config.USER_CHATLOG + "\n"
 				);
 			} else {
 				boolean value = Boolean.parseBoolean(words[2]);
+				boolean recognized = true;
+
 				if (words[1].equals("colors")) {
 					Config.COLORED_MESSAGES = value;
 				} else if (words[1].equals("send_username")) {
 					Config.SEND_MY_USERNAME = value;
+				} else if (words[1].equals("chatlog")) {
+					Config.USER_CHATLOG = value;
+					client.getLogger().setEnabled(value);
+				} else {
+					System.out.println("ERROR: Config " + words[1] + " not recognized! Try /config");
+					recognized = false;
 				}
-				System.out.println("Config " + words[1] + " set to " + value);
+				if (recognized) {
+					System.out.println("Config " + words[1] + " set to " + value);
+				}
 			}
 		}
 	}

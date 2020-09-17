@@ -14,10 +14,12 @@ public class Client {
 	private String hostname;
 	private int port;
 	private String userName;
+	private Logger logger;
 
 	public Client(String hostname, int port) {
 		this.hostname = hostname;
 		this.port = port;
+		this.logger = new Logger("spl_client.log", Config.USER_CHATLOG);
 	}
 
 	public void execute() {
@@ -43,8 +45,12 @@ public class Client {
 		this.userName = userName;
 	}
 
-	String getUserName() {
+	public String getUserName() {
 		return this.userName;
+	}
+
+	public Logger getLogger() {
+		return logger;
 	}
 
 

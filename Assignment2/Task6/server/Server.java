@@ -10,7 +10,7 @@ public class Server {
 
 	public Server(int port) {
 		this.port = port;
-		logger = new Logger("spl_server.log");
+		logger = new Logger("spl_server.log", Config.SERVER_CHATLOG);
 	}
 
 	public void execute() {
