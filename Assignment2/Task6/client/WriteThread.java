@@ -84,12 +84,12 @@ public class WriteThread extends Thread {
 
 		String text;
 		Message m;
-		String usernameToSend = Config.SEND_MY_USERNAME ? userName : "anonymous";
 		do {
 			text = console.readLine("[" + userName + "]: ");
 			if (text.startsWith("/")) {
 				handleCommand(text);
 			} else {
+				String usernameToSend = Config.SEND_MY_USERNAME ? userName : "anonymous";
 				try {
 					m = new ChatEncryptedMessage(usernameToSend, text, color);
 					oos.writeObject(m);
