@@ -1,16 +1,12 @@
 public class ChatEncryptedMessage extends Message {
-	private final Color color;
-	private final String username;
-	private char[] m;
-
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Sent by a client, broadcast by the server to all other clients
 	 */
 
 	public ChatEncryptedMessage(String username, char[] m, Color color) {
-		this.username = username;
-		this.m = m;
-		this.color = color;
+		super(username, m, color);
 
 		// encrypt messages
 		this.m = this.applyROT13(this.m);
@@ -18,9 +14,7 @@ public class ChatEncryptedMessage extends Message {
 	}
 
 	public ChatEncryptedMessage(String username, String m, Color color) {
-		this.username = username;
-		this.m = m.toCharArray();
-		this.color = color;
+		super(username, m, color);
 
 		// encrypt messages
 		this.m = this.applyROT13(this.m);
@@ -50,18 +44,5 @@ public class ChatEncryptedMessage extends Message {
 		m_decrypted = this.applyROT13(m_decrypted);
 
 		return new ChatMessage(username, m_decrypted, color);
-	}
-
-	public String getMessageBody() {
-		return this.color + getPlainMessage() + Color.RESET;
-	}
-
-	public String getPlainMessage() {
-		return "[" + username + "]: " + new String(this.m);
-	}
-
-	@Override
-	public String toString() {
-		return String.format("Message: " + new String(m));
 	}
 }
