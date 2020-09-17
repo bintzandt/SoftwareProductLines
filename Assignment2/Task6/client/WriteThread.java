@@ -38,10 +38,13 @@ public class WriteThread extends Thread {
 						+ "colors = " + Config.COLORED_MESSAGES + "\n"
 						+ "send_username = " + Config.SEND_MY_USERNAME + "\n"
 						+ "chatlog = " + Config.USER_CHATLOG + "\n"
+						+ "encrypt_rot13 = " + Config.ENCRYPT_ROT13 + "\n"
+						+ "encrypt_revert = " + Config.ENCRYPT_REVERT + "\n"
 				);
 			} else {
 				boolean value = Boolean.parseBoolean(words[2]);
 				boolean recognized = true;
+				boolean encryption_option = false;
 
 				if (words[1].equals("colors")) {
 					Config.COLORED_MESSAGES = value;
@@ -50,12 +53,22 @@ public class WriteThread extends Thread {
 				} else if (words[1].equals("chatlog")) {
 					Config.USER_CHATLOG = value;
 					client.getLogger().setEnabled(value);
+				} else if (words[1].equals("encrypt_rot13")) {
+					Config.ENCRYPT_ROT13 = value;
+					encryption_option = true;
+				} else if (words[1].equals("encrypt_revert")) {
+					Config.ENCRYPT_REVERT = value;
+					encryption_option = true;
 				} else {
 					System.out.println("ERROR: Config " + words[1] + " not recognized! Try /config");
 					recognized = false;
 				}
 				if (recognized) {
 					System.out.println("Config " + words[1] + " set to " + value);
+					if (encryption_option && !value) {
+						System.out.println("WARNING! Disabling our industry-grade encryption (ROT13, revert) is");
+						System.out.println("not recommended! This will weaken the privacy of your conversations.");
+					}
 				}
 			}
 		} else if (words[0].equals("/color")) {
