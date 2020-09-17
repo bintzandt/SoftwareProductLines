@@ -58,6 +58,17 @@ public class WriteThread extends Thread {
 					System.out.println("Config " + words[1] + " set to " + value);
 				}
 			}
+		} else if (words[0].equals("/color")) {
+			if (words.length < 2) {
+				System.out.println("Please input a new color");
+			} else {
+				try {
+					color = Color.valueOf(words[1].toUpperCase());
+					System.out.println("Your color has been changed to " + color.name());
+				} catch (IllegalArgumentException ex) {
+					System.out.println("Invalid color, please choose one of the following colors: " + Color.getColorOptions());
+				}
+			}
 		}
 	}
 
