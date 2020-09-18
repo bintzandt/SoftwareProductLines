@@ -1,3 +1,5 @@
+package chat.messages;
+
 import java.io.Serializable;
 
 public class LoginMessage implements Serializable {

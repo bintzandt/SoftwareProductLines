@@ -1,7 +1,11 @@
+package chat.client;
+
 import java.io.Console;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import chat.messages.*;
+import chat.config.*;
 
 /**
  * This thread is responsible for reading user's input and send it

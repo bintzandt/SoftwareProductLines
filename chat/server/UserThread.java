@@ -1,8 +1,13 @@
+package chat.server;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+// Import classes from our other packages.
+import chat.messages.*;
+import chat.config.*;
 
 public class UserThread extends Thread {
 	private final String serverPassword = "SUPERSECRET";
