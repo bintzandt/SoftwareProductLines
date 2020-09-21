@@ -1,10 +1,6 @@
-package chat.client;
-
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import chat.config.Config;
-import chat.logger.Logger;
 
 /**
  * To run the client in a command prompt use (in root directory):

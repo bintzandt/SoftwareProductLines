@@ -1,5 +1,3 @@
-package chat.config;
-
 public class Config {
 
 	public static boolean COLORED_MESSAGES = true;

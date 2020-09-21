@@ -1,13 +1,8 @@
-package chat.server;
-
-import java.io.*;
-import java.net.*;
-import java.util.*;
-
-// Import classes from other packages.
-import chat.logger.Logger;
-import chat.config.*;
-import chat.messages.Message;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Server {
 	private int port;

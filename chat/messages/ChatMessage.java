@@ -1,7 +1,3 @@
-package chat.messages;
-
-import chat.config.Color;
-
 public class ChatMessage extends Message {
 	private static final long serialVersionUID = 1L;
 
