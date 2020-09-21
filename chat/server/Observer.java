@@ -1,7 +1,4 @@
-package chat.server;
-
 import java.util.*;
-import chat.messages.Message;
 
 public class Observer {
 	private Set<UserThread> userThreads = new HashSet<>();
