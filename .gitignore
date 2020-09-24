@@ -23,7 +23,6 @@
 fiddle.*
 # Eclipse project files
 **/.classpath
-**/.project
 
 **/SoftwareProductLines.iml
 
