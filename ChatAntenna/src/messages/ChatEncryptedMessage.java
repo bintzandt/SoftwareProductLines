@@ -11,15 +11,15 @@ public class ChatEncryptedMessage extends Message {
 	public ChatEncryptedMessage(String username, char[] m, Color color) {
 		super(username, m, color);
 
-		// encrypt messages
-		if (Config.ENCRYPT_ROT13) {
-			this.m = this.applyROT13(this.m);
-			is_encrypted_rot13 = true;
-		}
-		if (Config.ENCRYPT_REVERT) {
-			this.m = this.applyRevert(this.m);
-			is_encrypted_revert = true;
-		}
+		// #if ROT13
+//@		this.m = this.applyROT13(this.m);
+//@		this.is_encrypted_rot13 = true;
+		// #endif
+		
+		// #if Reverse 
+//@		this.m = this.applyRevert(this.m);
+//@		this.is_encrypted_revert = true;
+		// #endif
 	}
 
 	public ChatEncryptedMessage(String username, String m, Color color) {

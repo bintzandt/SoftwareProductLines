@@ -22,11 +22,13 @@ public abstract class Message implements Serializable {
 	}
 	
 	public final String getMessageBody() {
-		if (Config.COLORED_MESSAGES) {
-			return this.color + getPlainMessage() + Color.RESET;
-		} else {
-			return getPlainMessage();
-		}
+		// #if ColoredMessages
+//@		return this.color + getPlainMessage() + Color.RESET;
+		// #else
+		return getPlainMessage();
+		// #endif
+		
+		
 	}
 
 	public final String getPlainMessage() {

@@ -15,7 +15,10 @@ public class Client {
 	public Client(String hostname, int port) {
 		this.hostname = hostname;
 		this.port = port;
-		this.logger = new Logger("spl_client.log", Config.USER_CHATLOG);
+
+		// #if ChatLog
+//@		this.logger = new Logger("spl_client.log");
+		// #endif
 	}
 
 	public void execute() {

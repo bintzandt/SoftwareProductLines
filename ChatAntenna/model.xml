@@ -13,10 +13,10 @@
 			<feature name="ColoredMessages"/>
 			<feature name="SendUsername"/>
 			<feature name="ChatLog"/>
-			<alt abstract="true" name="Encryption">
+			<or abstract="true" name="Encryption">
 				<feature name="ROT13"/>
 				<feature name="Reverse"/>
-			</alt>
+			</or>
 			<alt abstract="true" name="UserInterface">
 				<feature name="GUI"/>
 				<feature name="CommandLine"/>

@@ -13,8 +13,8 @@ public class Server {
 
 	public Server(int port) {
 		this.port = port;
-		logger = new Logger("spl_server.log", Config.SERVER_CHATLOG);
 		this.observer = new Observer();
+		logger = new Logger("spl_server.log");
 	}
 
 	public void execute() {

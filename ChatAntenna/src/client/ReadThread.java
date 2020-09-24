@@ -35,12 +35,16 @@ public class ReadThread extends Thread {
 					ChatMessage cm = (ChatMessage) m;
 
 					System.out.println("\n" + cm.getMessageBody());
-					client.getLogger().writeln(cm.getPlainMessage());
+					// #if ChatLog
+//@					client.getLogger().writeln(cm.getPlainMessage());
+					// #endif
 				} else if (m instanceof ChatEncryptedMessage) {
 					ChatMessage cm = ((ChatEncryptedMessage) m).getDecryptedMessage();
 
 					System.out.println("\n" + cm.getMessageBody());
-					client.getLogger().writeln(cm.getPlainMessage());
+					// #if ChatLog
+//@					client.getLogger().writeln(cm.getPlainMessage());
+					// #endif
 				}
 
 				// prints the username after displaying the server's message
