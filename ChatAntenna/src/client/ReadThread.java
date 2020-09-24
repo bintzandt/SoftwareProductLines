@@ -59,6 +59,8 @@ public class ReadThread extends Thread {
 			}
 		}
 
-		client.getLogger().close();
+		// #if ChatLog
+//@		client.getLogger().close();
+		// #endif
 	}
 }

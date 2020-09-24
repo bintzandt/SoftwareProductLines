@@ -35,17 +35,21 @@ public class WriteThread extends Thread {
 		String userName = client.view.waitForInput("Enter your name: ");
 		client.setUserName(userName);
 
-		do {
-			try {
-				String colorString = client.view.waitForInput("Enter you text color: ").toUpperCase();
-				color = Color.valueOf(colorString);
-			} catch (IllegalArgumentException ex) {
-				client.view.output("Invalid color, please choose one of the following colors: " + Color.getColorOptions());
-				continue;
-			}
-			break;
-		} while (true);
-		client.view.output("You chose " + color.name() + ", all messages you send will be displayed in this color!");
+		// #if ColoredMessages
+//@		do {
+//@			try {
+//@				String colorString = client.view.waitForInput("Enter you text color: ").toUpperCase();
+//@				color = Color.valueOf(colorString);
+//@			} catch (IllegalArgumentException ex) {
+//@				client.view.output("Invalid color, please choose one of the following colors: " + Color.getColorOptions());
+//@				continue;
+//@			}
+//@			break;
+//@		} while (true);
+//@		client.view.output("You chose " + color.name() + ", all messages you send will be displayed in this color!");
+		// #else
+		color = Color.RESET;
+		// #endif
 
 		try {
 			String secret = client.view.waitForInput("Enter the secret password: ");
