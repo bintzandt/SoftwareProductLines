@@ -8,6 +8,6 @@
 	<feature name="ROT13"/>
 	<feature name="Reverse"/>
 	<feature automatic="selected" name="UserInterface"/>
-	<feature manual="selected" name="GUI"/>
-	<feature automatic="unselected" name="CommandLine"/>
+	<feature automatic="unselected" name="GUI"/>
+	<feature manual="selected" name="CommandLine"/>
 </configuration>

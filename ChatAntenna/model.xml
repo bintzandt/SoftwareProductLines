@@ -17,10 +17,20 @@
 				<feature name="ROT13"/>
 				<feature name="Reverse"/>
 			</or>
-			<alt abstract="true" name="UserInterface">
+			<alt abstract="true" mandatory="true" name="UserInterface">
 				<feature name="GUI"/>
 				<feature name="CommandLine"/>
 			</alt>
 		</and>
 	</struct>
+	<constraints>
+		<rule>
+			<imp>
+				<var>ColoredMessages</var>
+				<not>
+					<var>GUI</var>
+				</not>
+			</imp>
+		</rule>
+	</constraints>
 </featureModel>
