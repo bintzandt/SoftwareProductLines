@@ -1,7 +1,4 @@
-package chat.messages;
-
 import java.io.Serializable;
-import chat.config.*;
 
 public abstract class Message implements Serializable {
 	protected static final long serialVersionUID = 1L;

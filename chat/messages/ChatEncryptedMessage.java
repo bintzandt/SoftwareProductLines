@@ -1,7 +1,3 @@
-package chat.messages;
-
-import chat.config.*;
-
 public class ChatEncryptedMessage extends Message {
 	private static final long serialVersionUID = 1L;
 

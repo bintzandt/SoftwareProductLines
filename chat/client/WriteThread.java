@@ -1,11 +1,6 @@
-package chat.client;
-
-import java.io.Console;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import chat.messages.*;
-import chat.config.*;
 
 /**
  * This thread is responsible for reading user's input and send it
@@ -27,7 +22,7 @@ public class WriteThread extends Thread {
 		try {
 			oos = new ObjectOutputStream(socket.getOutputStream());
 		} catch (IOException ex) {
-			System.out.println("Error getting output stream: " + ex.getMessage());
+			Config.view.output("Error getting output stream: " + ex.getMessage());
 			ex.printStackTrace();
 		}
 	}
@@ -37,13 +32,13 @@ public class WriteThread extends Thread {
 
 		if (words[0].equals("/config")) {
 			if (words.length < 3) {
-				System.out.print(
+				Config.view.output(
 						"Current configuration:\n"
 						+ "colors = " + Config.COLORED_MESSAGES + "\n"
 						+ "send_username = " + Config.SEND_MY_USERNAME + "\n"
 						+ "chatlog = " + Config.USER_CHATLOG + "\n"
 						+ "encrypt_rot13 = " + Config.ENCRYPT_ROT13 + "\n"
-						+ "encrypt_revert = " + Config.ENCRYPT_REVERT + "\n"
+						+ "encrypt_revert = " + Config.ENCRYPT_REVERT
 				);
 			} else {
 				boolean value = Boolean.parseBoolean(words[2]);
@@ -64,59 +59,56 @@ public class WriteThread extends Thread {
 					Config.ENCRYPT_REVERT = value;
 					encryption_option = true;
 				} else {
-					System.out.println("ERROR: Config " + words[1] + " not recognized! Try /config");
+					Config.view.output("ERROR: Config " + words[1] + " not recognized! Try /config");
 					recognized = false;
 				}
 				if (recognized) {
-					System.out.println("Config " + words[1] + " set to " + value);
+					Config.view.output("Config " + words[1] + " set to " + value);
 					if (encryption_option && !value) {
-						System.out.println("WARNING! Disabling our industry-grade encryption (ROT13, revert) is");
-						System.out.println("not recommended! This will weaken the privacy of your conversations.");
+						Config.view.output("WARNING! Disabling our industry-grade encryption (ROT13, revert) is");
+						Config.view.output("not recommended! This will weaken the privacy of your conversations.");
 					}
 				}
 			}
 		} else if (words[0].equals("/color")) {
 			if (words.length < 2) {
-				System.out.println("Please input a new color");
+				Config.view.output("Please input a new color");
 			} else {
 				try {
 					color = Color.valueOf(words[1].toUpperCase());
-					System.out.println("Your color has been changed to " + color.name());
+					Config.view.output("Your color has been changed to " + color.name());
 				} catch (IllegalArgumentException ex) {
-					System.out.println("Invalid color, please choose one of the following colors: " + Color.getColorOptions());
+					Config.view.output("Invalid color, please choose one of the following colors: " + Color.getColorOptions());
 				}
 			}
 		}
 	}
 
 	public void run() {
-
-		Console console = System.console();
-
-		String userName = console.readLine("\nEnter your name: ");
+		String userName = Config.view.waitForInput("Enter your name: ");
 		client.setUserName(userName);
 
 		do {
 			try {
-				String colorString = console.readLine("\nEnter you text color: ").toUpperCase();
+				String colorString = Config.view.waitForInput("Enter you text color: ").toUpperCase();
 				color = Color.valueOf(colorString);
 			} catch (IllegalArgumentException ex) {
-				System.out.println("Invalid color, please choose one of the following colors: " + Color.getColorOptions());
+				Config.view.output("Invalid color, please choose one of the following colors: " + Color.getColorOptions());
 				continue;
 			}
 			break;
 		} while (true);
-		System.out.println("You chose " + color.name() + ", all messages you send will be displayed in this color!");
+		Config.view.output("You chose " + color.name() + ", all messages you send will be displayed in this color!");
 
 		try {
-			String secret = console.readLine("\nEnter the secret password: ");
+			String secret = Config.view.waitForInput("Enter the secret password: ");
 
 			LoginMessage loginMessage = new LoginMessage(userName, secret);
 			oos.writeObject(loginMessage);
 
-			System.out.println("Joining the chat server as " + userName);
+			Config.view.output("Joining the chat server as " + userName);
 		} catch (IOException ex) {
-			System.out.println("Error sending login message to server: " + ex.getMessage());
+			Config.view.output("Error sending login message to server: " + ex.getMessage());
 			ex.printStackTrace();
 			return; // Disconnect?
 		}
@@ -124,7 +116,7 @@ public class WriteThread extends Thread {
 		String text;
 		Message m;
 		do {
-			text = console.readLine("[" + userName + "]: ");
+			text = Config.view.waitForInput("[" + userName + "]: ");
 			if (text.startsWith("/")) {
 				handleCommand(text);
 			} else {
@@ -133,7 +125,7 @@ public class WriteThread extends Thread {
 					m = new ChatEncryptedMessage(usernameToSend, text, color);
 					oos.writeObject(m);
 				} catch (IOException ex) {
-					System.out.println("Error sending message to server: " + ex.getMessage());
+					Config.view.output("Error sending message to server: " + ex.getMessage());
 					ex.printStackTrace();
 				}
 			}
@@ -144,7 +136,7 @@ public class WriteThread extends Thread {
 			socket.close();
 		} catch (IOException ex) {
 
-			System.out.println("Error writing to server: " + ex.getMessage());
+			Config.view.output("Error writing to server: " + ex.getMessage());
 		}
 	}
 }
