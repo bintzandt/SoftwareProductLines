@@ -16,6 +16,8 @@ public class Client {
 		this.hostname = hostname;
 		this.port = port;
 		this.logger = new Logger("spl_client.log", Config.USER_CHATLOG);
+
+		Config.view = new GUIView();
 	}
 
 	public void execute() {
