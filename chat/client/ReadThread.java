@@ -44,7 +44,7 @@ public class ReadThread extends Thread {
 				}
 
 				// prints the username after displaying the server's message
-				if (client.getUserName() != null) {
+				if (client.getUserName() != null && Config.view instanceof ConsoleView) {
 					Config.view.output("[" + client.getUserName() + "]: ");
 				}
 
