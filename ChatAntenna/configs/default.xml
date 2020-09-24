@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configuration>
+	<feature automatic="selected" name="Root"/>
+	<feature manual="selected" name="ColoredMessages"/>
+	<feature manual="selected" name="SendUsername"/>
+	<feature manual="selected" name="ChatLog"/>
+	<feature automatic="selected" name="Encryption"/>
+	<feature manual="selected" name="ROT13"/>
+	<feature automatic="unselected" name="Reverse"/>
+	<feature automatic="selected" name="UserInterface"/>
+	<feature manual="selected" name="GUI"/>
+	<feature automatic="unselected" name="CommandLine"/>
+</configuration>
