@@ -11,10 +11,18 @@ public class Client {
 	private int port;
 	private String userName;
 	private Logger logger;
+	
+	public ViewInterface view;
 
 	public Client(String hostname, int port) {
 		this.hostname = hostname;
 		this.port = port;
+		
+		// #if GUI
+//@		view = new GUIView();
+		// #else
+		view = new ConsoleView();
+		// #endif
 
 		// #if ChatLog
 //@		this.logger = new Logger("spl_client.log");
