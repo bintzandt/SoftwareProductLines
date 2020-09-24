@@ -23,7 +23,7 @@ public class ReadThread extends Thread {
 		try {
 			this.ois = new ObjectInputStream(socket.getInputStream());
 		} catch (IOException ex) {
-			System.out.println("Error creating object input stream " + ex.getMessage());
+			Config.view.output("Error creating object input stream " + ex.getMessage());
 			ex.printStackTrace();
 		}
 
@@ -33,23 +33,23 @@ public class ReadThread extends Thread {
 
 				if (m instanceof ChatMessage) {
 					ChatMessage cm = (ChatMessage) m;
-
-					System.out.println("\n" + cm.getMessageBody());
+					
+					Config.view.output(cm.getMessageBody());
 					client.getLogger().writeln(cm.getPlainMessage());
 				} else if (m instanceof ChatEncryptedMessage) {
 					ChatMessage cm = ((ChatEncryptedMessage) m).getDecryptedMessage();
 
-					System.out.println("\n" + cm.getMessageBody());
+					Config.view.output(cm.getMessageBody());
 					client.getLogger().writeln(cm.getPlainMessage());
 				}
 
 				// prints the username after displaying the server's message
 				if (client.getUserName() != null) {
-					System.out.print("[" + client.getUserName() + "]: ");
+					Config.view.output("[" + client.getUserName() + "]: ");
 				}
 
 			} catch (Exception ex) {
-				System.out.println("Error reading from server: " + ex.getMessage());
+				Config.view.output("Error reading from server: " + ex.getMessage());
 				ex.printStackTrace();
 				break;
 			}
