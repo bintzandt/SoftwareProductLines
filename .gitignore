@@ -31,3 +31,9 @@ hs_err_pid*
 
 chat/bin
 **/.vscode/
+
+# Ignore FeatureIDE directory
+FeatureIDE/
+
+# Ignore bin directories
+**/bin

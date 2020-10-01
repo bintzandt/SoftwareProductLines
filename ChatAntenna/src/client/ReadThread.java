@@ -23,7 +23,7 @@ public class ReadThread extends Thread {
 		try {
 			this.ois = new ObjectInputStream(socket.getInputStream());
 		} catch (IOException ex) {
-			System.out.println("Error creating object input stream " + ex.getMessage());
+			client.view.output("Error creating object input stream " + ex.getMessage());
 			ex.printStackTrace();
 		}
 
@@ -34,31 +34,33 @@ public class ReadThread extends Thread {
 				if (m instanceof ChatMessage) {
 					ChatMessage cm = (ChatMessage) m;
 
-					System.out.println("\n" + cm.getMessageBody());
+					client.view.output(cm.getMessageBody());
 					// #if ChatLog
 //@					client.getLogger().writeln(cm.getPlainMessage());
 					// #endif
 				} else if (m instanceof ChatEncryptedMessage) {
 					ChatMessage cm = ((ChatEncryptedMessage) m).getDecryptedMessage();
 
-					System.out.println("\n" + cm.getMessageBody());
+					client.view.output(cm.getMessageBody());
 					// #if ChatLog
 //@					client.getLogger().writeln(cm.getPlainMessage());
 					// #endif
 				}
 
 				// prints the username after displaying the server's message
-				if (client.getUserName() != null) {
+				if (client.getUserName() != null && client.view instanceof ConsoleView) {
 					System.out.print("[" + client.getUserName() + "]: ");
 				}
 
 			} catch (Exception ex) {
-				System.out.println("Error reading from server: " + ex.getMessage());
+				client.view.output("Error reading from server: " + ex.getMessage());
 				ex.printStackTrace();
 				break;
 			}
 		}
 
-		client.getLogger().close();
+		// #if ChatLog
+//@		client.getLogger().close();
+		// #endif
 	}
 }

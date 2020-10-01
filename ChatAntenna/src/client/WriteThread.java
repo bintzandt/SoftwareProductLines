@@ -23,7 +23,7 @@ public class WriteThread extends Thread {
 		try {
 			oos = new ObjectOutputStream(socket.getOutputStream());
 		} catch (IOException ex) {
-			System.out.println("Error getting output stream: " + ex.getMessage());
+			client.view.output("Error getting output stream: " + ex.getMessage());
 			ex.printStackTrace();
 		}
 	}
@@ -32,30 +32,34 @@ public class WriteThread extends Thread {
 
 		Console console = System.console();
 
-		String userName = console.readLine("\nEnter your name: ");
+		String userName = client.view.waitForInput("Enter your name: ");
 		client.setUserName(userName);
 
-		do {
-			try {
-				String colorString = console.readLine("\nEnter you text color: ").toUpperCase();
-				color = Color.valueOf(colorString);
-			} catch (IllegalArgumentException ex) {
-				System.out.println("Invalid color, please choose one of the following colors: " + Color.getColorOptions());
-				continue;
-			}
-			break;
-		} while (true);
-		System.out.println("You chose " + color.name() + ", all messages you send will be displayed in this color!");
+		// #if ColoredMessages
+//@		do {
+//@			try {
+//@				String colorString = client.view.waitForInput("Enter you text color: ").toUpperCase();
+//@				color = Color.valueOf(colorString);
+//@			} catch (IllegalArgumentException ex) {
+//@				client.view.output("Invalid color, please choose one of the following colors: " + Color.getColorOptions());
+//@				continue;
+//@			}
+//@			break;
+//@		} while (true);
+//@		client.view.output("You chose " + color.name() + ", all messages you send will be displayed in this color!");
+		// #else
+		color = Color.RESET;
+		// #endif
 
 		try {
-			String secret = console.readLine("\nEnter the secret password: ");
+			String secret = client.view.waitForInput("Enter the secret password: ");
 
 			LoginMessage loginMessage = new LoginMessage(userName, secret);
 			oos.writeObject(loginMessage);
 
-			System.out.println("Joining the chat server as " + userName);
+			client.view.output("Joining the chat server as " + userName);
 		} catch (IOException ex) {
-			System.out.println("Error sending login message to server: " + ex.getMessage());
+			client.view.output("Error sending login message to server: " + ex.getMessage());
 			ex.printStackTrace();
 			return; // Disconnect?
 		}
@@ -63,7 +67,7 @@ public class WriteThread extends Thread {
 		String text;
 		Message m;
 		do {
-			text = console.readLine("[" + userName + "]: ");
+			text = client.view.waitForInput("[" + userName + "]: ");
 			
 			// #if SendUsername
 //@			String usernameToSend = userName;
@@ -75,7 +79,7 @@ public class WriteThread extends Thread {
 				m = new ChatEncryptedMessage(usernameToSend, text, color);
 				oos.writeObject(m);
 			} catch (IOException ex) {
-				System.out.println("Error sending message to server: " + ex.getMessage());
+				client.view.output("Error sending message to server: " + ex.getMessage());
 				ex.printStackTrace();
 			}
 
@@ -85,7 +89,7 @@ public class WriteThread extends Thread {
 			socket.close();
 		} catch (IOException ex) {
 
-			System.out.println("Error writing to server: " + ex.getMessage());
+			client.view.output("Error writing to server: " + ex.getMessage());
 		}
 	}
 }

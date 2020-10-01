@@ -4,16 +4,21 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class UserThread extends Thread {
-	private final String serverPassword = "SUPERSECRET";
-
 	private Socket socket;
 	private Server server;
-	private ObjectInputStream ois;
-	private ObjectOutputStream oos;
+	
+	public ObjectInputStream ois;
+	public ObjectOutputStream oos;
+
+	public String userName;
+	public boolean authenticated;
 
 	public UserThread(Socket socket, Server server) {
 		this.socket = socket;
 		this.server = server;
+
+		this.userName = "";
+		this.authenticated = false;
 	}
 
 	public void run() {
@@ -21,25 +26,12 @@ public class UserThread extends Thread {
 			this.ois = new ObjectInputStream(socket.getInputStream());
 			this.oos = new ObjectOutputStream(socket.getOutputStream());
 
-			boolean authenticated = false;
-			String userName = "";
-			do {
-				LoginMessage userNameMessage = (LoginMessage) ois.readObject();
-				if (userNameMessage instanceof LoginMessage) {
-					LoginMessage lm = (LoginMessage) userNameMessage;
-					userName = lm.getUsername();
-					String password = lm.getPassword();
-
-					if (password.equals(serverPassword)) {
-						authenticated = true;
-					} else {
-						System.out.println("User " + userName + " attempted login with incorrect password");
-						sendMessage(new ChatMessage("Server", "Incorrect password! Please reconnect, connection closed.", Color.RED));
-						socket.close();
-						return;
-					}
-				}
-			} while (!authenticated);
+			AuthenticationPlugin auth = (AuthenticationPlugin) this.server.plugins.get("authentication");
+			if ( auth != null ){
+				do {
+					auth.execute(this);
+				} while (!authenticated);
+			}
 
 			printUsers(userName);
 			server.addUserName(userName);
@@ -123,5 +115,17 @@ public class UserThread extends Thread {
 			System.out.println("Error sending message to user: " + ex.getMessage());
 			ex.printStackTrace();
 		}
+	}
+
+	public void setUserName( String userName ){
+		this.userName = userName;
+	}
+
+	public void setAuthenticated( boolean authenticated ){
+		this.authenticated = authenticated;
+	}
+
+	public Socket getSocket(){
+		return this.socket;
 	}
 }
