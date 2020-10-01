@@ -1,4 +1,4 @@
-public class AuthenticationPlugin implements PluginInterface {
+public class AuthenticationPlugin extends  Plugin {
 	private final String serverPassword = "SUPERSECRET";
 
 	public void execute(UserThread userThread) {
@@ -15,7 +15,7 @@ public class AuthenticationPlugin implements PluginInterface {
 					userThread.setAuthenticated(true);
 				} else {
 					System.out.println("User " + userName + " attempted login with incorrect password");
-					userThread.sendMessage(new ChatMessage("Server",
+					userThread.sendMessage(new Message("Server",
 							"Incorrect password! Please reconnect, connection closed.", Color.RED));
 					userThread.getSocket().close();
 					return;

@@ -1,3 +1,3 @@
-public class GUIPlugin implements PluginInterface {
+public class GUIPlugin extends Plugin {
 	
 }

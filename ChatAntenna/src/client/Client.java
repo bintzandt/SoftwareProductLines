@@ -11,9 +11,7 @@ public class Client {
 	private int port;
 	private String userName;
 	
-	// #if ChatLog
-//@	private Logger logger;
-	// #endif
+	private Logger logger;
 	
 	public ViewInterface view;
 
@@ -21,15 +19,10 @@ public class Client {
 		this.hostname = hostname;
 		this.port = port;
 		
-		// #if GUI
-//@		view = new GUIView();
-		// #else
+//		view = new GUIView();
 		view = new ConsoleView();
-		// #endif
 
-		// #if ChatLog
-//@		this.logger = new Logger("spl_client.log");
-		// #endif
+		this.logger = new Logger("spl_client.log");
 	}
 
 	public void execute() {
@@ -58,11 +51,9 @@ public class Client {
 		return this.userName;
 	}
 
-	// #if ChatLog
-//@	public Logger getLogger() {
-//@		return logger;
-//@	}
-	// #endif
+	public Logger getLogger() {
+		return logger;
+	}
 
 
 	public static void main(String[] args) {

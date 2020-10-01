@@ -13,7 +13,7 @@ public class Server {
 	
 	private Logger logger;
 
-	public Map<String, PluginInterface> plugins = new HashMap<String, PluginInterface>();
+	public Map<String, Plugin> plugins = new HashMap<String, Plugin>();
 
 	public Server(int port) {
 		this.port = port;

@@ -1,3 +1,3 @@
-public class ConsolePlugin implements PluginInterface {
+public class ConsolePlugin extends Plugin {
 	
 }
