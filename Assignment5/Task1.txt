@@ -1,0 +1,31 @@
+a) Code tangling refers to when pieces of code belonging to different concerns (ie. authentication and logging) are "tangled" together in one class or one method.
+
+Yes, the example contains code tangling. If we look at the addEdge method, we see that it does the following things:
+- Check if the graph is locked
+- Lock the graph
+- Create a new Edge
+- Add the Edge to the graph
+- Log
+- Unlock the graph
+- Check if the the graph is directed, if not: add a new edge target node to the source node.
+
+We clearly see code of different concerns (ie. locking and logging) being tangled in the same method (addEdge)
+
+b) Code scattering refers to code belonging to the same concern being spread across the entire program.
+
+Yes, the example contains code scattering. If we look at the addEdge and addNode functions, we see that both have their own locking check.
+
+This means that code belonging to the same concern (locking) is spread (copied) throughout the program, in this case to the addEdge and addNode functions.
+
+c) Possible consequences of code tangling and scattering are:
+- It is harder to evolve the application since new functionality also has to take care of concerns that do not belong to the new functionality. For example: it also needs to add logging.
+- Different concerns may belong to different persons in the organization. This means that knowledge is lacking from other people. This in turn makes it harder to refactor existing code since the implications are not known.
+
+d) Code tangling and scattering could appear (among others) in the following locations of a chat application:
+- Authentication: if you allow both authorized and unauthorized users to send messages you might have a different implementation for them (ie. authorized users can set their own name).
+
+The problem would be worse if you allow an owner / superuser that has additional capabilities.
+
+- Logging: if you want maintain server logs, the logging code might be tangled / scattered in the application
+
+- Receiving / Sending messages: if you have multiple front-end applications (ie. web-app and native desktop app) the code for sending / receiving messages might be tangled with checks for which front-end is being used.
