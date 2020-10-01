@@ -3,6 +3,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Server {
 	private int port;
@@ -10,6 +12,8 @@ public class Server {
 	private Observer observer;
 	
 	private Logger logger;
+
+	public Map<String, PluginInterface> plugins = new HashMap<String, PluginInterface>();
 
 	public Server(int port) {
 		this.port = port;
@@ -48,6 +52,9 @@ public class Server {
 		int port = Integer.parseInt(args[0]);
 
 		Server server = new Server(port);
+
+		server.plugins.put("authentication", new AuthenticationPlugin() );
+
 		server.execute();
 	}
 
