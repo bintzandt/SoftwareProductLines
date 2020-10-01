@@ -1,3 +1,3 @@
-public class ROTEncryptionPlugin implements PluginInterface {
+public class ROTEncryptionPlugin extends Plugin {
 	
 }

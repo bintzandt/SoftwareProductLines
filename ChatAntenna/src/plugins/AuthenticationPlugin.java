@@ -1,4 +1,4 @@
-public class AuthenticationPlugin implements PluginInterface {
+public class AuthenticationPlugin extends  Plugin {
 	private final String serverPassword = "SUPERSECRET";
 
 	public void execute(UserThread userThread) {

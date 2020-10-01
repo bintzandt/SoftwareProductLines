@@ -15,10 +15,12 @@ public class WriteThread extends Thread {
 	private Client client;
 	private ObjectOutputStream oos;
 	private Color color;
+	private PluginManager pluginManager;
 
 	public WriteThread(Socket socket, Client client) {
 		this.socket = socket;
 		this.client = client;
+		this.pluginManager = PluginManager.getInstance();
 
 		try {
 			oos = new ObjectOutputStream(socket.getOutputStream());
@@ -34,22 +36,7 @@ public class WriteThread extends Thread {
 
 		String userName = client.view.waitForInput("Enter your name: ");
 		client.setUserName(userName);
-
-		// #if ColoredMessages
-//@		do {
-//@			try {
-//@				String colorString = client.view.waitForInput("Enter you text color: ").toUpperCase();
-//@				color = Color.valueOf(colorString);
-//@			} catch (IllegalArgumentException ex) {
-//@				client.view.output("Invalid color, please choose one of the following colors: " + Color.getColorOptions());
-//@				continue;
-//@			}
-//@			break;
-//@		} while (true);
-//@		client.view.output("You chose " + color.name() + ", all messages you send will be displayed in this color!");
-		// #else
 		color = Color.RESET;
-		// #endif
 
 		try {
 			String secret = client.view.waitForInput("Enter the secret password: ");
@@ -63,6 +50,10 @@ public class WriteThread extends Thread {
 			ex.printStackTrace();
 			return; // Disconnect?
 		}
+		
+		for (ClientPlugin plugin : this.pluginManager.getClientPlugins()) {
+			plugin.afterClientCreation(client, this);
+		}
 
 		String text;
 		Message m;
@@ -70,10 +61,13 @@ public class WriteThread extends Thread {
 			text = client.view.waitForInput("[" + userName + "]: ");
 			
 			String usernameToSend = userName;
-//			String usernameToSend = "anonymous";
 					
 			try {
-//				m = new ChatEncryptedMessage(usernameToSend, text, color);
+				m = new Message(usernameToSend, text, color);
+				for (ClientPlugin plugin : this.pluginManager.getClientPlugins()) {
+					text = plugin.changeMessage(text, m);
+				}
+				
 				m = new Message(usernameToSend, text, color);
 				oos.writeObject(m);
 			} catch (IOException ex) {
@@ -89,5 +83,9 @@ public class WriteThread extends Thread {
 
 			client.view.output("Error writing to server: " + ex.getMessage());
 		}
+	}
+	
+	public void setColor(Color color) {
+		this.color = color;
 	}
 }
