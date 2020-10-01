@@ -1,4 +1,4 @@
-public class ChatEncryptedMessage extends Message {
+public class ChatEncryptedMessageDEPRICATED extends Message {
 	private static final long serialVersionUID = 1L;
 
 	private boolean is_encrypted_rot13;
@@ -8,7 +8,7 @@ public class ChatEncryptedMessage extends Message {
 	 * Sent by a client, broadcast by the server to all other clients
 	 */
 
-	public ChatEncryptedMessage(String username, char[] m, Color color) {
+	public ChatEncryptedMessageDEPRICATED(String username, char[] m, Color color) {
 		super(username, m, color);
 
 		// #if ROT13
@@ -22,7 +22,7 @@ public class ChatEncryptedMessage extends Message {
 		// #endif
 	}
 
-	public ChatEncryptedMessage(String username, String m, Color color) {
+	public ChatEncryptedMessageDEPRICATED(String username, String m, Color color) {
 		this(username, m.toCharArray(), color);
 	}
 
@@ -43,13 +43,13 @@ public class ChatEncryptedMessage extends Message {
 		return new StringBuilder(new String(m)).reverse().toString().toCharArray();
 	}
 
-	public ChatMessage getDecryptedMessage() {
+	public ChatEncryptedMessageDEPRICATED getDecryptedMessage() {
 		char[] m_decrypted = this.m.clone();
 		if (is_encrypted_revert)
 			m_decrypted = this.applyRevert(m_decrypted);
 		if (is_encrypted_rot13)
 			m_decrypted = this.applyROT13(m_decrypted);
 
-		return new ChatMessage(username, m_decrypted, color);
+		return new ChatEncryptedMessageDEPRICATED(username, m_decrypted, color);
 	}
 }

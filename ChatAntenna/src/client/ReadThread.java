@@ -31,21 +31,12 @@ public class ReadThread extends Thread {
 			try {
 				Message m = (Message) ois.readObject();
 
-				if (m instanceof ChatMessage) {
-					ChatMessage cm = (ChatMessage) m;
+				client.view.output(m.getMessageBody());
 
-					client.view.output(cm.getMessageBody());
-					// #if ChatLog
-//@					client.getLogger().writeln(cm.getPlainMessage());
-					// #endif
-				} else if (m instanceof ChatEncryptedMessage) {
-					ChatMessage cm = ((ChatEncryptedMessage) m).getDecryptedMessage();
-
-					client.view.output(cm.getMessageBody());
-					// #if ChatLog
-//@					client.getLogger().writeln(cm.getPlainMessage());
-					// #endif
-				}
+				client.getLogger().writeln(m.getPlainMessage());
+				
+				
+//				ChatMessage cm = ((ChatEncryptedMessage) m).getDecryptedMessage();
 
 				// prints the username after displaying the server's message
 				if (client.getUserName() != null && client.view instanceof ConsoleView) {
@@ -59,8 +50,6 @@ public class ReadThread extends Thread {
 			}
 		}
 
-		// #if ChatLog
-//@		client.getLogger().close();
-		// #endif
+		client.getLogger().close();
 	}
 }

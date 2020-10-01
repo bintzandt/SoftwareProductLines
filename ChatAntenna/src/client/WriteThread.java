@@ -69,14 +69,12 @@ public class WriteThread extends Thread {
 		do {
 			text = client.view.waitForInput("[" + userName + "]: ");
 			
-			// #if SendUsername
-//@			String usernameToSend = userName;
-			// #else
-			String usernameToSend = "anonymous";
-			// #endif
+			String usernameToSend = userName;
+//			String usernameToSend = "anonymous";
 					
 			try {
-				m = new ChatEncryptedMessage(usernameToSend, text, color);
+//				m = new ChatEncryptedMessage(usernameToSend, text, color);
+				m = new Message(usernameToSend, text, color);
 				oos.writeObject(m);
 			} catch (IOException ex) {
 				client.view.output("Error sending message to server: " + ex.getMessage());

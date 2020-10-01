@@ -1,6 +1,6 @@
 import java.io.Serializable;
 
-public abstract class Message implements Serializable {
+public class Message implements Serializable {
 	protected static final long serialVersionUID = 1L;
 	
 	protected final String username;
@@ -22,13 +22,7 @@ public abstract class Message implements Serializable {
 	}
 	
 	public final String getMessageBody() {
-		// #if ColoredMessages
-//@		return this.color + getPlainMessage() + Color.RESET;
-		// #else
 		return getPlainMessage();
-		// #endif
-		
-		
 	}
 
 	public final String getPlainMessage() {
