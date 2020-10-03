@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class PluginManager {
 	
 	private final ArrayList<Plugin> plugins;
-	private static PluginManager pluginMagnager;
+	private static PluginManager pluginManager;
 	
 	private PluginManager() {
 		this.plugins = new ArrayList<Plugin>() {{
@@ -14,13 +14,13 @@ public class PluginManager {
 		
 	}
 	
-	public static PluginManager getInstance() { 
-        if (pluginMagnager == null) { 
-        	pluginMagnager= new PluginManager();
-        }
-        
-        return pluginMagnager; 
-    }
+	public static PluginManager getInstance() {
+		if (pluginManager == null) {
+			pluginManager= new PluginManager();
+		}
+
+		return pluginManager;
+	}
 	
 	public ArrayList<ClientPlugin> getClientPlugins() {
 		ArrayList<ClientPlugin> clientPlugins = new ArrayList<ClientPlugin>();
