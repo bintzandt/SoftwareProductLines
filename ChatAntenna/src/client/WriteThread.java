@@ -25,7 +25,7 @@ public class WriteThread extends Thread {
 		try {
 			oos = new ObjectOutputStream(socket.getOutputStream());
 		} catch (IOException ex) {
-			client.view.output("Error getting output stream: " + ex.getMessage());
+			client.viewsOutput("Error getting output stream: " + ex.getMessage());
 			ex.printStackTrace();
 		}
 	}
@@ -34,19 +34,19 @@ public class WriteThread extends Thread {
 
 		Console console = System.console();
 
-		String userName = client.view.waitForInput("Enter your name: ");
+		String userName = client.viewsWaitForInput("Enter your name: ");
 		client.setUserName(userName);
 		color = Color.RESET;
 
 		try {
-			String secret = client.view.waitForInput("Enter the secret password: ");
+			String secret = client.viewsWaitForInput("Enter the secret password: ");
 
 			LoginMessage loginMessage = new LoginMessage(userName, secret);
 			oos.writeObject(loginMessage);
 
-			client.view.output("Joining the chat server as " + userName);
+			client.viewsOutput("Joining the chat server as " + userName);
 		} catch (IOException ex) {
-			client.view.output("Error sending login message to server: " + ex.getMessage());
+			client.viewsOutput("Error sending login message to server: " + ex.getMessage());
 			ex.printStackTrace();
 			return; // Disconnect?
 		}
@@ -58,7 +58,7 @@ public class WriteThread extends Thread {
 		String text;
 		Message m;
 		do {
-			text = client.view.waitForInput("[" + userName + "]: ");
+			text = client.viewsWaitForInput("[" + userName + "]: ");
 			
 			String usernameToSend = userName;
 					
@@ -71,7 +71,7 @@ public class WriteThread extends Thread {
 				m = new Message(usernameToSend, text, color);
 				oos.writeObject(m);
 			} catch (IOException ex) {
-				client.view.output("Error sending message to server: " + ex.getMessage());
+				client.viewsOutput("Error sending message to server: " + ex.getMessage());
 				ex.printStackTrace();
 			}
 
@@ -81,7 +81,7 @@ public class WriteThread extends Thread {
 			socket.close();
 		} catch (IOException ex) {
 
-			client.view.output("Error writing to server: " + ex.getMessage());
+			client.viewsOutput("Error writing to server: " + ex.getMessage());
 		}
 	}
 	

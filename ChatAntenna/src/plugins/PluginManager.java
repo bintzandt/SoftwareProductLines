@@ -10,6 +10,8 @@ public class PluginManager {
 		this.plugins = new ArrayList<Plugin>() {{
 			add(new ReverseEncryptionPlugin());
 			add(new ColorPlugin());
+			//add(new ConsolePlugin());
+			add(new GUIPlugin());
 		}};
 		
 	}

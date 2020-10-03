@@ -10,16 +10,16 @@ public class ColorPlugin extends Plugin {
 			Color color;
 			do {
 				try {
-					String colorString = client.view.waitForInput("Enter you text color: ").toUpperCase();
+					String colorString = client.viewsWaitForInput("Enter you text color: ").toUpperCase();
 					color = Color.valueOf(colorString);
 				} catch (IllegalArgumentException ex) {
-					client.view.output("Invalid color, please choose one of the following colors: " + Color.getColorOptions());
+					client.viewsOutput("Invalid color, please choose one of the following colors: " + Color.getColorOptions());
 					continue;
 				}
 				break;
 			} while (true);
 			writeThread.setColor(color);
-			client.view.output("You chose " + color.name() + ", all messages you send will be displayed in this color!");			
+			client.viewsOutput("You chose " + color.name() + ", all messages you send will be displayed in this color!");
 		}
 	}
 	

@@ -23,7 +23,7 @@ public class ReadThread extends Thread {
 		try {
 			this.ois = new ObjectInputStream(socket.getInputStream());
 		} catch (IOException ex) {
-			client.view.output("Error creating object input stream " + ex.getMessage());
+			client.viewsOutput("Error creating object input stream " + ex.getMessage());
 			ex.printStackTrace();
 		}
 
@@ -31,7 +31,7 @@ public class ReadThread extends Thread {
 			try {
 				Message m = (Message) ois.readObject();
 
-				client.view.output(m.getMessageBody());
+				client.viewsOutput(m.getMessageBody());
 
 				client.getLogger().writeln(m.getPlainMessage());
 				
@@ -39,12 +39,12 @@ public class ReadThread extends Thread {
 //				ChatMessage cm = ((ChatEncryptedMessage) m).getDecryptedMessage();
 
 				// prints the username after displaying the server's message
-				if (client.getUserName() != null && client.view instanceof ConsoleView) {
-					System.out.print("[" + client.getUserName() + "]: ");
-				}
+				//if (client.getUserName() != null && client.view instanceof ConsoleView) {
+					//System.out.print("[" + client.getUserName() + "]: ");
+				//}
 
 			} catch (Exception ex) {
-				client.view.output("Error reading from server: " + ex.getMessage());
+				client.viewsOutput("Error reading from server: " + ex.getMessage());
 				ex.printStackTrace();
 				break;
 			}
