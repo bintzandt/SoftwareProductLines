@@ -10,7 +10,7 @@ public class AuthenticationPlugin extends Plugin {
 
 	class ClientAuthenticationPlugin extends ClientPlugin {
 		@Override
-		public void beforeClientCreation(Client client, WriteThread writeThread) {
+		public void afterClientCreation(Client client, WriteThread writeThread) {
 			String userName = client.viewsWaitForInput("Enter your name: ");
 			client.setUserName(userName);
 			writeThread.setUsername(userName);

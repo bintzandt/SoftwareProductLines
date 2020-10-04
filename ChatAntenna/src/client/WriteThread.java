@@ -32,11 +32,6 @@ public class WriteThread extends Thread {
 	}
 
 	public void run() {
-		for (ClientPlugin plugin : this.pluginManager.getClientPlugins()) {
-			plugin.beforeClientCreation(client, this);
-		}
-
-		// Client creation?
 		color = Color.RESET;
 		
 		for (ClientPlugin plugin : this.pluginManager.getClientPlugins()) {

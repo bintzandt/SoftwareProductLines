@@ -1,0 +1,19 @@
+- How much effort was required to create the plug-ins?
+Before we started creating the actual plugins, we spent a lot of time thinking about a good structure. In the end, we decided to use a single PluginManager class, that is responsible for managing all the plugins. Since some plugins require modification on both the server and client side, we created an abstract class Plugin that allows us to specify a ClientPlugin and ServerPlugin per Plugin. This is used in the AuthenticationPlugin for example.
+
+Once that structure was in place, we needed some way of communicating with the plugins. From the lectures, we got the idea to use hooks that plugins can implement.
+
+These are the hooks for the client:
+beforeClientCreation, afterClientCreation, changeMessage, encryptMessage, decryptMessage.
+
+This allows all the functionality we need in the client.
+
+For the server, we only have one hook: onClientStarted which runs when (a new) client has started.
+
+Creating the plugins themselves was somewhat straight-forward and used a lot of copy-pasting existing code and modifying the parent classes to expose needed functionality.
+
+- How often did you have to change the framework source-code or plug-in interfaces because the existing solution did not fit?
+We have made three changes to our original plan:
+1) We originally wanted to uses an interface for the Plugin, with default functions. However, using an interface with two interfaces in it, was not possible. Therefore, we decided to use an abstract class instead with implemented default functions and two getters for retrieving the ClientPlugin and ServerPlugin.
+2) We originally had two Server hooks: onClientConnect and onClientConnected. However, it turned out we only needed a hook that ran once the client was started. Therefore, we created a hooks called onClientStarted.
+3) Our original plan did not include the PluginManager. It turned out that a manager of some sort was handy for managing the plugins.
