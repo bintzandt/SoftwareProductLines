@@ -1,4 +1,3 @@
-import java.io.Console;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -16,11 +15,13 @@ public class WriteThread extends Thread {
 	private ObjectOutputStream oos;
 	private Color color;
 	private PluginManager pluginManager;
+	private String userName;
 
 	public WriteThread(Socket socket, Client client) {
 		this.socket = socket;
 		this.client = client;
 		this.pluginManager = PluginManager.getInstance();
+		this.userName = "anonymous";
 
 		try {
 			oos = new ObjectOutputStream(socket.getOutputStream());
@@ -31,25 +32,12 @@ public class WriteThread extends Thread {
 	}
 
 	public void run() {
-
-		Console console = System.console();
-
-		String userName = client.viewsWaitForInput("Enter your name: ");
-		client.setUserName(userName);
-		color = Color.RESET;
-
-		try {
-			String secret = client.viewsWaitForInput("Enter the secret password: ");
-
-			LoginMessage loginMessage = new LoginMessage(userName, secret);
-			oos.writeObject(loginMessage);
-
-			client.viewsOutput("Joining the chat server as " + userName);
-		} catch (IOException ex) {
-			client.viewsOutput("Error sending login message to server: " + ex.getMessage());
-			ex.printStackTrace();
-			return; // Disconnect?
+		for (ClientPlugin plugin : this.pluginManager.getClientPlugins()) {
+			plugin.beforeClientCreation(client, this);
 		}
+
+		// Client creation?
+		color = Color.RESET;
 		
 		for (ClientPlugin plugin : this.pluginManager.getClientPlugins()) {
 			plugin.afterClientCreation(client, this);
@@ -58,9 +46,9 @@ public class WriteThread extends Thread {
 		String text;
 		Message m;
 		do {
-			text = client.viewsWaitForInput("[" + userName + "]: ");
+			text = client.viewsWaitForInput("[" + this.userName + "]: ");
 			
-			String usernameToSend = userName;
+			String usernameToSend = this.userName;
 					
 			try {
 				m = new Message(usernameToSend, text, color);
@@ -87,5 +75,13 @@ public class WriteThread extends Thread {
 	
 	public void setColor(Color color) {
 		this.color = color;
+	}
+
+	public ObjectOutputStream getOos(){
+		return this.oos;
+	}
+
+	public void setUsername( String userName ){
+		this.userName = userName;
 	}
 }

@@ -1,4 +1,5 @@
 public abstract class ClientPlugin {
+	public void beforeClientCreation( Client client, WriteThread writeThread ){}
 	public void afterClientCreation( Client client, WriteThread writeThread ){}
 	public String changeMessage( String messageBody, Message message ){ return messageBody; }
 	public String encryptMessage( String messageBody, Message message ){ return messageBody; }

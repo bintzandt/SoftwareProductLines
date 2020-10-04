@@ -3,21 +3,20 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Server {
 	private int port;
 	private Set<String> userNames = new HashSet<>();
 	private Observer observer;
+
+	private PluginManager pluginManager;
 	
 	private Logger logger;
-
-	public Map<String, Plugin> plugins = new HashMap<String, Plugin>();
 
 	public Server(int port) {
 		this.port = port;
 		this.observer = new Observer();
+		this.pluginManager = PluginManager.getInstance();
 		logger = new Logger("spl_server.log");
 	}
 
@@ -53,8 +52,6 @@ public class Server {
 
 		Server server = new Server(port);
 
-		server.plugins.put("authentication", new AuthenticationPlugin() );
-
 		server.execute();
 	}
 
@@ -84,6 +81,10 @@ public class Server {
 
 	boolean hasUsers() {
 		return !this.userNames.isEmpty();
+	}
+
+	PluginManager getPluginManager(){
+		return this.pluginManager;
 	}
 
 }

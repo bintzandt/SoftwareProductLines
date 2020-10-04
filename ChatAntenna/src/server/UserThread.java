@@ -17,7 +17,7 @@ public class UserThread extends Thread {
 		this.socket = socket;
 		this.server = server;
 
-		this.userName = "";
+		this.userName = "anonymous";
 		this.authenticated = false;
 	}
 
@@ -26,22 +26,19 @@ public class UserThread extends Thread {
 			this.ois = new ObjectInputStream(socket.getInputStream());
 			this.oos = new ObjectOutputStream(socket.getOutputStream());
 
-			AuthenticationPlugin auth = (AuthenticationPlugin) this.server.plugins.get("authentication");
-			if ( auth != null ){
-				do {
-					auth.execute(this);
-				} while (!authenticated);
-			}
+			this.clientStarted();
 
 			printUsers(userName);
 			server.addUserName(userName);
-
+			
 			Message serverMessage = new Message("Server", "New user connected: " + userName, Color.YELLOW);
 			server.broadcast(serverMessage, this);
-
+			
 			String clientMessage = "";
 			Message m;
 			boolean saidBye = false;
+			
+			
 			do {
 				m = (Message) ois.readObject();
 				clientMessage = m.getPlainMessage();
@@ -123,5 +120,11 @@ public class UserThread extends Thread {
 
 	public Socket getSocket(){
 		return this.socket;
+	}
+
+	private void clientStarted(){
+		for (ServerPlugin plugin : this.server.getPluginManager().getServerPlugins()){
+			plugin.onClientStarted(this);
+		}
 	}
 }
