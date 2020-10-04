@@ -6,12 +6,16 @@ public class ReverseEncryptionPlugin extends Plugin {
 	}
 	
 	public class ClientReverseEncryptionPlugin extends ClientPlugin {
-		public String encryptMessage( String messageBody, Message message ){
-			return new StringBuilder(new String(messageBody)).reverse().toString();
+		public void encryptMessage( Message message ){
+			message.setEncrypted(true);
+			message.m = new StringBuilder(new String(message.m)).reverse().toString().toCharArray();
 		}
 		
-		public String decryptMessage( String messageBody, Message message ){
-			return messageBody;
+		public void decryptMessage(Message message ){
+			if (message.isEncrypted) {
+				String text = new String(message.m);
+				message.m = new StringBuilder(text).reverse().toString().toCharArray();
+			}
 		}
 	}
 	

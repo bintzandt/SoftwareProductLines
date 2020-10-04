@@ -6,11 +6,13 @@ public class Message implements Serializable {
 	protected final String username;
 	protected char[] m;
 	protected final Color color;
+	protected boolean isEncrypted;
 	
 	public Message(String username, char[] m, Color color) {
 		this.username = username;
 		this.m = m;
 		this.color = color;
+		this.isEncrypted = false;
 	}
 	
 	public Message(String username, String m, Color color) {
@@ -26,7 +28,11 @@ public class Message implements Serializable {
 	}
 
 	public final String getPlainMessage() {
-		return "[" + username + "]: " + new String(this.m);
+		return "[" + username + "]: " + this.color +  new String(this.m) + Color.RESET;
+	}
+	
+	public void setEncrypted(boolean isEncrypted) {
+		this.isEncrypted = isEncrypted;
 	}
 
 	@Override

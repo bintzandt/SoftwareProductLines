@@ -9,10 +9,13 @@ public class PluginManager {
 	private PluginManager() {
 		this.plugins = new ArrayList<Plugin>() {{
 			add(new ReverseEncryptionPlugin());
+			add(new ROTEncryptionPlugin());
 			add(new ColorPlugin());
 			add(new AuthenticationPlugin());
-			// add(new ConsolePlugin());
-			add(new GUIPlugin());
+			
+			 add(new ConsolePlugin());
+//			GUI plugin does not work in Ubuntu terminal on windows
+//			 add(new GUIPlugin());
 		}};
 		
 	}

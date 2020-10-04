@@ -37,7 +37,7 @@ public class WriteThread extends Thread {
 		for (ClientPlugin plugin : this.pluginManager.getClientPlugins()) {
 			plugin.afterClientCreation(client, this);
 		}
-
+		
 		String text;
 		Message m;
 		do {
@@ -47,11 +47,15 @@ public class WriteThread extends Thread {
 					
 			try {
 				m = new Message(usernameToSend, text, color);
+				
 				for (ClientPlugin plugin : this.pluginManager.getClientPlugins()) {
-					text = plugin.changeMessage(text, m);
+					plugin.changeMessage(m);
 				}
 				
-				m = new Message(usernameToSend, text, color);
+				for (ClientPlugin plugin : this.pluginManager.getClientPlugins()) {
+					plugin.encryptMessage(m);
+				}
+				
 				oos.writeObject(m);
 			} catch (IOException ex) {
 				client.viewsOutput("Error sending message to server: " + ex.getMessage());

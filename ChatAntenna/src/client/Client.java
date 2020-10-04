@@ -39,8 +39,9 @@ public class Client {
 			if (plugin instanceof ClientUIPlugin) {
 				String input = ((ClientUIPlugin) plugin).viewWaitForInput(question);
 				
-				if (input != null)
+				if (input != null) {
 					return input;
+				}
 			}
 		}
 		
