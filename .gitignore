@@ -37,3 +37,6 @@ FeatureIDE/
 
 # Ignore bin directories
 **/bin
+/.metadata/
+
+/target/

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<featureModel>
+	<properties>
+		<graphics key="legendautolayout" value="true"/>
+		<graphics key="showshortnames" value="false"/>
+		<graphics key="layout" value="horizontal"/>
+		<graphics key="showcollapsedconstraints" value="true"/>
+		<graphics key="legendhidden" value="false"/>
+		<graphics key="layoutalgorithm" value="1"/>
+	</properties>
+	<struct>
+		<and abstract="true" mandatory="true" name="Root">
+			<feature mandatory="true" name="Base"/>
+			<feature name="ColoredMessages"/>
+			<feature name="SendUsername"/>
+			<feature name="ChatLog"/>
+			<or abstract="true" name="Encryption">
+				<feature name="ROT13"/>
+				<feature name="Reverse"/>
+			</or>
+			<alt abstract="true" mandatory="true" name="UserInterface">
+				<feature name="GUI"/>
+				<feature name="CommandLine"/>
+			</alt>
+		</and>
+	</struct>
+	<constraints>
+		<rule>
+			<imp>
+				<var>ColoredMessages</var>
+				<not>
+					<var>GUI</var>
+				</not>
+			</imp>
+		</rule>
+	</constraints>
+</featureModel>
