@@ -26,7 +26,7 @@ public class WriteThread extends Thread {
 		try {
 			oos = new ObjectOutputStream(socket.getOutputStream());
 		} catch (IOException ex) {
-			client.viewsOutput("Error getting output stream: " + ex.getMessage());
+			client.viewOutput("Error getting output stream: " + ex.getMessage());
 			ex.printStackTrace();
 		}
 	}
@@ -41,7 +41,7 @@ public class WriteThread extends Thread {
 		String text;
 		Message m;
 		do {
-			text = client.viewsWaitForInput("[" + this.userName + "]: ");
+			text = client.viewWaitForInput("[" + this.userName + "]: ");
 			
 			String usernameToSend = this.userName;
 					
@@ -58,7 +58,7 @@ public class WriteThread extends Thread {
 				
 				oos.writeObject(m);
 			} catch (IOException ex) {
-				client.viewsOutput("Error sending message to server: " + ex.getMessage());
+				client.viewOutput("Error sending message to server: " + ex.getMessage());
 				ex.printStackTrace();
 			}
 
@@ -68,7 +68,7 @@ public class WriteThread extends Thread {
 			socket.close();
 		} catch (IOException ex) {
 
-			client.viewsOutput("Error writing to server: " + ex.getMessage());
+			client.viewOutput("Error writing to server: " + ex.getMessage());
 		}
 	}
 	

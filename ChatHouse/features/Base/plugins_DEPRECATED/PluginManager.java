@@ -15,7 +15,7 @@ public class PluginManager {
 			
 //			 add(new ConsolePlugin());
 //			GUI plugin does not work in Ubuntu terminal on windows
-			 add(new GUIPlugin());
+			 //add(new GUIPlugin());
 		}};
 		
 	}
