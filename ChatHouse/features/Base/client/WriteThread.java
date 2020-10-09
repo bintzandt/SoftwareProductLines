@@ -14,13 +14,11 @@ public class WriteThread extends Thread {
 	private Client client;
 	private ObjectOutputStream oos;
 	private Color color;
-	private PluginManager pluginManager;
 	private String userName;
 
 	public WriteThread(Socket socket, Client client) {
 		this.socket = socket;
 		this.client = client;
-		this.pluginManager = PluginManager.getInstance();
 		this.userName = "anonymous";
 
 		try {
@@ -33,10 +31,9 @@ public class WriteThread extends Thread {
 
 	public void run() {
 		color = Color.RESET;
+		this.client.setUserName(userName);
 		
-		for (ClientPlugin plugin : this.pluginManager.getClientPlugins()) {
-			plugin.afterClientCreation(client, this);
-		}
+		this.afterClientCreation();
 		
 		String text;
 		Message m;
@@ -47,14 +44,7 @@ public class WriteThread extends Thread {
 					
 			try {
 				m = new Message(usernameToSend, text, color);
-				
-				for (ClientPlugin plugin : this.pluginManager.getClientPlugins()) {
-					plugin.changeMessage(m);
-				}
-				
-				for (ClientPlugin plugin : this.pluginManager.getClientPlugins()) {
-					plugin.encryptMessage(m);
-				}
+				m.encrypt();
 				
 				oos.writeObject(m);
 			} catch (IOException ex) {
@@ -83,4 +73,6 @@ public class WriteThread extends Thread {
 	public void setUsername( String userName ){
 		this.userName = userName;
 	}
+	
+	private void afterClientCreation() {}
 }

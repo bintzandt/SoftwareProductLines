@@ -11,18 +11,18 @@ public class AuthenticationPlugin extends Plugin {
 	class ClientAuthenticationPlugin extends ClientPlugin {
 		@Override
 		public void afterClientCreation(Client client, WriteThread writeThread) {
-			String userName = client.viewsWaitForInput("Enter your name: ");
+			String userName = client.viewWaitForInput("Enter your name: ");
 			client.setUserName(userName);
 			writeThread.setUsername(userName);
 			try {
-				String secret = client.viewsWaitForInput("Enter the secret password: ");
+				String secret = client.viewWaitForInput("Enter the secret password: ");
 
 				LoginMessage loginMessage = new LoginMessage(userName, secret);
 				writeThread.getOos().writeObject(loginMessage);
 
-				client.viewsOutput("Joining the chat server as " + userName);
+				client.viewOutput("Joining the chat server as " + userName);
 			} catch (IOException ex) {
-				client.viewsOutput("Error sending login message to server: " + ex.getMessage());
+				client.viewOutput("Error sending login message to server: " + ex.getMessage());
 				ex.printStackTrace();
 				return; // Disconnect?
 			}
