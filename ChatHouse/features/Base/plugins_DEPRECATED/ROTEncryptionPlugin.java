@@ -7,7 +7,7 @@ public class ROTEncryptionPlugin extends Plugin {
 	
 	public class ClientROTEncryptionPlugin extends ClientPlugin {
 		public void encryptMessage( Message message ){
-			message.setEncrypted(true);
+//			message.setEncrypted(true);
 			char[] m_encrypted = message.m.clone();
 			for (int i = 0; i < m_encrypted.length; i++) {
 				char c = m_encrypted[i];

@@ -11,6 +11,8 @@ public class Client {
 	private int port;
 	private String userName;
 	
+	private boolean block = false;
+	
 	private Logger logger;
 	
 	public Client(String hostname, int port) {
@@ -59,5 +61,13 @@ public class Client {
 
 		Client client = new Client(hostname, port);
 		client.execute();
+	}
+	
+	public void setBlock(boolean b) {
+		this.block = b;
+	}
+	
+	public boolean getBlock() {
+		return this.block;
 	}
 }

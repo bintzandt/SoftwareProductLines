@@ -30,8 +30,13 @@ public class ReadThread extends Thread {
 		while (true) {
 			try {
 				Message m = (Message) ois.readObject();
+				m.decrypt();
 
-				client.viewOutput(m.getMessageBody());
+				while (this.client.getBlock()) {
+					Thread.sleep(500);
+				}
+				
+				client.viewOutput(m.getMessageBody(), this.client.getUserName());
 
 				client.getLogger().writeln(m.getPlainMessage());
 
@@ -44,4 +49,5 @@ public class ReadThread extends Thread {
 
 		client.getLogger().close();
 	}
+
 }

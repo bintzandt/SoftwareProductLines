@@ -31,9 +31,9 @@ public class Message implements Serializable {
 		return "[" + username + "]: " + this.color +  new String(this.m) + Color.RESET;
 	}
 	
-	public void setEncrypted(boolean isEncrypted) {
-		this.isEncrypted = isEncrypted;
-	}
+	public void encrypt() {}
+	
+	public void decrypt() {}
 
 	@Override
 	public final String toString() {

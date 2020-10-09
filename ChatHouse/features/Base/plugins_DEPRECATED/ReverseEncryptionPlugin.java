@@ -7,7 +7,7 @@ public class ReverseEncryptionPlugin extends Plugin {
 	
 	public class ClientReverseEncryptionPlugin extends ClientPlugin {
 		public void encryptMessage( Message message ){
-			message.setEncrypted(true);
+//			message.setEncrypted(true);
 			message.m = new StringBuilder(new String(message.m)).reverse().toString().toCharArray();
 		}
 		

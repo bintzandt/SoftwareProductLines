@@ -1,7 +1,8 @@
-public class UserThread extends Thread {
+public class WriteThread extends Thread {
+	private Client client;
 	
-	private void clientStarted(){
-		Color color;
+	private void afterClientCreation(){
+		this.client.setBlock(true);
 		do {
 			try {
 				String colorString = client.viewWaitForInput("Enter your text color: ").toUpperCase();
@@ -12,8 +13,9 @@ public class UserThread extends Thread {
 			}
 			break;
 		} while (true);
-		writeThread.setColor(color);
+		this.setColor(color);
 		client.viewOutput("You chose " + color.name() + ", all messages you send will be displayed in this color!");
+		this.client.setBlock(false);
 	}
-	
+
 }
