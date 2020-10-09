@@ -13,12 +13,10 @@ public class ReadThread extends Thread {
 	private final Socket socket;
 	private final Client client;
 	private ObjectInputStream ois;
-	private PluginManager pluginManager;
 
 	public ReadThread(Socket socket, Client client) {
 		this.socket = socket;
 		this.client = client;
-		this.pluginManager = PluginManager.getInstance();
 	}
 
 	public void run() {
@@ -32,10 +30,6 @@ public class ReadThread extends Thread {
 		while (true) {
 			try {
 				Message m = (Message) ois.readObject();
-				
-				for (ClientPlugin plugin : this.pluginManager.getClientPlugins()) {
-					plugin.decryptMessage(m);
-				}
 
 				client.viewOutput(m.getMessageBody());
 

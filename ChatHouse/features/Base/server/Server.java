@@ -16,7 +16,6 @@ public class Server {
 	public Server(int port) {
 		this.port = port;
 		this.observer = new Observer();
-		this.pluginManager = PluginManager.getInstance();
 		logger = new Logger("spl_server.log");
 	}
 

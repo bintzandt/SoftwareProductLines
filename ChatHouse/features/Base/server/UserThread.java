@@ -123,8 +123,6 @@ public class UserThread extends Thread {
 	}
 
 	private void clientStarted(){
-		for (ServerPlugin plugin : this.server.getPluginManager().getServerPlugins()){
-			plugin.onClientStarted(this);
-		}
+		
 	}
 }
