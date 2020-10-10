@@ -76,4 +76,8 @@ public class Client {
 	public void viewOutput(String message) {
 		outputField.append(message + "\n");
 	}
+	
+	public void viewOutput(String message, String username) {
+		outputField.append(message + "\n");
+	}
 }
