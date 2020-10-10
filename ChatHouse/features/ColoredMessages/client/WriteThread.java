@@ -2,6 +2,7 @@ public class WriteThread extends Thread {
 	private Client client;
 	
 	private void afterClientCreation(){
+		original();
 		this.client.setBlock(true);
 		do {
 			try {

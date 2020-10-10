@@ -9,7 +9,6 @@ import java.net.UnknownHostException;
 public class Client {
 	private String hostname;
 	private int port;
-	private String userName;
 	
 	private boolean block = false;
 	
@@ -40,12 +39,8 @@ public class Client {
 
 	}
 
-	void setUserName(String userName) {
-		this.userName = userName;
-	}
-
 	public String getUserName() {
-		return this.userName;
+		return "anonymous";
 	}
 
 	public Logger getLogger() {

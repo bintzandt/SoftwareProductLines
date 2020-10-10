@@ -2,7 +2,6 @@ import java.io.Console;
 
 public class Client {
 	private final Console console;
-	private String userName;
 
 	public Client(String hostname, int port) {
 		this.console = System.console();

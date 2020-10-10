@@ -12,8 +12,9 @@
 		<and abstract="true" mandatory="true" name="Root">
 			<feature mandatory="true" name="Base"/>
 			<feature name="ColoredMessages"/>
-			<feature name="SendUsername"/>
+			<feature name="Authentication"/>
 			<feature name="ChatLog"/>
+			<feature name="SoundOutput"/>
 			<or abstract="true" name="Encryption">
 				<feature name="ROT13"/>
 				<feature name="Reverse"/>
