@@ -8,8 +8,6 @@ public class Server {
 	private int port;
 	private Set userNames = new HashSet();
 	private Observer observer;
-
-	private PluginManager pluginManager;
 	
 	private Logger logger;
 
@@ -82,10 +80,6 @@ public class Server {
 
 	boolean hasUsers() {
 		return !this.userNames.isEmpty();
-	}
-
-	PluginManager getPluginManager(){
-		return this.pluginManager;
 	}
 
 }

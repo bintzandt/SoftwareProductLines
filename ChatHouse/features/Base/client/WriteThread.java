@@ -14,12 +14,10 @@ public class WriteThread extends Thread {
 	private Client client;
 	private ObjectOutputStream oos;
 	private Color color;
-	private String userName;
 
 	public WriteThread(Socket socket, Client client) {
 		this.socket = socket;
 		this.client = client;
-		this.userName = "anonymous";
 
 		try {
 			oos = new ObjectOutputStream(socket.getOutputStream());
@@ -31,16 +29,15 @@ public class WriteThread extends Thread {
 
 	public void run() {
 		color = Color.RESET;
-		this.client.setUserName(userName);
 		
 		this.afterClientCreation();
 		
 		String text;
 		Message m;
 		do {
-			text = client.viewWaitForInput("[" + this.userName + "]: ");
+			text = client.viewWaitForInput("[" + this.client.getUserName() + "]: ");
 			
-			String usernameToSend = this.userName;
+			String usernameToSend = this.client.getUserName();
 					
 			try {
 				m = new Message(usernameToSend, text, color);
@@ -68,10 +65,6 @@ public class WriteThread extends Thread {
 
 	public ObjectOutputStream getOos(){
 		return this.oos;
-	}
-
-	public void setUsername( String userName ){
-		this.userName = userName;
 	}
 	
 	private void afterClientCreation() {}

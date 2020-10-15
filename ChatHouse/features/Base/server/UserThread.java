@@ -11,14 +11,12 @@ public class UserThread extends Thread {
 	public ObjectOutputStream oos;
 
 	public String userName;
-	public boolean authenticated;
 
 	public UserThread(Socket socket, Server server) {
 		this.socket = socket;
 		this.server = server;
 
 		this.userName = "anonymous";
-		this.authenticated = false;
 	}
 
 	public void run() {
@@ -28,8 +26,8 @@ public class UserThread extends Thread {
 
 			this.clientStarted();
 
-			printUsers(userName);
-			server.addUserName(userName);
+			printUsers(this.userName);
+			server.addUserName(this.userName);
 			
 			Message serverMessage = new Message("Server", "New user connected: " + userName, Color.YELLOW);
 			server.broadcast(serverMessage, this);
@@ -108,14 +106,6 @@ public class UserThread extends Thread {
 			System.out.println("Error sending message to user: " + ex.getMessage());
 			ex.printStackTrace();
 		}
-	}
-
-	public void setUserName( String userName ){
-		this.userName = userName;
-	}
-
-	public void setAuthenticated( boolean authenticated ){
-		this.authenticated = authenticated;
 	}
 
 	public Socket getSocket(){
