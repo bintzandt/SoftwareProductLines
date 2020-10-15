@@ -1,0 +1,4 @@
+run server with argument 8080
+
+run client using the following command in the "src" folder
+javac -d out **/*.java && java -cp out Client localhost 8080

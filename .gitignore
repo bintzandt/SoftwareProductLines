@@ -18,6 +18,8 @@
 *.zip
 *.tar.gz
 *.rar
+*.metadata
+*.settings
 
 # Dummy files
 fiddle.*
