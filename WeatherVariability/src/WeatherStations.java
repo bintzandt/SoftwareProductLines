@@ -1,5 +1,9 @@
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -51,6 +55,10 @@ public class WeatherStations {
 	
 	public WeatherStation getWeatherStation(String key) {
 		return this.l.get(key);
+	}
+	
+	public Set<String> getWeatherStationNames() {
+		return this.l.keySet();
 	}
 	
 	// debug code

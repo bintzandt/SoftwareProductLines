@@ -4,7 +4,8 @@ public class Main {
 		WeatherStations weatherStations = WeatherStations.getInstance();
 		weatherStations.printWeatherStations();
 
-		GUI gui = new GUI();
+		GUI gui = new GUI(weatherStations);
+		gui.populateWeatherStations();
 	}
 
 }
