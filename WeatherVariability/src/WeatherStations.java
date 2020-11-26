@@ -28,14 +28,13 @@ public class WeatherStations {
 	        NodeList weerstations = doc.getElementsByTagName("weerstation");     
         	for (int i=0; i< weerstations.getLength(); i++) {
         		Node weerstation_node = weerstations.item(i);
-        		System.out.println("\nCurrent Element :" + weerstation_node.getNodeName());
         		
         		if (weerstation_node.getNodeType() == Node.ELEMENT_NODE) {
         			Element weerstation_element = (Element) weerstation_node;
-        			
-        			WeatherStation weatherStation = new WeatherStation(weerstation_element);
+        			String regio = weerstation_element.getElementsByTagName("stationnaam").item(0).getAttributes().getNamedItem("regio").getTextContent();
+        			WeatherStation weatherStation = new WeatherStation(weerstation_element, regio);
         			 
-        			 l.put(weatherStation.getWeatherStationName(), weatherStation);
+        			 l.put(regio, weatherStation);
         		}
 	        }
 
