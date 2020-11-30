@@ -11,7 +11,10 @@
 	<struct>
 		<and abstract="true" mandatory="true" name="Root">
 			<feature mandatory="true" name="Base"/>
+			<feature name="WindDirection"/>
 			<feature name="WindSpeed"/>
+			<feature name="AirPressure"/>
+			<feature name="SunIntensity"/>
 		</and>
 	</struct>
 </featureModel>

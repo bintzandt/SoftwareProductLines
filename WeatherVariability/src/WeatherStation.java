@@ -147,5 +147,47 @@ public  class  WeatherStation {
 		return this.regio;
 	}
 
+	
+	
+	public WeatherAttribute getTemperatur10cm() {
+		return new WeatherAttribute("Temperatuur", this.temperatuur10cm.toString(), "°C");
+	}
+
+	
+	
+	public WeatherAttribute getWindrichting() {
+		return new WeatherAttribute("Windrichting", this.windrichting, null);
+	}
+
+	
+	
+	public WeatherAttribute getWindsnelheidms() {
+		if (this.windsnelheidMS instanceof Float) {
+			return new WeatherAttribute("Windsnelheid", this.windsnelheidMS.toString(), "m/s");
+		} else { 
+			return new WeatherAttribute("Windsnelheid");
+		}
+	}
+
+	
+	
+	public WeatherAttribute getLuchtdruk() {
+		if (this.luchtdruk instanceof Float) {
+			return new WeatherAttribute("Luchtdruk", this.luchtdruk.toString(), "hPa");
+		} else {
+			return new WeatherAttribute("Luchtdruk");
+		}
+	}
+
+	
+	
+	public WeatherAttribute getZonintensiteit() {
+		if (this.zonintensiteitWM2 instanceof Integer) {
+			return new WeatherAttribute("Zonintensiteit", this.zonintensiteitWM2.toString(), "W/m²");
+		} else {
+			return new WeatherAttribute("Zonintensiteit");
+		}
+	}
+
 
 }

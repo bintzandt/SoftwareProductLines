@@ -76,24 +76,24 @@ public class GUI {
 		attributesPanel.add(cityLabel);
 		
 		// add weather information to GUI
-		this.addAttributes();
+		this.addAttributes(weatherStation);
 		
 		attributesPanel.revalidate();
 		attributesPanel.repaint();
 	}
 	
-	private void addAttributes() {
-		addAttribute("Temperature:", "40", "°C");
+	private void addAttributes(WeatherStation weatherStation) {
+		this.addAttribute(weatherStation.getTemperatur10cm());
 	}
 	
-	private void addAttribute(String label, String value, String unit) {
+	private void addAttribute(WeatherAttribute weatherAttribute) {
 		JPanel attrPanel = new JPanel();
-		JLabel labelLabel = new JLabel(label);
+		JLabel labelLabel = new JLabel(weatherAttribute.getDescription());
 		Font unboldFont = labelLabel.getFont().deriveFont(labelLabel.getFont().getStyle() & ~Font.BOLD);
 		labelLabel.setFont(unboldFont);
 		attrPanel.add(labelLabel);
-		attrPanel.add(new JLabel(value));
-		JLabel unitLabel = new JLabel(unit);
+		attrPanel.add(new JLabel(weatherAttribute.getValue()));
+		JLabel unitLabel = new JLabel(weatherAttribute.getUnit());
 		unitLabel.setFont(unboldFont);
 		attrPanel.add(unitLabel);
 		attributesPanel.add(attrPanel);
