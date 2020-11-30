@@ -37,7 +37,7 @@ public class GUI {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(400, 400);
 		
-		cityDropdown = new JComboBox<>();
+		cityDropdown = new JComboBox<String>();
 		ItemListener cityDropdownItemListener = new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -58,7 +58,7 @@ public class GUI {
 	}
 	
 	public void populateWeatherStations() {
-		ArrayList<String> list = new ArrayList<>();
+		ArrayList<String> list = new ArrayList<String>();
 		for (String name: weatherStations.getWeatherStationNames()) {
 			list.add(name);
 		}
@@ -74,9 +74,16 @@ public class GUI {
 		attributesPanel.removeAll();
 		JLabel cityLabel = new JLabel("Weather in " + stationName);
 		attributesPanel.add(cityLabel);
-		addAttribute("Temperature:", "40", "°C");
+		
+		// add weather information to GUI
+		this.addAttributes();
+		
 		attributesPanel.revalidate();
 		attributesPanel.repaint();
+	}
+	
+	private void addAttributes() {
+		addAttribute("Temperature:", "40", "°C");
 	}
 	
 	private void addAttribute(String label, String value, String unit) {

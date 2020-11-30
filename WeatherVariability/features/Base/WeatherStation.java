@@ -1,63 +1,28 @@
-import java.text.ParseException; 
-import java.text.SimpleDateFormat; 
-import java.util.Date; 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-import org.w3c.dom.Element; 
+import org.w3c.dom.Element;
 
-public  class  WeatherStation {
-	
+public class WeatherStation {
 	private final String regio;
-
-	
 	
 	private final String stationnaam;
-
-	
 	private final Float lat;
-
-	
 	private final Float lon;
-
-	
 	private final Date date;
-
-	
 	private final Integer luchtvochtigheid;
-
-	
 	private final Float temperatuurGC;
-
-	
 	private final Float windsnelheidMS;
-
-	
 	private final Integer windsnelheidBF;
-
-	
 	private final Integer windrichtingGR;
-
-	
 	private final String windrichting;
-
-	
 	private final Float luchtdruk;
-
-	
 	private final Integer zichtmeters;
-
-	
 	private final Float windstotenMS;
-
-	
 	private final Float regenMMPU;
-
-	
 	private final Integer zonintensiteitWM2;
-
-	
 	private final Float temperatuur10cm;
-
-	
 	
 	
 	
@@ -83,8 +48,6 @@ public  class  WeatherStation {
 		 this.temperatuur10cm = getFloatElement(weerstation_element, "temperatuur10cm");
 	
 	}
-
-	
 	
 	@Override
     public String toString() {
@@ -108,8 +71,6 @@ public  class  WeatherStation {
 				
 				
 	}
-
-	
 	
 	private Float getFloatElement(Element e, String tag) {
 		try {
@@ -119,8 +80,6 @@ public  class  WeatherStation {
 			return null;
 		}
 	}
-
-	
 	
 	private Integer getIntegerElement(Element e, String tag) {
 		try {
@@ -130,8 +89,6 @@ public  class  WeatherStation {
 			return null;
 		}
 	}
-
-	
 	
 	private Date getDateElement(Element e, String tag) {
 		try {
@@ -140,12 +97,8 @@ public  class  WeatherStation {
 			return null;
 		}
 	}
-
-	
 	
 	public String getRegio() {
 		return this.regio;
 	}
-
-
 }
