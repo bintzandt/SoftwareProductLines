@@ -2,5 +2,9 @@
 <configuration>
 	<feature automatic="selected" name="Root"/>
 	<feature automatic="selected" name="Base"/>
-	<feature name="WindSpeed"/>
+	<feature manual="selected" name="WindDirection"/>
+	<feature manual="selected" name="WindSpeed"/>
+	<feature manual="selected" name="AirPressure"/>
+	<feature manual="selected" name="SunIntensity"/>
+	<feature manual="selected" name="Humidity"/>
 </configuration>
