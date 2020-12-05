@@ -7,4 +7,8 @@
 	<feature manual="selected" name="AirPressure"/>
 	<feature manual="selected" name="SunIntensity"/>
 	<feature manual="selected" name="Humidity"/>
+	<feature automatic="selected" name="TemperatureUnit"/>
+	<feature manual="selected" name="Celcius"/>
+	<feature automatic="unselected" name="Kelvin"/>
+	<feature automatic="unselected" name="Fahrenheit"/>
 </configuration>

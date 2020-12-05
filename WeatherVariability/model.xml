@@ -16,6 +16,11 @@
 			<feature name="AirPressure"/>
 			<feature name="SunIntensity"/>
 			<feature name="Humidity"/>
+			<alt mandatory="true" name="TemperatureUnit">
+				<feature name="Celcius"/>
+				<feature name="Kelvin"/>
+				<feature name="Fahrenheit"/>
+			</alt>
 		</and>
 	</struct>
 </featureModel>

@@ -1,6 +1,9 @@
 # Compiled class file
 *.class
 
+# Compiled src files
+WeatherVariability/src/*.java
+
 # Log file
 *.log
 

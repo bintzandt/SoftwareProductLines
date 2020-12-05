@@ -150,7 +150,12 @@ public  class  WeatherStation {
 	
 	
 	public WeatherAttribute getTemperatur10cm() {
-		return new WeatherAttribute("Temperatuur", this.temperatuur10cm != null ? this.temperatuur10cm.toString() : "n/a", "°C");
+		if (this.temperatuur10cm instanceof Float) {
+			return new WeatherAttribute("Temperatuur", this.temperatuur10cm.toString(), "°C");
+		} else {
+			return new WeatherAttribute("Temperatuur", "n/a", "°C");
+		}
+		
 	}
 
 	
