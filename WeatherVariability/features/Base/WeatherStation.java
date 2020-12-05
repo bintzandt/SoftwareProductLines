@@ -103,7 +103,7 @@ public class WeatherStation {
 	}
 	
 	public WeatherAttribute getTemperatur10cm() {
-		return new WeatherAttribute("Temperatuur", this.temperatuur10cm.toString(), "°C");
+		return new WeatherAttribute("Temperatuur", this.temperatuur10cm != null ? this.temperatuur10cm.toString() : "n/a", "°C");
 	}
 	
 	public WeatherAttribute getWindrichting() {
