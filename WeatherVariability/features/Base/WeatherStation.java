@@ -133,4 +133,12 @@ public class WeatherStation {
 			return new WeatherAttribute("Zonintensiteit");
 		}
 	}
+	
+	public WeatherAttribute getLuchtvochtigheid() {
+		if (this.luchtvochtigheid instanceof Integer) {
+			return new WeatherAttribute("Luchtvochtigheid", this.luchtvochtigheid.toString(), "%");
+		} else {
+			return new WeatherAttribute("Luchtvochtigheid");
+		}
+	}
 }

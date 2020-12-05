@@ -15,6 +15,7 @@
 			<feature name="WindSpeed"/>
 			<feature name="AirPressure"/>
 			<feature name="SunIntensity"/>
+			<feature name="Humidity"/>
 		</and>
 	</struct>
 </featureModel>

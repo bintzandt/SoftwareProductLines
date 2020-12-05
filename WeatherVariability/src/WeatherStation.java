@@ -189,5 +189,15 @@ public  class  WeatherStation {
 		}
 	}
 
+	
+	
+	public WeatherAttribute getLuchtvochtigheid() {
+		if (this.luchtvochtigheid instanceof Integer) {
+			return new WeatherAttribute("Luchtvochtigheid", this.luchtvochtigheid.toString(), "%");
+		} else {
+			return new WeatherAttribute("Luchtvochtigheid");
+		}
+	}
+
 
 }
