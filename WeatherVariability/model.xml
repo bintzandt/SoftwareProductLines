@@ -16,11 +16,17 @@
 			<feature name="AirPressure"/>
 			<feature name="SunIntensity"/>
 			<feature name="Humidity"/>
-			<alt mandatory="true" name="TemperatureUnit">
-				<feature name="Celcius"/>
-				<feature name="Kelvin"/>
-				<feature name="Fahrenheit"/>
-			</alt>
+			<and abstract="true" mandatory="true" name="Units">
+				<alt abstract="true" mandatory="true" name="TemperatureUnit">
+					<feature abstract="true" name="Celcius"/>
+					<feature name="Kelvin"/>
+					<feature name="Fahrenheit"/>
+				</alt>
+				<alt abstract="true" mandatory="true" name="WindSpeedUnit">
+					<feature abstract="true" name="MeterPerSecond"/>
+					<feature name="Beaufort"/>
+				</alt>
+			</and>
 		</and>
 	</struct>
 </featureModel>

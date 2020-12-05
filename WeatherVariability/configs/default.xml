@@ -7,8 +7,12 @@
 	<feature manual="selected" name="AirPressure"/>
 	<feature manual="selected" name="SunIntensity"/>
 	<feature manual="selected" name="Humidity"/>
+	<feature automatic="selected" name="Units"/>
 	<feature automatic="selected" name="TemperatureUnit"/>
 	<feature manual="selected" name="Celcius"/>
 	<feature automatic="unselected" name="Kelvin"/>
 	<feature automatic="unselected" name="Fahrenheit"/>
+	<feature automatic="selected" name="WindSpeedUnit"/>
+	<feature manual="selected" name="MeterPerSecond"/>
+	<feature automatic="unselected" name="Beaufort"/>
 </configuration>

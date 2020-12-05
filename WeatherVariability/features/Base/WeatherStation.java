@@ -115,7 +115,7 @@ public class WeatherStation {
 		return new WeatherAttribute("Windrichting", this.windrichting, null);
 	}
 	
-	public WeatherAttribute getWindsnelheidms() {
+	public WeatherAttribute getWindsnelheid() {
 		if (this.windsnelheidMS instanceof Float) {
 			return new WeatherAttribute("Windsnelheid", this.windsnelheidMS.toString(), "m/s");
 		} else { 
