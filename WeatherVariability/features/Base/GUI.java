@@ -83,7 +83,7 @@ public class GUI {
 	}
 	
 	private void addAttributes(WeatherStation weatherStation) {
-		this.addAttribute(weatherStation.getTemperatur10cm());
+		// No attributes by default, everything is configurable
 	}
 	
 	private void addAttribute(WeatherAttribute weatherAttribute) {
