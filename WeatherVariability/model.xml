@@ -18,11 +18,11 @@
 			<feature name="SunIntensity"/>
 			<feature name="Humidity"/>
 			<and abstract="true" mandatory="true" name="Units">
-				<alt abstract="true" mandatory="true" name="TemperatureUnit">
-					<feature abstract="true" name="Celcius"/>
+				<or abstract="true" mandatory="true" name="TemperatureUnit">
+					<feature name="Celcius"/>
 					<feature name="Kelvin"/>
 					<feature name="Fahrenheit"/>
-				</alt>
+				</or>
 				<alt abstract="true" mandatory="true" name="WindSpeedUnit">
 					<feature abstract="true" name="MeterPerSecond"/>
 					<feature name="Beaufort"/>

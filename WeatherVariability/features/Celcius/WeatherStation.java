@@ -8,13 +8,9 @@ public class WeatherStation {
 			new ValueConverter() {
 				@Override
 				String getShownValue(String apiValue) {
-					return celciusToKelvin(Float.parseFloat(apiValue)).toString();
+					return ((Float) Float.parseFloat(apiValue)).toString();
 				}
-			}, "°K"
+			}, "°C"
 		);
-	}
-	
-	private Float celciusToKelvin( Float tempInCelcius ) {
-		return (float) (tempInCelcius + 273.15);
 	}
 } 
