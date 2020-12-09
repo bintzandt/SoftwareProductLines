@@ -6,7 +6,6 @@ public class WeatherStation {
 
 		luchtdruk.addShownValue(
 			new ValueConverter() {
-				@Override
 				String getShownValue(String apiValue) {
 					return ((Float) Float.parseFloat(apiValue)).toString();
 				}

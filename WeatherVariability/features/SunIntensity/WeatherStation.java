@@ -1,15 +1,15 @@
 import org.w3c.dom.Element;
 
 public class WeatherStation {
-	public void addWindrichting(Element weerstation_element) {
+	public void addZonintensiteit(Element weerstation_element) {
 		original(weerstation_element);
 
-		windrichting.addShownValue(
+		zonintensiteitWM2.addShownValue(
 			new ValueConverter() {
 				String getShownValue(String apiValue) {
-					return apiValue;
+					return ((Integer) Integer.parseInt(apiValue)).toString();
 				}
-			}, null
+			}, "W/m²"
 		);
 	}
 } 

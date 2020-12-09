@@ -50,7 +50,7 @@ public   class  WeatherStation {
 	private final Float regenMMPU;
 
 	
-	private final Integer zonintensiteitWM2;
+	private WeatherAttribute zonintensiteitWM2;
 
 	
 	private WeatherAttribute temperatuur10cm;
@@ -77,7 +77,7 @@ public   class  WeatherStation {
 		this.zichtmeters = getIntegerElement(weerstation_element, "zichtmeters");
 		this.windstotenMS = getFloatElement(weerstation_element, "windstotenMS");
 		this.regenMMPU = getFloatElement(weerstation_element, "regenMMPU");
-		this.zonintensiteitWM2 = getIntegerElement(weerstation_element, "zonintensiteitWM2");
+		this.addZonintensiteit(weerstation_element);
 		this.addTemperatuur10cm(weerstation_element);
 	
 	}
@@ -181,7 +181,7 @@ public   class  WeatherStation {
 
 	
 	
-	 private void  addWindrichting__wrappee__Base(Element weerstation_element) {
+	 private void  addWindrichting__wrappee__Base  (Element weerstation_element) {
 		windrichting = new WeatherAttribute(
 			"Windrichting", getElement(weerstation_element, "windrichting")
 		);
@@ -193,7 +193,6 @@ public   class  WeatherStation {
 
 		windrichting.addShownValue(
 			new ValueConverter() {
-				@Override
 				String getShownValue(String apiValue) {
 					return apiValue;
 				}
@@ -247,7 +246,7 @@ public   class  WeatherStation {
 
 	
 	
-	 private void  addLuchtdruk__wrappee__Base(Element weerstation_element) {
+	 private void  addLuchtdruk__wrappee__Base  (Element weerstation_element) {
 		luchtdruk = new WeatherAttribute(
 			"Luchtdruk", getElement(weerstation_element, "luchtdruk")
 		);
@@ -259,7 +258,6 @@ public   class  WeatherStation {
 
 		luchtdruk.addShownValue(
 			new ValueConverter() {
-				@Override
 				String getShownValue(String apiValue) {
 					return ((Float) Float.parseFloat(apiValue)).toString();
 				}
@@ -270,6 +268,32 @@ public   class  WeatherStation {
 	
 	public WeatherAttribute getLuchtdruk() {
 		return luchtdruk;
+	}
+
+	
+	
+	 private void  addZonintensiteit__wrappee__Base  (Element weerstation_element) {
+		zonintensiteitWM2 = new WeatherAttribute(
+			"Zonintensiteit", getElement(weerstation_element, "zonintensiteitWM2")
+		);
+	}
+
+	
+	public void addZonintensiteit(Element weerstation_element) {
+		addZonintensiteit__wrappee__Base(weerstation_element);
+
+		zonintensiteitWM2.addShownValue(
+			new ValueConverter() {
+				String getShownValue(String apiValue) {
+					return ((Integer) Integer.parseInt(apiValue)).toString();
+				}
+			}, "W/m²"
+		);
+	}
+
+	
+	public WeatherAttribute getZonintensiteit() {
+		return zonintensiteitWM2;
 	}
 
 	

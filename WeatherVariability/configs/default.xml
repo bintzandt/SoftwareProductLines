@@ -6,7 +6,7 @@
 	<feature manual="selected" name="WindDirection"/>
 	<feature manual="selected" name="WindSpeed"/>
 	<feature manual="selected" name="AirPressure"/>
-	<feature name="SunIntensity"/>
+	<feature manual="selected" name="SunIntensity"/>
 	<feature name="Humidity"/>
 	<feature automatic="selected" name="Units"/>
 	<feature automatic="selected" name="TemperatureUnit"/>

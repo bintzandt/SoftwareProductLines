@@ -21,7 +21,7 @@ public class WeatherStation {
 	private final Integer zichtmeters;
 	private final Float windstotenMS;
 	private final Float regenMMPU;
-	private final Integer zonintensiteitWM2;
+	private WeatherAttribute zonintensiteitWM2;
 	private WeatherAttribute temperatuur10cm;
 	
 	
@@ -44,7 +44,7 @@ public class WeatherStation {
 		this.zichtmeters = getIntegerElement(weerstation_element, "zichtmeters");
 		this.windstotenMS = getFloatElement(weerstation_element, "windstotenMS");
 		this.regenMMPU = getFloatElement(weerstation_element, "regenMMPU");
-		this.zonintensiteitWM2 = getIntegerElement(weerstation_element, "zonintensiteitWM2");
+		this.addZonintensiteit(weerstation_element);
 		this.addTemperatuur10cm(weerstation_element);
 	
 	}
@@ -118,6 +118,15 @@ public class WeatherStation {
 	}
 	public WeatherAttribute getLuchtdruk() {
 		return luchtdruk;
+	}
+	
+	public void addZonintensiteit(Element weerstation_element) {
+		zonintensiteitWM2 = new WeatherAttribute(
+			"Zonintensiteit", getElement(weerstation_element, "zonintensiteitWM2")
+		);
+	}
+	public WeatherAttribute getZonintensiteit() {
+		return zonintensiteitWM2;
 	}
 	/*
 	
