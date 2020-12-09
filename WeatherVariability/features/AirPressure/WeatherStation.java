@@ -7,7 +7,7 @@ public class WeatherStation {
 		luchtdruk.addShownValue(
 			new ValueConverter() {
 				String getShownValue(String apiValue) {
-					return ((Float) Float.parseFloat(apiValue)).toString();
+					return floatString(apiValue);
 				}
 			}, "hPa"
 		);

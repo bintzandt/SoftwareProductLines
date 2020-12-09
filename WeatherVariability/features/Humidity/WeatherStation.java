@@ -1,15 +1,15 @@
 import org.w3c.dom.Element;
 
 public class WeatherStation {
-	public void addWindsnelheid(Element weerstation_element) {
+	public void addLuchtvochtigheid(Element weerstation_element) {
 		original(weerstation_element);
-		
-		windsnelheidMS.addShownValue(
+
+		luchtvochtigheid.addShownValue(
 			new ValueConverter() {
 				String getShownValue(String apiValue) {
-					return floatString(apiValue);
+					return ((Integer) Integer.parseInt(apiValue)).toString();
 				}
-			}, "m/s"
+			}, "%"
 		);
 	}
-}
+} 

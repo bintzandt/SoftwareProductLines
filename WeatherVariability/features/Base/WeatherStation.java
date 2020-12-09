@@ -11,7 +11,7 @@ public class WeatherStation {
 	private final Float lat;
 	private final Float lon;
 	private final Date date;
-	private final Integer luchtvochtigheid;
+	private WeatherAttribute luchtvochtigheid;
 	private final Float temperatuurGC;
 	private WeatherAttribute windsnelheidMS;
 	private final Integer windsnelheidBF;
@@ -34,7 +34,7 @@ public class WeatherStation {
 		this.lat = getFloatElement(weerstation_element, "lat");
 		this.lon = getFloatElement(weerstation_element, "lon");
 		this.date = getDateElement(weerstation_element, "datum");
-		this.luchtvochtigheid = getIntegerElement(weerstation_element, "luchtvochtigheid");
+		this.addLuchtvochtigheid(weerstation_element);
 		this.temperatuurGC = getFloatElement(weerstation_element, "temperatuurGC");
 		this.addWindsnelheid(weerstation_element);
 		this.windsnelheidBF = getIntegerElement(weerstation_element, "windsnelheidBF");
@@ -84,6 +84,14 @@ public class WeatherStation {
 		return this.regio;
 	}
 	
+	public String floatString(String s) throws NumberFormatException {
+		// Ensures a string is formatted as float, or throws exception
+		return floatString(Float.parseFloat(s));
+	}
+	public String floatString(Float f) {
+		return ((Float) f).toString();
+	}
+	
 	public void addTemperatuur10cm(Element weerstation_element) {
 		temperatuur10cm = new WeatherAttribute(
 			"Temperatuur", getElement(weerstation_element, "temperatuur10cm")
@@ -128,23 +136,13 @@ public class WeatherStation {
 	public WeatherAttribute getZonintensiteit() {
 		return zonintensiteitWM2;
 	}
-	/*
 	
-	
-	public WeatherAttribute getZonintensiteit() {
-		if (this.zonintensiteitWM2 instanceof Integer) {
-			return new WeatherAttribute("Zonintensiteit", this.zonintensiteitWM2.toString(), "W/m²");
-		} else {
-			return new WeatherAttribute("Zonintensiteit");
-		}
+	public void addLuchtvochtigheid(Element weerstation_element) {
+		luchtvochtigheid = new WeatherAttribute(
+			"Luchtvochtigheid", getElement(weerstation_element, "luchtvochtigheid")
+		);
 	}
-	
 	public WeatherAttribute getLuchtvochtigheid() {
-		if (this.luchtvochtigheid instanceof Integer) {
-			return new WeatherAttribute("Luchtvochtigheid", this.luchtvochtigheid.toString(), "%");
-		} else {
-			return new WeatherAttribute("Luchtvochtigheid");
-		}
+		return luchtvochtigheid;
 	}
-	*/
 }

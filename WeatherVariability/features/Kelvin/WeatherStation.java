@@ -7,7 +7,7 @@ public class WeatherStation {
 		temperatuur10cm.addShownValue(
 			new ValueConverter() {
 				String getShownValue(String apiValue) {
-					return celciusToKelvin(Float.parseFloat(apiValue)).toString();
+					return floatString(celciusToKelvin(Float.parseFloat(apiValue)));
 				}
 			}, "°K"
 		);

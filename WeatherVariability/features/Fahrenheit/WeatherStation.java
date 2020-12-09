@@ -7,7 +7,7 @@ public class WeatherStation {
 		temperatuur10cm.addShownValue(
 			new ValueConverter() {
 				String getShownValue(String apiValue) {
-					return celciusToFahrenheit(Float.parseFloat(apiValue)).toString();
+					return floatString(celciusToFahrenheit(Float.parseFloat(apiValue)));
 				}
 			}, "°F"
 		);

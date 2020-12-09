@@ -20,7 +20,7 @@ public   class  WeatherStation {
 	private final Date date;
 
 	
-	private final Integer luchtvochtigheid;
+	private WeatherAttribute luchtvochtigheid;
 
 	
 	private final Float temperatuurGC;
@@ -67,7 +67,7 @@ public   class  WeatherStation {
 		this.lat = getFloatElement(weerstation_element, "lat");
 		this.lon = getFloatElement(weerstation_element, "lon");
 		this.date = getDateElement(weerstation_element, "datum");
-		this.luchtvochtigheid = getIntegerElement(weerstation_element, "luchtvochtigheid");
+		this.addLuchtvochtigheid(weerstation_element);
 		this.temperatuurGC = getFloatElement(weerstation_element, "temperatuurGC");
 		this.addWindsnelheid(weerstation_element);
 		this.windsnelheidBF = getIntegerElement(weerstation_element, "windsnelheidBF");
@@ -129,6 +129,18 @@ public   class  WeatherStation {
 
 	
 	
+	public String floatString(String s) throws NumberFormatException {
+		// Ensures a string is formatted as float, or throws exception
+		return floatString(Float.parseFloat(s));
+	}
+
+	
+	public String floatString(Float f) {
+		return ((Float) f).toString();
+	}
+
+	
+	
 	 private void  addTemperatuur10cm__wrappee__Base  (Element weerstation_element) {
 		temperatuur10cm = new WeatherAttribute(
 			"Temperatuur", getElement(weerstation_element, "temperatuur10cm")
@@ -142,7 +154,7 @@ public   class  WeatherStation {
 		temperatuur10cm.addShownValue(
 			new ValueConverter() {
 				String getShownValue(String apiValue) {
-					return ((Float) Float.parseFloat(apiValue)).toString();
+					return floatString(apiValue);
 				}
 			}, "°C"
 		);
@@ -155,7 +167,7 @@ public   class  WeatherStation {
 		temperatuur10cm.addShownValue(
 			new ValueConverter() {
 				String getShownValue(String apiValue) {
-					return celciusToKelvin(Float.parseFloat(apiValue)).toString();
+					return floatString(celciusToKelvin(Float.parseFloat(apiValue)));
 				}
 			}, "°K"
 		);
@@ -168,7 +180,7 @@ public   class  WeatherStation {
 		temperatuur10cm.addShownValue(
 			new ValueConverter() {
 				String getShownValue(String apiValue) {
-					return celciusToFahrenheit(Float.parseFloat(apiValue)).toString();
+					return floatString(celciusToFahrenheit(Float.parseFloat(apiValue)));
 				}
 			}, "°F"
 		);
@@ -220,7 +232,7 @@ public   class  WeatherStation {
 		windsnelheidMS.addShownValue(
 			new ValueConverter() {
 				String getShownValue(String apiValue) {
-					return ((Float) Float.parseFloat(apiValue)).toString();
+					return floatString(apiValue);
 				}
 			}, "m/s"
 		);
@@ -259,7 +271,7 @@ public   class  WeatherStation {
 		luchtdruk.addShownValue(
 			new ValueConverter() {
 				String getShownValue(String apiValue) {
-					return ((Float) Float.parseFloat(apiValue)).toString();
+					return floatString(apiValue);
 				}
 			}, "hPa"
 		);
@@ -294,6 +306,32 @@ public   class  WeatherStation {
 	
 	public WeatherAttribute getZonintensiteit() {
 		return zonintensiteitWM2;
+	}
+
+	
+	
+	 private void  addLuchtvochtigheid__wrappee__Base  (Element weerstation_element) {
+		luchtvochtigheid = new WeatherAttribute(
+			"Luchtvochtigheid", getElement(weerstation_element, "luchtvochtigheid")
+		);
+	}
+
+	
+	public void addLuchtvochtigheid(Element weerstation_element) {
+		addLuchtvochtigheid__wrappee__Base(weerstation_element);
+
+		luchtvochtigheid.addShownValue(
+			new ValueConverter() {
+				String getShownValue(String apiValue) {
+					return ((Integer) Integer.parseInt(apiValue)).toString();
+				}
+			}, "%"
+		);
+	}
+
+	
+	public WeatherAttribute getLuchtvochtigheid() {
+		return luchtvochtigheid;
 	}
 
 	
