@@ -38,7 +38,6 @@ public class WeatherAttribute {
 	}
 	
 	private void applyTranslation() {
-		System.out.println(this.dict.keySet());
 		if (this.dict instanceof HashMap && this.dict.get(this.description) instanceof String) {
 			System.out.println("Fired");
 			this.description = this.dict.get(this.description);

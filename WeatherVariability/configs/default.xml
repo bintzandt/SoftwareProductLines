@@ -17,7 +17,7 @@
 	<feature automatic="unselected" name="MeterPerSecond"/>
 	<feature manual="selected" name="Beaufort"/>
 	<feature automatic="selected" name="Language"/>
-	<feature automatic="unselected" name="NL"/>
-	<feature manual="selected" name="EN"/>
+	<feature manual="selected" name="NL"/>
+	<feature automatic="unselected" name="EN"/>
 	<feature automatic="unselected" name="DE"/>
 </configuration>
