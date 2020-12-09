@@ -5,7 +5,7 @@
 	<feature manual="selected" name="Temperature"/>
 	<feature manual="selected" name="WindDirection"/>
 	<feature manual="selected" name="WindSpeed"/>
-	<feature name="AirPressure"/>
+	<feature manual="selected" name="AirPressure"/>
 	<feature name="SunIntensity"/>
 	<feature name="Humidity"/>
 	<feature automatic="selected" name="Units"/>

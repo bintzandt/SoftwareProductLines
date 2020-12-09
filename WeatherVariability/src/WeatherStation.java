@@ -38,7 +38,7 @@ public   class  WeatherStation {
 	private WeatherAttribute windrichting;
 
 	
-	private final Float luchtdruk;
+	private WeatherAttribute luchtdruk;
 
 	
 	private final Integer zichtmeters;
@@ -73,7 +73,7 @@ public   class  WeatherStation {
 		this.windsnelheidBF = getIntegerElement(weerstation_element, "windsnelheidBF");
 		this.windrichtingGR = getIntegerElement(weerstation_element, "windrichtingGR");
 		this.addWindrichting(weerstation_element);
-		this.luchtdruk = getFloatElement(weerstation_element, "luchtdruk");
+		this.addLuchtdruk(weerstation_element);
 		this.zichtmeters = getIntegerElement(weerstation_element, "zichtmeters");
 		this.windstotenMS = getFloatElement(weerstation_element, "windstotenMS");
 		this.regenMMPU = getFloatElement(weerstation_element, "regenMMPU");
@@ -243,6 +243,33 @@ public   class  WeatherStation {
 	
 	public WeatherAttribute getWindsnelheid() {
 		return windsnelheidMS;
+	}
+
+	
+	
+	 private void  addLuchtdruk__wrappee__Base(Element weerstation_element) {
+		luchtdruk = new WeatherAttribute(
+			"Luchtdruk", getElement(weerstation_element, "luchtdruk")
+		);
+	}
+
+	
+	public void addLuchtdruk(Element weerstation_element) {
+		addLuchtdruk__wrappee__Base(weerstation_element);
+
+		luchtdruk.addShownValue(
+			new ValueConverter() {
+				@Override
+				String getShownValue(String apiValue) {
+					return ((Float) Float.parseFloat(apiValue)).toString();
+				}
+			}, "hPa"
+		);
+	}
+
+	
+	public WeatherAttribute getLuchtdruk() {
+		return luchtdruk;
 	}
 
 	

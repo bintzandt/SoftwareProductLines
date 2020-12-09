@@ -17,7 +17,7 @@ public class WeatherStation {
 	private final Integer windsnelheidBF;
 	private final Integer windrichtingGR;
 	private WeatherAttribute windrichting;
-	private final Float luchtdruk;
+	private WeatherAttribute luchtdruk;
 	private final Integer zichtmeters;
 	private final Float windstotenMS;
 	private final Float regenMMPU;
@@ -40,7 +40,7 @@ public class WeatherStation {
 		this.windsnelheidBF = getIntegerElement(weerstation_element, "windsnelheidBF");
 		this.windrichtingGR = getIntegerElement(weerstation_element, "windrichtingGR");
 		this.addWindrichting(weerstation_element);
-		this.luchtdruk = getFloatElement(weerstation_element, "luchtdruk");
+		this.addLuchtdruk(weerstation_element);
 		this.zichtmeters = getIntegerElement(weerstation_element, "zichtmeters");
 		this.windstotenMS = getFloatElement(weerstation_element, "windstotenMS");
 		this.regenMMPU = getFloatElement(weerstation_element, "regenMMPU");
@@ -110,15 +110,17 @@ public class WeatherStation {
 	public WeatherAttribute getWindsnelheid() {
 		return windsnelheidMS;
 	}
+	
+	public void addLuchtdruk(Element weerstation_element) {
+		luchtdruk = new WeatherAttribute(
+			"Luchtdruk", getElement(weerstation_element, "luchtdruk")
+		);
+	}
+	public WeatherAttribute getLuchtdruk() {
+		return luchtdruk;
+	}
 	/*
 	
-	public WeatherAttribute getLuchtdruk() {
-		if (this.luchtdruk instanceof Float) {
-			return new WeatherAttribute("Luchtdruk", this.luchtdruk.toString(), "hPa");
-		} else {
-			return new WeatherAttribute("Luchtdruk");
-		}
-	}
 	
 	public WeatherAttribute getZonintensiteit() {
 		if (this.zonintensiteitWM2 instanceof Integer) {
