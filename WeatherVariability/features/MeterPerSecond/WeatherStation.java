@@ -1,15 +1,15 @@
 import org.w3c.dom.Element;
 
 public class WeatherStation {
-	public void addTemperatuur10cm(Element weerstation_element) {
+	public void addWindsnelheid(Element weerstation_element) {
 		original(weerstation_element);
-
-		temperatuur10cm.addShownValue(
+		
+		windsnelheidMS.addShownValue(
 			new ValueConverter() {
 				String getShownValue(String apiValue) {
 					return ((Float) Float.parseFloat(apiValue)).toString();
 				}
-			}, "°C"
+			}, "m/s"
 		);
 	}
-} 
+}

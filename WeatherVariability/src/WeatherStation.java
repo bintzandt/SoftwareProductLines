@@ -1,6 +1,8 @@
 import java.text.ParseException; 
 import java.text.SimpleDateFormat; 
-import java.util.Date; import org.w3c.dom.Element; public   class  WeatherStation {
+import java.util.Date; import org.w3c.dom.Element; 
+
+public   class  WeatherStation {
 	
 	private final String regio;
 
@@ -24,7 +26,7 @@ import java.util.Date; import org.w3c.dom.Element; public   class  WeatherStatio
 	private final Float temperatuurGC;
 
 	
-	private final Float windsnelheidMS;
+	private WeatherAttribute windsnelheidMS;
 
 	
 	private final Integer windsnelheidBF;
@@ -67,7 +69,7 @@ import java.util.Date; import org.w3c.dom.Element; public   class  WeatherStatio
 		this.date = getDateElement(weerstation_element, "datum");
 		this.luchtvochtigheid = getIntegerElement(weerstation_element, "luchtvochtigheid");
 		this.temperatuurGC = getFloatElement(weerstation_element, "temperatuurGC");
-		this.windsnelheidMS = getFloatElement(weerstation_element, "windsnelheidMS");
+		this.addWindsnelheid(weerstation_element);
 		this.windsnelheidBF = getIntegerElement(weerstation_element, "windsnelheidBF");
 		this.windrichtingGR = getIntegerElement(weerstation_element, "windrichtingGR");
 		this.addWindrichting(weerstation_element);
@@ -127,19 +129,18 @@ import java.util.Date; import org.w3c.dom.Element; public   class  WeatherStatio
 
 	
 	
-	 private void  addTemperatuur10cm__wrappee__Base(Element weerstation_element) {
+	 private void  addTemperatuur10cm__wrappee__Base  (Element weerstation_element) {
 		temperatuur10cm = new WeatherAttribute(
 			"Temperatuur", getElement(weerstation_element, "temperatuur10cm")
 		);
 	}
 
 	
-	 private void  addTemperatuur10cm__wrappee__Celcius(Element weerstation_element) {
+	 private void  addTemperatuur10cm__wrappee__Celcius  (Element weerstation_element) {
 		addTemperatuur10cm__wrappee__Base(weerstation_element);
 
 		temperatuur10cm.addShownValue(
 			new ValueConverter() {
-				@Override
 				String getShownValue(String apiValue) {
 					return ((Float) Float.parseFloat(apiValue)).toString();
 				}
@@ -148,12 +149,11 @@ import java.util.Date; import org.w3c.dom.Element; public   class  WeatherStatio
 	}
 
 	
-	 private void  addTemperatuur10cm__wrappee__Kelvin(Element weerstation_element) {
+	 private void  addTemperatuur10cm__wrappee__Kelvin  (Element weerstation_element) {
 		addTemperatuur10cm__wrappee__Celcius(weerstation_element);
 
 		temperatuur10cm.addShownValue(
 			new ValueConverter() {
-				@Override
 				String getShownValue(String apiValue) {
 					return celciusToKelvin(Float.parseFloat(apiValue)).toString();
 				}
@@ -167,7 +167,6 @@ import java.util.Date; import org.w3c.dom.Element; public   class  WeatherStatio
 
 		temperatuur10cm.addShownValue(
 			new ValueConverter() {
-				@Override
 				String getShownValue(String apiValue) {
 					return celciusToFahrenheit(Float.parseFloat(apiValue)).toString();
 				}
@@ -209,6 +208,45 @@ import java.util.Date; import org.w3c.dom.Element; public   class  WeatherStatio
 
 	
 	
+	 private void  addWindsnelheid__wrappee__Base  (Element weerstation_element) {
+		windsnelheidMS = new WeatherAttribute(
+			"Windsnelheid", getElement(weerstation_element, "windsnelheidMS")
+		);
+	}
+
+	
+	 private void  addWindsnelheid__wrappee__MeterPerSecond  (Element weerstation_element) {
+		addWindsnelheid__wrappee__Base(weerstation_element);
+		
+		windsnelheidMS.addShownValue(
+			new ValueConverter() {
+				String getShownValue(String apiValue) {
+					return ((Float) Float.parseFloat(apiValue)).toString();
+				}
+			}, "m/s"
+		);
+	}
+
+	
+	public void addWindsnelheid(Element weerstation_element) {
+		addWindsnelheid__wrappee__MeterPerSecond(weerstation_element);
+		
+		windsnelheidMS.addShownValue(
+			new ValueConverter() {
+				String getShownValue(String apiValue) {
+					return convertMsToBeaufort(Float.parseFloat(apiValue)).toString();
+				}
+			}, "B"
+		);
+	}
+
+	
+	public WeatherAttribute getWindsnelheid() {
+		return windsnelheidMS;
+	}
+
+	
+	
 	private Float celciusToKelvin( Float tempInCelcius ) {
 		return (float) (tempInCelcius + 273.15);
 	}
@@ -217,17 +255,6 @@ import java.util.Date; import org.w3c.dom.Element; public   class  WeatherStatio
 	
 	private Float celciusToFahrenheit( Float tempInCelcius ) {
 		return (float) (tempInCelcius * 1.8 + 32);
-	}
-
-	
-	public WeatherAttribute getWindsnelheid() {
-		if (this.windsnelheidBF instanceof Integer) {
-			return new WeatherAttribute("Windsnelheid", this.windsnelheidBF.toString(), "B");
-		} else if (this.windsnelheidMS instanceof Float) { 
-			return new WeatherAttribute("Windsnelheid", this.convertMsToBeaufort(this.windsnelheidMS).toString(), "B");
-		} else {
-			return new WeatherAttribute("Windsnelheid");
-		}
 	}
 
 	
