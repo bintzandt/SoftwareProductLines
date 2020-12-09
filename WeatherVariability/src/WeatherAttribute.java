@@ -1,6 +1,7 @@
-import java.util.HashMap; 
+import java.util.List; 
+import java.util.LinkedList; import java.util.HashMap; 
 
-public  class  WeatherAttribute {
+public   class  WeatherAttribute {
 	
 	public HashMap<String, String> dict;
 
@@ -9,26 +10,25 @@ public  class  WeatherAttribute {
 	public String description;
 
 	
-	public final String value;
+	public final String apiValue;
 
 	
-	public final String unit;
+	public List<WeatherAttributeShownValue> shownValues;
 
 	
 	
-	public WeatherAttribute(String description, String value, String unit) {
+	public WeatherAttribute  (String description, String apiValue) {
 		this.description = description;
-		this.value = value.toString();
-		this.unit = unit;
+		this.apiValue = apiValue;
+		this.shownValues = new LinkedList<WeatherAttributeShownValue>();
 		this.dict = new HashMap<String, String>();
-	}
-
 	
-	
-	public WeatherAttribute(String description) {
-		this.description = description;
-		this.value = "n/a";
-		this.unit = "";
+		this.dict.put("Temperatuur", "Temperatur");
+		this.dict.put("Windrichting", "Windrichtung");
+		this.dict.put("Windsnelheid", "Windgeschwindigkeit");
+		this.dict.put("Luchtdruk", "Luftdruck");
+		this.dict.put("Zonintensiteit", "Sonnenintensität");
+		this.dict.put("Luchtvochtigheid", "Feuchtigkeit");
 	}
 
 	
@@ -40,14 +40,20 @@ public  class  WeatherAttribute {
 
 	
 	
-	public String getValue() {
-		return this.value;
+	public String getApiValue() {
+		return this.apiValue;
 	}
 
 	
 	
-	public String getUnit() {
-		return this.unit;
+	public List<WeatherAttributeShownValue> getShownValues() {
+		return shownValues;
+	}
+
+	
+	
+	public void addShownValue(ValueConverter valueconverter, String unit) {
+		shownValues.add(new WeatherAttributeShownValue(valueconverter.safeGetShownValue(apiValue), unit));
 	}
 
 	
@@ -60,7 +66,6 @@ public  class  WeatherAttribute {
 	
 	private void applyTranslation() {
 		if (this.dict instanceof HashMap && this.dict.get(this.description) instanceof String) {
-			System.out.println("Fired");
 			this.description = this.dict.get(this.description);
 		}
 	}

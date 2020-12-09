@@ -1,12 +1,16 @@
+import org.w3c.dom.Element;
+
 public class WeatherStation {
-	public WeatherAttribute getWindsnelheid() {
-		if (this.windsnelheidBF instanceof Integer) {
-			return new WeatherAttribute("Windsnelheid", this.windsnelheidBF.toString(), "B");
-		} else if (this.windsnelheidMS instanceof Float) { 
-			return new WeatherAttribute("Windsnelheid", this.convertMsToBeaufort(this.windsnelheidMS).toString(), "B");
-		} else {
-			return new WeatherAttribute("Windsnelheid");
-		}
+	public void addWindsnelheid(Element weerstation_element) {
+		original(weerstation_element);
+		
+		windsnelheidMS.addShownValue(
+			new ValueConverter() {
+				String getShownValue(String apiValue) {
+					return convertMsToBeaufort(Float.parseFloat(apiValue)).toString();
+				}
+			}, "B"
+		);
 	}
 	
 	private Integer convertMsToBeaufort( Float speedInMs) {

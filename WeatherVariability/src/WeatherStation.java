@@ -1,8 +1,7 @@
 import java.text.ParseException; 
 import java.text.SimpleDateFormat; 
-import java.util.Date; 
-
-import org.w3c.dom.Element; public   class  WeatherStation {
+import java.util.Date; import org.w3c.dom.Element; 
+public   class  WeatherStation {
 	
 	private final String regio;
 
@@ -20,13 +19,13 @@ import org.w3c.dom.Element; public   class  WeatherStation {
 	private final Date date;
 
 	
-	private final Integer luchtvochtigheid;
+	private WeatherAttribute luchtvochtigheid;
 
 	
 	private final Float temperatuurGC;
 
 	
-	private final Float windsnelheidMS;
+	private WeatherAttribute windsnelheidMS;
 
 	
 	private final Integer windsnelheidBF;
@@ -35,10 +34,10 @@ import org.w3c.dom.Element; public   class  WeatherStation {
 	private final Integer windrichtingGR;
 
 	
-	private final String windrichting;
+	private WeatherAttribute windrichting;
 
 	
-	private final Float luchtdruk;
+	private WeatherAttribute luchtdruk;
 
 	
 	private final Integer zichtmeters;
@@ -50,10 +49,10 @@ import org.w3c.dom.Element; public   class  WeatherStation {
 	private final Float regenMMPU;
 
 	
-	private final Integer zonintensiteitWM2;
+	private WeatherAttribute zonintensiteitWM2;
 
 	
-	private final Float temperatuur10cm;
+	private WeatherAttribute temperatuur10cm;
 
 	
 	
@@ -63,55 +62,36 @@ import org.w3c.dom.Element; public   class  WeatherStation {
 		this.regio = regio;
 		
 		// Get all attribters
-		 this.stationnaam = weerstation_element.getElementsByTagName("stationnaam").item(0).getTextContent();
-		 this.lat = getFloatElement(weerstation_element, "lat");
-		 this.lon = getFloatElement(weerstation_element, "lon");
-		 this.date = getDateElement(weerstation_element, "datum");
-		 this.luchtvochtigheid = getIntegerElement(weerstation_element, "luchtvochtigheid");
-		 this.temperatuurGC = getFloatElement(weerstation_element, "temperatuurGC");
-		 this.windsnelheidMS = getFloatElement(weerstation_element, "windsnelheidMS");
-		 this.windsnelheidBF = getIntegerElement(weerstation_element, "windsnelheidBF");
-		 this.windrichtingGR = getIntegerElement(weerstation_element, "windrichtingGR");
-		 this.windrichting = weerstation_element.getElementsByTagName("windrichting").item(0).getTextContent();
-		 this.luchtdruk = getFloatElement(weerstation_element, "luchtdruk");
-		 this.zichtmeters = getIntegerElement(weerstation_element, "zichtmeters");
-		 this.windstotenMS = getFloatElement(weerstation_element, "windstotenMS");
-		 this.regenMMPU = getFloatElement(weerstation_element, "regenMMPU");
-		 this.zonintensiteitWM2 = getIntegerElement(weerstation_element, "zonintensiteitWM2");
-		 this.temperatuur10cm = getFloatElement(weerstation_element, "temperatuur10cm");
+		this.stationnaam = getElement(weerstation_element, "stationnaam");
+		this.lat = getFloatElement(weerstation_element, "lat");
+		this.lon = getFloatElement(weerstation_element, "lon");
+		this.date = getDateElement(weerstation_element, "datum");
+		this.addLuchtvochtigheid(weerstation_element);
+		this.temperatuurGC = getFloatElement(weerstation_element, "temperatuurGC");
+		this.addWindsnelheid(weerstation_element);
+		this.windsnelheidBF = getIntegerElement(weerstation_element, "windsnelheidBF");
+		this.windrichtingGR = getIntegerElement(weerstation_element, "windrichtingGR");
+		this.addWindrichting(weerstation_element);
+		this.addLuchtdruk(weerstation_element);
+		this.zichtmeters = getIntegerElement(weerstation_element, "zichtmeters");
+		this.windstotenMS = getFloatElement(weerstation_element, "windstotenMS");
+		this.regenMMPU = getFloatElement(weerstation_element, "regenMMPU");
+		this.addZonintensiteit(weerstation_element);
+		this.addTemperatuur10cm(weerstation_element);
 	
 	}
 
 	
 	
-	@Override
-    public String toString() {
-		return "regio: " + this.regio +
-				", stationnaam: " + this.stationnaam +
-				", latitude: " + this.lat +
-				", longitude: " + this.lon +
-				", date: " + this.date +
-				", luchtvochtigheid: " + this.luchtvochtigheid +
-				", temperatuur (GC): " + this.temperatuurGC +
-				", windsnelheid (m/s): " + this.windsnelheidMS +
-				", windsnelheid (beaufort): " + this.windsnelheidBF +
-				", windrichting (graden): " + this.windrichtingGR +
-				", windrichting: " + this.windrichting +
-				", luchtdruk: " + this.luchtdruk +
-				", zichtmeters: " + this.zichtmeters +
-				", windstoten (m/s): " + this.windstotenMS +
-				", regen (mmpu): " + this.regenMMPU +
-				", zonintensiteit (W/M2): " + this.zonintensiteitWM2 +
-				", temperatuur 10cm: " + this.temperatuur10cm;
-				
-				
+	private String getElement(Element e, String tag) {
+		return e.getElementsByTagName(tag).item(0).getTextContent();
 	}
 
 	
 	
 	private Float getFloatElement(Element e, String tag) {
 		try {
-			return Float.parseFloat(e.getElementsByTagName(tag).item(0).getTextContent());
+			return Float.parseFloat(getElement(e, tag));
 		}
 		catch(Exception exception) {
 			return null;
@@ -122,7 +102,7 @@ import org.w3c.dom.Element; public   class  WeatherStation {
 	
 	private Integer getIntegerElement(Element e, String tag) {
 		try {
-			return Integer.parseInt(e.getElementsByTagName(tag).item(0).getTextContent());
+			return Integer.parseInt(getElement(e, tag));
 		}
 		catch(Exception exception) {
 			return null;
@@ -133,6 +113,7 @@ import org.w3c.dom.Element; public   class  WeatherStation {
 	
 	private Date getDateElement(Element e, String tag) {
 		try {
+			// FIXME
 			return new SimpleDateFormat("MM/dd/yyyy hh:mm:ss").parse("11/26/2020 09:50:00");
 		} catch (ParseException exception) {
 			return null;
@@ -146,66 +127,227 @@ import org.w3c.dom.Element; public   class  WeatherStation {
 	}
 
 	
-	public WeatherAttribute getTemperatur10cm  () {
-		if (this.temperatuur10cm instanceof Float) {
-			return new WeatherAttribute("Temperatuur", this.celciusToKelvin(this.temperatuur10cm).toString(), "°K");
-		} else {
-			return new WeatherAttribute("Temperatuur", "n/a", "°K");
-		}
-		
+	
+	public String floatString(String s) throws NumberFormatException {
+		// Ensures a string is formatted as float, or throws exception
+		return floatString(Float.parseFloat(s));
 	}
 
 	
+	 private String  floatString__wrappee__Base  (Float f) {
+		return ((Float) f).toString();
+	}
+
+	
+	public String floatString(Float f) {
+		return floatString__wrappee__Base(f).replace(".", ",");
+	}
+
+	
+	
+	 private void  addTemperatuur10cm__wrappee__Base  (Element weerstation_element) {
+		temperatuur10cm = new WeatherAttribute(
+			"Temperatuur", getElement(weerstation_element, "temperatuur10cm")
+		);
+	}
+
+	
+	 private void  addTemperatuur10cm__wrappee__Celcius  (Element weerstation_element) {
+		addTemperatuur10cm__wrappee__Base(weerstation_element);
+
+		temperatuur10cm.addShownValue(
+			new ValueConverter() {
+				String getShownValue(String apiValue) {
+					return floatString(apiValue);
+				}
+			}, "°C"
+		);
+	}
+
+	
+	 private void  addTemperatuur10cm__wrappee__Kelvin  (Element weerstation_element) {
+		addTemperatuur10cm__wrappee__Celcius(weerstation_element);
+
+		temperatuur10cm.addShownValue(
+			new ValueConverter() {
+				String getShownValue(String apiValue) {
+					return floatString(celciusToKelvin(Float.parseFloat(apiValue)));
+				}
+			}, "°K"
+		);
+	}
+
+	
+	public void addTemperatuur10cm(Element weerstation_element) {
+		addTemperatuur10cm__wrappee__Kelvin(weerstation_element);
+
+		temperatuur10cm.addShownValue(
+			new ValueConverter() {
+				String getShownValue(String apiValue) {
+					return floatString(celciusToFahrenheit(Float.parseFloat(apiValue)));
+				}
+			}, "°F"
+		);
+	}
+
+	
+	public WeatherAttribute getTemperatur10cm() {
+		return temperatuur10cm;
+	}
+
+	
+	
+	 private void  addWindrichting__wrappee__Base  (Element weerstation_element) {
+		windrichting = new WeatherAttribute(
+			"Windrichting", getElement(weerstation_element, "windrichting")
+		);
+	}
+
+	
+	public void addWindrichting(Element weerstation_element) {
+		addWindrichting__wrappee__Base(weerstation_element);
+
+		windrichting.addShownValue(
+			new ValueConverter() {
+				String getShownValue(String apiValue) {
+					return apiValue;
+				}
+			}, null
+		);
+	}
+
 	
 	public WeatherAttribute getWindrichting() {
-		return new WeatherAttribute("Windrichting", this.windrichting, null);
+		return windrichting;
 	}
 
 	
-	public WeatherAttribute getWindsnelheid  () {
-		if (this.windsnelheidBF instanceof Integer) {
-			return new WeatherAttribute("Windsnelheid", this.windsnelheidBF.toString(), "B");
-		} else if (this.windsnelheidMS instanceof Float) { 
-			return new WeatherAttribute("Windsnelheid", this.convertMsToBeaufort(this.windsnelheidMS).toString(), "B");
-		} else {
-			return new WeatherAttribute("Windsnelheid");
-		}
+	
+	 private void  addWindsnelheid__wrappee__Base  (Element weerstation_element) {
+		windsnelheidMS = new WeatherAttribute(
+			"Windsnelheid", getElement(weerstation_element, "windsnelheidMS")
+		);
 	}
 
 	
+	 private void  addWindsnelheid__wrappee__MeterPerSecond  (Element weerstation_element) {
+		addWindsnelheid__wrappee__Base(weerstation_element);
+		
+		windsnelheidMS.addShownValue(
+			new ValueConverter() {
+				String getShownValue(String apiValue) {
+					return floatString(apiValue);
+				}
+			}, "m/s"
+		);
+	}
+
+	
+	public void addWindsnelheid(Element weerstation_element) {
+		addWindsnelheid__wrappee__MeterPerSecond(weerstation_element);
+		
+		windsnelheidMS.addShownValue(
+			new ValueConverter() {
+				String getShownValue(String apiValue) {
+					return convertMsToBeaufort(Float.parseFloat(apiValue)).toString();
+				}
+			}, "B"
+		);
+	}
+
+	
+	public WeatherAttribute getWindsnelheid() {
+		return windsnelheidMS;
+	}
+
+	
+	
+	 private void  addLuchtdruk__wrappee__Base  (Element weerstation_element) {
+		luchtdruk = new WeatherAttribute(
+			"Luchtdruk", getElement(weerstation_element, "luchtdruk")
+		);
+	}
+
+	
+	public void addLuchtdruk(Element weerstation_element) {
+		addLuchtdruk__wrappee__Base(weerstation_element);
+
+		luchtdruk.addShownValue(
+			new ValueConverter() {
+				String getShownValue(String apiValue) {
+					return floatString(apiValue);
+				}
+			}, "hPa"
+		);
+	}
+
 	
 	public WeatherAttribute getLuchtdruk() {
-		if (this.luchtdruk instanceof Float) {
-			return new WeatherAttribute("Luchtdruk", this.luchtdruk.toString(), "hPa");
-		} else {
-			return new WeatherAttribute("Luchtdruk");
-		}
+		return luchtdruk;
 	}
 
 	
+	
+	 private void  addZonintensiteit__wrappee__Base  (Element weerstation_element) {
+		zonintensiteitWM2 = new WeatherAttribute(
+			"Zonintensiteit", getElement(weerstation_element, "zonintensiteitWM2")
+		);
+	}
+
+	
+	public void addZonintensiteit(Element weerstation_element) {
+		addZonintensiteit__wrappee__Base(weerstation_element);
+
+		zonintensiteitWM2.addShownValue(
+			new ValueConverter() {
+				String getShownValue(String apiValue) {
+					return ((Integer) Integer.parseInt(apiValue)).toString();
+				}
+			}, "W/m²"
+		);
+	}
+
 	
 	public WeatherAttribute getZonintensiteit() {
-		if (this.zonintensiteitWM2 instanceof Integer) {
-			return new WeatherAttribute("Zonintensiteit", this.zonintensiteitWM2.toString(), "W/m²");
-		} else {
-			return new WeatherAttribute("Zonintensiteit");
-		}
+		return zonintensiteitWM2;
 	}
 
 	
 	
+	 private void  addLuchtvochtigheid__wrappee__Base  (Element weerstation_element) {
+		luchtvochtigheid = new WeatherAttribute(
+			"Luchtvochtigheid", getElement(weerstation_element, "luchtvochtigheid")
+		);
+	}
+
+	
+	public void addLuchtvochtigheid(Element weerstation_element) {
+		addLuchtvochtigheid__wrappee__Base(weerstation_element);
+
+		luchtvochtigheid.addShownValue(
+			new ValueConverter() {
+				String getShownValue(String apiValue) {
+					return ((Integer) Integer.parseInt(apiValue)).toString();
+				}
+			}, "%"
+		);
+	}
+
+	
 	public WeatherAttribute getLuchtvochtigheid() {
-		if (this.luchtvochtigheid instanceof Integer) {
-			return new WeatherAttribute("Luchtvochtigheid", this.luchtvochtigheid.toString(), "%");
-		} else {
-			return new WeatherAttribute("Luchtvochtigheid");
-		}
+		return luchtvochtigheid;
 	}
 
 	
 	
 	private Float celciusToKelvin( Float tempInCelcius ) {
 		return (float) (tempInCelcius + 273.15);
+	}
+
+	
+	
+	private Float celciusToFahrenheit( Float tempInCelcius ) {
+		return (float) (tempInCelcius * 1.8 + 32);
 	}
 
 	

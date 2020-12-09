@@ -2,7 +2,7 @@ import java.util.HashMap;
 
 public class WeatherAttribute {
 	
-	public WeatherAttribute(String description, String value, String unit) {
+	public WeatherAttribute(String description, String apiValue) {
 		this.dict.put("Temperatuur", "Temperatur");
 		this.dict.put("Windrichting", "Windrichtung");
 		this.dict.put("Windsnelheid", "Windgeschwindigkeit");

@@ -1,23 +1,23 @@
+import java.util.List;
+import java.util.LinkedList;
 import java.util.HashMap;
 
+/**
+ * A datapoint from the Buienradar API.
+ * value is unparsed data from the API, while a ShownValue is made to be human-readable.
+ */
 public class WeatherAttribute {
 	public HashMap<String, String> dict;
 
 	public String description;
-	public final String value;
-	public final String unit;
+	public final String apiValue;
+	public List<WeatherAttributeShownValue> shownValues;
 	
-	public WeatherAttribute(String description, String value, String unit) {
+	public WeatherAttribute(String description, String apiValue) {
 		this.description = description;
-		this.value = value.toString();
-		this.unit = unit;
+		this.apiValue = apiValue;
+		this.shownValues = new LinkedList<WeatherAttributeShownValue>();
 		this.dict = new HashMap<String, String>();
-	}
-	
-	public WeatherAttribute(String description) {
-		this.description = description;
-		this.value = "n/a";
-		this.unit = "";
 	}
 	
 	public String getDescription() {
@@ -25,12 +25,16 @@ public class WeatherAttribute {
 		return this.description;
 	}
 	
-	public String getValue() {
-		return this.value;
+	public String getApiValue() {
+		return this.apiValue;
 	}
 	
-	public String getUnit() {
-		return this.unit;
+	public List<WeatherAttributeShownValue> getShownValues() {
+		return shownValues;
+	}
+	
+	public void addShownValue(ValueConverter valueconverter, String unit) {
+		shownValues.add(new WeatherAttributeShownValue(valueconverter.safeGetShownValue(apiValue), unit));
 	}
 	
 	public void InitDict() {
@@ -39,7 +43,6 @@ public class WeatherAttribute {
 	
 	private void applyTranslation() {
 		if (this.dict instanceof HashMap && this.dict.get(this.description) instanceof String) {
-			System.out.println("Fired");
 			this.description = this.dict.get(this.description);
 		}
 	}
