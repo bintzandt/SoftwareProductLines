@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <configuration>
 	<feature automatic="selected" name="Root"/>
-	<feature automatic="selected" name="Language"/>
-	<feature automatic="unselected" name="NL"/>
-	<feature manual="selected" name="EN"/>
-	<feature automatic="unselected" name="DE"/>
 	<feature automatic="selected" name="Base"/>
 	<feature manual="selected" name="Temperature"/>
 	<feature manual="selected" name="WindDirection"/>
@@ -20,4 +16,8 @@
 	<feature automatic="selected" name="WindSpeedUnit"/>
 	<feature automatic="unselected" name="MeterPerSecond"/>
 	<feature manual="selected" name="Beaufort"/>
+	<feature automatic="selected" name="Language"/>
+	<feature automatic="unselected" name="NL"/>
+	<feature manual="selected" name="EN"/>
+	<feature automatic="unselected" name="DE"/>
 </configuration>

@@ -2,12 +2,6 @@ import java.util.HashMap;
 
 public   class  WeatherAttribute {
 	
-	
-	public void InitDict  () {
-		this.dict = new HashMap<String, String>();
-	}
-
-	
 	public HashMap<String, String> dict;
 
 	
@@ -22,10 +16,18 @@ public   class  WeatherAttribute {
 
 	
 	
-	public WeatherAttribute(String description, String value, String unit) {
+	public WeatherAttribute  (String description, String value, String unit) {
 		this.description = description;
 		this.value = value.toString();
 		this.unit = unit;
+		this.dict = new HashMap<String, String>();
+	
+		this.dict.put("Temperatuur", "Temperature");
+		this.dict.put("Windrichting", "Wind direction");
+		this.dict.put("Windsnelheid", "Wind speed");
+		this.dict.put("Luchtdruk", "Air pressure");
+		this.dict.put("Zonintensiteit", "Sun intensity");
+		this.dict.put("Luchtvochtigheid", "Humidity");
 	}
 
 	
@@ -57,7 +59,14 @@ public   class  WeatherAttribute {
 
 	
 	
+	public void InitDict() {
+		this.dict = new HashMap<String, String>();
+	}
+
+	
+	
 	private void applyTranslation() {
+		System.out.println(this.dict.keySet());
 		if (this.dict instanceof HashMap && this.dict.get(this.description) instanceof String) {
 			System.out.println("Fired");
 			this.description = this.dict.get(this.description);
