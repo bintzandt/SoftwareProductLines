@@ -72,7 +72,7 @@ public class GUI {
 		WeatherStation weatherStation = weatherStations.getWeatherStation(stationName);
 		
 		attributesPanel.removeAll();
-		JLabel cityLabel = new JLabel("Weather in " + stationName);
+		JLabel cityLabel = new JLabel(cityTitle(stationName));
 		attributesPanel.add(cityLabel);
 		
 		// add weather information to GUI
@@ -80,6 +80,10 @@ public class GUI {
 		
 		attributesPanel.revalidate();
 		attributesPanel.repaint();
+	}
+	
+	private String cityTitle(String city) {
+		return "Weer in " + city;
 	}
 	
 	private void addAttributes(WeatherStation weatherStation) {

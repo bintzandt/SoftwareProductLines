@@ -1,7 +1,6 @@
 import java.text.ParseException; 
 import java.text.SimpleDateFormat; 
 import java.util.Date; import org.w3c.dom.Element; 
-
 public   class  WeatherStation {
 	
 	private final String regio;
@@ -135,8 +134,13 @@ public   class  WeatherStation {
 	}
 
 	
-	public String floatString(Float f) {
+	 private String  floatString__wrappee__Base  (Float f) {
 		return ((Float) f).toString();
+	}
+
+	
+	public String floatString(Float f) {
+		return floatString__wrappee__Base(f).replace(".", ",");
 	}
 
 	
