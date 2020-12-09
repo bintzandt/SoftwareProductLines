@@ -2,9 +2,9 @@
 <configuration>
 	<feature automatic="selected" name="Root"/>
 	<feature automatic="selected" name="Language"/>
-	<feature automatic="unselected" name="Dutch"/>
-	<feature manual="selected" name="English"/>
-	<feature automatic="unselected" name="German"/>
+	<feature automatic="unselected" name="NL"/>
+	<feature manual="selected" name="EN"/>
+	<feature automatic="unselected" name="DE"/>
 	<feature automatic="selected" name="Base"/>
 	<feature manual="selected" name="Temperature"/>
 	<feature manual="selected" name="WindDirection"/>

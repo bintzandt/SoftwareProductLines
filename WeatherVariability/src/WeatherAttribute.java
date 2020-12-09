@@ -3,8 +3,8 @@ import java.util.HashMap;
 public   class  WeatherAttribute {
 	
 	
-	public String getUnit  () {
-		return this.unit;
+	public void InitDict  () {
+		this.dict = new HashMap<String, String>();
 	}
 
 	
@@ -51,14 +51,13 @@ public   class  WeatherAttribute {
 
 	
 	
-	private void InitDict() {
-		this.dict = new HashMap<String, String>();
+	public String getUnit() {
+		return this.unit;
 	}
 
 	
 	
 	private void applyTranslation() {
-		System.out.println("translating" + this.description + this.dict.keySet());
 		if (this.dict instanceof HashMap && this.dict.get(this.description) instanceof String) {
 			System.out.println("Fired");
 			this.description = this.dict.get(this.description);

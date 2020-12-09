@@ -11,9 +11,9 @@
 	<struct>
 		<and abstract="true" mandatory="true" name="Root">
 			<alt abstract="true" mandatory="true" name="Language">
-				<feature abstract="true" name="Dutch"/>
-				<feature name="English"/>
-				<feature name="German"/>
+				<feature abstract="true" name="NL"/>
+				<feature name="EN"/>
+				<feature name="DE"/>
 			</alt>
 			<feature mandatory="true" name="Base"/>
 			<feature name="Temperature"/>
