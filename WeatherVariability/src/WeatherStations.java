@@ -1,9 +1,9 @@
-import java.net.URL; 
+
+import java.util.Set; import java.net.URL; 
 import java.util.ArrayList; 
 import java.util.Collections; 
 import java.util.HashMap; 
 import java.util.List; 
-import java.util.Set; 
 
 import javax.xml.parsers.DocumentBuilder; 
 import javax.xml.parsers.DocumentBuilderFactory; 
@@ -13,7 +13,19 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node; 
 import org.w3c.dom.NodeList; 
 
-public  class  WeatherStations {
+public   class  WeatherStations {
+	
+	
+	public Set<String> getWeatherStationNames  () {
+		return this.l.keySet();
+	}
+
+	
+	
+	public int Kip() {
+		return 123;
+	}
+
 	
 	
 	private final String url = "https://data.buienradar.nl/1.0/feed/xml";
@@ -66,12 +78,6 @@ public  class  WeatherStations {
 	
 	public WeatherStation getWeatherStation(String key) {
 		return this.l.get(key);
-	}
-
-	
-	
-	public Set<String> getWeatherStationNames() {
-		return this.l.keySet();
 	}
 
 	

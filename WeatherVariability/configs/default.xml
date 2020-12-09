@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <configuration>
 	<feature automatic="selected" name="Root"/>
+	<feature automatic="selected" name="Language"/>
+	<feature automatic="unselected" name="Dutch"/>
+	<feature manual="selected" name="English"/>
+	<feature automatic="unselected" name="German"/>
 	<feature automatic="selected" name="Base"/>
 	<feature manual="selected" name="Temperature"/>
 	<feature manual="selected" name="WindDirection"/>
@@ -10,10 +14,10 @@
 	<feature manual="selected" name="Humidity"/>
 	<feature automatic="selected" name="Units"/>
 	<feature automatic="selected" name="TemperatureUnit"/>
-	<feature manual="selected" name="Celcius"/>
-	<feature automatic="unselected" name="Kelvin"/>
+	<feature automatic="unselected" name="Celcius"/>
+	<feature manual="selected" name="Kelvin"/>
 	<feature automatic="unselected" name="Fahrenheit"/>
 	<feature automatic="selected" name="WindSpeedUnit"/>
-	<feature manual="selected" name="MeterPerSecond"/>
-	<feature automatic="unselected" name="Beaufort"/>
+	<feature automatic="unselected" name="MeterPerSecond"/>
+	<feature manual="selected" name="Beaufort"/>
 </configuration>
