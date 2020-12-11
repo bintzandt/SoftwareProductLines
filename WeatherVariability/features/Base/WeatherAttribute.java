@@ -10,7 +10,7 @@ public class WeatherAttribute {
 	public HashMap<String, String> dict;
 
 	public String description;
-	public final String apiValue;
+	public String apiValue;
 	public List<WeatherAttributeShownValue> shownValues;
 	
 	public WeatherAttribute(String description, String apiValue) {
@@ -21,7 +21,6 @@ public class WeatherAttribute {
 	}
 	
 	public String getDescription() {
-		this.applyTranslation();
 		return this.description;
 	}
 	
@@ -37,13 +36,15 @@ public class WeatherAttribute {
 		shownValues.add(new WeatherAttributeShownValue(valueconverter.safeGetShownValue(apiValue), unit));
 	}
 	
-	public void InitDict() {
-		this.dict = new HashMap<String, String>();
-	}
-	
 	private void applyTranslation() {
-		if (this.dict instanceof HashMap && this.dict.get(this.description) instanceof String) {
-			this.description = this.dict.get(this.description);
+		if (this.dict instanceof HashMap) {
+			if (this.dict.get(this.description) instanceof String) {
+				this.description = this.dict.get(this.description);
+			}
+			
+			if (this.dict.get(this.apiValue) instanceof String) {
+				this.apiValue = this.dict.get(apiValue);
+			}
 		}
 	}
 	
