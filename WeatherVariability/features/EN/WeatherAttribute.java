@@ -15,6 +15,12 @@ public class WeatherAttribute {
 		this.dict.put("ZW", "SW");
 		this.dict.put("O", "E");
 		this.dict.put("NO", "NE");
+		this.dict.put("NNO", "NNE");
+		this.dict.put("ONO", "ENE");
+		this.dict.put("OZO", "ESE");
+		this.dict.put("ZZO", "SSE");
+		this.dict.put("ZZW", "SSW");
+		this.dict.put("WZW", "WSW");
 	}
 
 }

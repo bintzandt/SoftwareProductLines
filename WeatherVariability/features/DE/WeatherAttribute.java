@@ -13,6 +13,10 @@ public class WeatherAttribute {
 		this.dict.put("Z", "S");
 		this.dict.put("ZO", "SO");
 		this.dict.put("ZW", "SW");
+		this.dict.put("OZO", "OSO");
+		this.dict.put("ZZO", "SSO");
+		this.dict.put("ZZW", "SSW");
+		this.dict.put("WZW", "WSW");
 		
 		this.dict.put("n/a", "n/d");
 		
