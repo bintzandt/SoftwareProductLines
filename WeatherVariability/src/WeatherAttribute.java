@@ -10,7 +10,7 @@ public   class  WeatherAttribute {
 	public String description;
 
 	
-	public final String apiValue;
+	public String apiValue;
 
 	
 	public List<WeatherAttributeShownValue> shownValues;
@@ -29,12 +29,19 @@ public   class  WeatherAttribute {
 		this.dict.put("Luchtdruk", "Luftdruck");
 		this.dict.put("Zonintensiteit", "Sonnenintensität");
 		this.dict.put("Luchtvochtigheid", "Feuchtigkeit");
+		
+		this.dict.put("Z", "S");
+		this.dict.put("ZO", "SO");
+		this.dict.put("ZW", "SW");
+		
+		this.dict.put("n/a", "n/d");
+		
+		this.applyTranslation();
 	}
 
 	
 	
 	public String getDescription() {
-		this.applyTranslation();
 		return this.description;
 	}
 
@@ -58,15 +65,15 @@ public   class  WeatherAttribute {
 
 	
 	
-	public void InitDict() {
-		this.dict = new HashMap<String, String>();
-	}
-
-	
-	
 	private void applyTranslation() {
-		if (this.dict instanceof HashMap && this.dict.get(this.description) instanceof String) {
-			this.description = this.dict.get(this.description);
+		if (this.dict instanceof HashMap) {
+			if (this.dict.get(this.description) instanceof String) {
+				this.description = this.dict.get(this.description);
+			}
+			
+			if (this.dict.get(this.apiValue) instanceof String) {
+				this.apiValue = this.dict.get(apiValue);
+			}
 		}
 	}
 

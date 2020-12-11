@@ -9,6 +9,12 @@ public class WeatherAttribute {
 		this.dict.put("Luchtdruk", "Air pressure");
 		this.dict.put("Zonintensiteit", "Sun intensity");
 		this.dict.put("Luchtvochtigheid", "Humidity");
+		
+		this.dict.put("Z", "S");
+		this.dict.put("ZO", "SE");
+		this.dict.put("ZW", "SW");
+		this.dict.put("O", "E");
+		this.dict.put("NO", "NE");
 	}
 
 }
