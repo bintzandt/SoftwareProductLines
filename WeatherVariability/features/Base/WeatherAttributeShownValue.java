@@ -1,6 +1,6 @@
 
 public class WeatherAttributeShownValue {
-	public final String value;
+	public String value;
 	public final String unit;
 	
 	public WeatherAttributeShownValue(String value, String unit) {

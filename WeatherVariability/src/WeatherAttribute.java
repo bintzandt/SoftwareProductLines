@@ -39,8 +39,6 @@ public   class  WeatherAttribute {
 		this.dict.put("WZW", "WSW");
 		
 		this.dict.put("n/a", "n/d");
-		
-		this.applyTranslation();
 	}
 
 	
@@ -69,14 +67,16 @@ public   class  WeatherAttribute {
 
 	
 	
-	private void applyTranslation() {
+	public void applyTranslation() {
 		if (this.dict instanceof HashMap) {
 			if (this.dict.get(this.description) instanceof String) {
 				this.description = this.dict.get(this.description);
 			}
 			
-			if (this.dict.get(this.apiValue) instanceof String) {
-				this.apiValue = this.dict.get(apiValue);
+			for (WeatherAttributeShownValue shownValue : shownValues) {
+				if (this.dict.get(shownValue.value) instanceof String) {
+					shownValue.value = this.dict.get(shownValue.value);
+				}
 			}
 		}
 	}

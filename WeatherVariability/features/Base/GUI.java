@@ -91,6 +91,8 @@ public class GUI {
 	}
 	
 	private void addAttribute(WeatherAttribute weatherAttribute) {
+		weatherAttribute.applyTranslation();
+		
 		JPanel attrPanel = new JPanel();
 		JLabel labelLabel = new JLabel(weatherAttribute.getDescription());
 		Font unboldFont = labelLabel.getFont().deriveFont(labelLabel.getFont().getStyle() & ~Font.BOLD);
