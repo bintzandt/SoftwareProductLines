@@ -9,7 +9,7 @@ public class WeatherAttributeShownValue {
 	}
 	
 	public WeatherAttributeShownValue(String unit) {
-		this.value = "n/a";
+		this.value = "n.v.t.";
 		this.unit = unit;
 	}
 	

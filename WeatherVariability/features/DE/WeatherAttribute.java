@@ -18,7 +18,7 @@ public class WeatherAttribute {
 		this.dict.put("ZZW", "SSW");
 		this.dict.put("WZW", "WSW");
 		
-		this.dict.put("n/a", "n/d");
+		this.dict.put("n.v.t.", "n/d");
 	}
 
 }

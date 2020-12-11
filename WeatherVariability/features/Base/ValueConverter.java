@@ -11,11 +11,11 @@ public class ValueConverter {
 		try {
 			String val = getShownValue(apiValue);
 			if (val == null || val.equals(""))
-				return "n/a";
+				return "n.v.t.";
 			return val;
 		}
 		catch (NumberFormatException e) {
-			return "n/a";
+			return "n.v.t.";
 		}
 	}
 }
