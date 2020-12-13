@@ -9,7 +9,7 @@ public class WeatherStation {
 				String getShownValue(String apiValue) {
 					return floatString(celciusToKelvin(Float.parseFloat(apiValue)));
 				}
-			}, "°K"
+			}, "K"
 		);
 	}
 	
