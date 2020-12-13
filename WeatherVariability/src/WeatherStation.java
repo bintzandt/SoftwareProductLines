@@ -10,6 +10,9 @@ public   class  WeatherStation {
 	private final String stationnaam;
 
 	
+	private final String icoonactueel;
+
+	
 	private final Float lat;
 
 	
@@ -63,6 +66,7 @@ public   class  WeatherStation {
 		
 		// Get all attribters
 		this.stationnaam = getElement(weerstation_element, "stationnaam");
+		this.icoonactueel = getElement(weerstation_element, "icoonactueel");
 		this.lat = getFloatElement(weerstation_element, "lat");
 		this.lon = getFloatElement(weerstation_element, "lon");
 		this.date = getDateElement(weerstation_element, "datum");
@@ -336,6 +340,12 @@ public   class  WeatherStation {
 	
 	public WeatherAttribute getLuchtvochtigheid() {
 		return luchtvochtigheid;
+	}
+
+	
+	
+	public String getIcoonactueel() {
+		return this.icoonactueel;
 	}
 
 	

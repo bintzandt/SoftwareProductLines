@@ -3,6 +3,7 @@
 	<feature automatic="selected" name="Root"/>
 	<feature automatic="selected" name="Base"/>
 	<feature manual="selected" name="Temperature"/>
+	<feature manual="selected" name="WeatherIcon"/>
 	<feature manual="selected" name="WindDirection"/>
 	<feature manual="selected" name="WindSpeed"/>
 	<feature manual="selected" name="AirPressure"/>
